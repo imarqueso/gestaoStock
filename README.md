@@ -48,5 +48,7 @@ Siga os passos abaixo para configurar e executar localmente o GestãoStock em se
 
    ```php artisan db:seed```
 
+8. **Para saber os dados de acesso ao sistema verifique o arquivo AdminSeeder.php:**
+
 
 
