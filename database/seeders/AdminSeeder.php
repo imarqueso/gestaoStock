@@ -14,11 +14,11 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'login' => 'igor',
-            'nome' => 'Igor',
-            'sobrenome' => 'Marques',
-            'email' => 'soigormarques@gmail.com',
-            'password' => Hash::make('igor4321'), // Correct usage of Hash facade
+            'login' => 'admin',
+            'nome' => 'admin',
+            'sobrenome' => 'master',
+            'email' => 'admin@email.com',
+            'password' => Hash::make('admin4321'), // Correct usage of Hash facade
             'ativo' => "Sim",
             'acesso' => 'Admin',
         ]);
