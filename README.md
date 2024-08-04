@@ -22,7 +22,7 @@ Siga os passos abaixo para configurar e executar localmente o GestãoStock em se
 
 1. **Clone o repositório:**
 
-   ```git clone https://github.com/imarqueso/gestao_stock.git```
+   ```git clone https://github.com/imarqueso/gestaoStock.git```
 
 2. **Abra a pasta do sistema no terminal:**
 
