@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notas', [NotasController::class, 'view'])->name('notasView');
     Route::post('/notas/cadastrar', [NotasController::class, 'cadastrar'])->name('cadastrarNota');
     Route::get('/notas/{id}', [NotasController::class, 'nota'])->name('nota');
+    Route::post('/notas/{id}/excluir', [NotasController::class, 'excluir'])->name('excluirNota');
 });
 
 Route::get('/login', [LoginController::class, 'loginView'])->name('loginView');

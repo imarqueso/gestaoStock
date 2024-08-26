@@ -360,7 +360,7 @@
                 </thead>
                 <tbody>
                     @foreach ($usuarios as $usuario)
-                        @if ($usuario->login == "admin")
+                        @if ($usuario->acesso === "Admin")
                         @else
                             <td>{{$usuario->nome}}&nbsp;{{$usuario->sobrenome}}</td>
                             <td>{{$usuario->login}}</td>
@@ -393,6 +393,8 @@
 </section>
 
 @foreach ($usuarios as $usuario)
+    @if ($usuario->acesso === "Admin")
+    @else
     <section class="modal-container modal-editar">
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-editar">
@@ -442,6 +444,7 @@
             </form>
         </div>
     </section>
+    @endif
 @endforeach
 <script>
     $(document).ready(function() {

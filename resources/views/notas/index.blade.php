@@ -480,9 +480,11 @@
                                     <span class="excluir">
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
-                                    <form action="" class="modal-excluir">
-                                        <input type="id" name="excluir" value="1" disabled hidden>
-                                        <button type="submit" class="btn-excluir salvar">Excluir</button>
+                                    <form method="post"
+                                    action="/notas/{{$nota->id}}/excluir"
+                                    enctype="multipart/form-data" class="modal-excluir">
+                                        @csrf
+                                        <button type="submit" class="btn-excluir">Excluir</button>
                                         <span class="btn-cancelar">Cancelar</span>
                                     </form>
                                 </div>

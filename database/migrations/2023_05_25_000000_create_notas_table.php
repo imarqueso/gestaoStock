@@ -15,7 +15,7 @@ class CreateNotasTable extends Migration
     {
         Schema::create('notas', function (Blueprint $table) {
             $table->id();
-            $table->integer('cpf');
+            $table->string('cpf');
             $table->string('cliente');
             $table->text('itens');
             $table->integer('qtd_itens');
