@@ -328,11 +328,11 @@
                     <h3 class="titulo-modal">Cadastrar Produto</h3>
                     <form method="post" action="{{ route('cadastrarProduto') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="produto" placeholder="Produto:" required>
-                        <input type="text" name="preco" placeholder="Preço:" class="preco" required>
-                        <input type="number" name="quantidade" placeholder="Quantidade:" required>
-                        <input type="number" name="vendidos" placeholder="Vendidos:" required>
-                        <button class="salvar" type="submit">Salvar</button>
+                        <input type="text" name="produto" placeholder="Produto:" required class="save_required">
+                        <input type="text" name="preco" placeholder="Preço:" class="preco" required class="save_required">
+                        <input type="number" name="quantidade" placeholder="Quantidade:" required class="save_required">
+                        <input type="number" name="vendidos" placeholder="Vendidos:" required class="save_required">
+                        <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
             </section>
@@ -392,46 +392,96 @@
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-vender">
             <h3 class="titulo-modal">Vender Produto</h3>
-            <form method="post"
-            action="/produtos/{{$produto->id}}/vender"
-            enctype="multipart/form-data">
+            <form method="post" action="/produtos/{{$produto->id}}/vender" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
                 @csrf
-                <input type="text" value="{{$produto->produto}}" name="produto"  placeholder="Produto:" disabled required>
-                <input type="text" value="{{$produto->preco}}" name="preco"  placeholder="Preco:" required hidden class="preco">
+                <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto:" disabled required class="vender_required_{{$produto->id}}">
+                <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preco:" required hidden class="preco vender_required_{{$produto->id}}">
                 <label>
                     <span>Data da venda:</span>
-                    <input type="date" required name="data_venda" placeholder="Data da Venda:">
+                    <input type="date" required name="data_venda" placeholder="Data da Venda:" class="vender_required_{{$produto->id}}">
                 </label>
-                <input type="number" value="{{$produto->quantidade}}" name="quantidade"  placeholder="Quantidade em estoque:" required hidden>
-                <input type="number" name="vendidos" placeholder="Quantidade vendida:" required>
-                <button class="salvar" type="submit">Salvar</button>
+                <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade em estoque:" required hidden class="vender_required_{{$produto->id}}">
+                <input type="number" name="vendidos" placeholder="Quantidade vendida:" required class="vender_required_{{$produto->id}}">
+                <button class="salvar btnVender_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
+
+        <script>
+            // Função para verificar os campos de venda do produto específico
+            function checkVenderFields_{{$produto->id}}() {
+                const requiredFields = document.querySelectorAll('.vender_required_{{$produto->id}}');
+                const venderButton = document.querySelector('.btnVender_{{$produto->id}}');
+
+                const allFilled = Array.from(requiredFields).every(field => {
+                    return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+                });
+
+                // Controla o estado do botão "Salvar"
+                if (allFilled) {
+                    venderButton.classList.remove('disabled');
+                } else {
+                    venderButton.classList.add('disabled');
+                }
+            }
+
+            // Aplica o event listener a cada campo individualmente
+            document.querySelectorAll('.vender_required_{{$produto->id}}').forEach(field => {
+                field.addEventListener('input', checkVenderFields_{{$produto->id}});
+            });
+
+            // Inicializa o botão com a classe disabled
+            checkVenderFields_{{$produto->id}}();
+        </script>
     </section>
 
     <section class="modal-container modal-editar">
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-editar">
             <h3 class="titulo-modal">Editar Produto</h3>
-            <form method="post"
-            action="/produtos/{{$produto->id}}/editar"
-            enctype="multipart/form-data">
+            <form method="post" action="/produtos/{{$produto->id}}/editar" enctype="multipart/form-data" id="form_editar_{{$produto->id}}">
                 @csrf
                 <label>
                     <span>Produto:</span>
-                    <input type="text" value="{{$produto->produto}}" name="produto"  placeholder="Produto:" required>
+                    <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto:" required class="editar_required_{{$produto->id}}">
                 </label>
                 <label>
                     <span>Preço:</span>
-                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço:" required class="preco">
+                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço:" required class="preco editar_required_{{$produto->id}}">
                 </label>
                 <label>
                     <span>Quantidade:</span>
-                    <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade:" required>
+                    <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade:" required class="editar_required_{{$produto->id}}">
                 </label>
-                <button class="salvar" type="submit">Salvar</button>
+                <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
+
+        <script>
+            // Função para verificar os campos de edição do produto específico
+            function checkEditarFields_{{$produto->id}}() {
+                const requiredFields = document.querySelectorAll('.editar_required_{{$produto->id}}');
+                const editButton = document.querySelector('.btnEdit_{{$produto->id}}');
+
+                const allFilled = Array.from(requiredFields).every(field => {
+                    return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+                });
+
+                // Controla o estado do botão "Salvar"
+                if (allFilled) {
+                    editButton.classList.remove('disabled');
+                } else {
+                    editButton.classList.add('disabled');
+                }
+            }
+
+            // Aplica o event listener a cada campo individualmente
+            document.querySelectorAll('.editar_required_{{$produto->id}}').forEach(field => {
+                field.addEventListener('input', checkEditarFields_{{$produto->id}});
+            });
+
+            // Inicializa o botão com a classe disabled
+            checkEditarFields_{{$produto->id}}();
+        </script>
     </section>
 @endforeach
 @endif
@@ -565,4 +615,34 @@
     });
 </script>
 
+<script>
+    const saveButtonAdd = document.querySelector('.btnSave');
+    saveButtonAdd.classList.add('disabled');
+
+    // Função para verificar todos os campos e controlar o estado do botão
+    function checkFields() {
+        const requiredFields = document.querySelectorAll('.save_required');
+        const saveButton = document.querySelector('.btnSave');
+
+        const allFilled = Array.from(requiredFields).every(field => {
+            if (field.tagName === 'SELECT') {
+                return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+            }
+            return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+        });
+
+        // Controla o estado do botão salvar
+        if (allFilled) {
+            saveButton.classList.remove('disabled');
+        } else {
+            saveButton.classList.add('disabled');
+        }
+    }
+
+    // Aplica o event listener a cada campo individualmente
+    document.querySelectorAll('.save_required').forEach(field => {
+        // Adiciona o event listener 'input' a cada campo
+        field.addEventListener('input', checkFields);
+    });
+</script>
 @endsection

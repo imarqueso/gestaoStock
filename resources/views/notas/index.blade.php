@@ -423,19 +423,19 @@
                     <h3 class="titulo-modal">Cadastrar Nota</h3>
                     <form method="post" action="{{ route('cadastrarNota') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="cpf" placeholder="CPF:">
-                        <input type="text" name="cliente" placeholder="Cliente:">
-                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens:">
+                        <input type="text" name="cpf" placeholder="CPF ou CNPJ:" id="cpf-cnpj">
+                        <input type="text" name="cliente" placeholder="Cliente:" class="save_required">
+                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens:" class="save_required">
                         <div class="box-form" id="box-form">
 
                         </div>
                         <label>
                             <span>Data da venda:</span>
-                            <input type="date" name="data_venda" placeholder="Data da Venda:">
+                            <input type="date" name="data_venda" placeholder="Data da Venda:" class="save_required">
                         </label>
                         <textarea placeholder="Observações:" name="observacoes"></textarea>
-                        <input type="text" class="preco" name="total" placeholder="Total da Nota:">
-                        <button class="salvar" type="submit">Salvar</button>
+                        <input type="text" class="preco" name="total" placeholder="Total da Nota:" class="save_required">
+                        <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
             </section>
@@ -518,45 +518,6 @@
     });
 </script>
 
-<script>
-    $('#quantidade-item').keyup(() => {
-        var quantidade_itens = $('#quantidade-item').val();
-        var element_itens = document.getElementById('box-form');
-
-        for (let i = 0; i < quantidade_itens; i++) {
-            var x = document.createElement("input");
-            x.setAttribute("value", "");
-            x.setAttribute("type", "text");
-            x.setAttribute("name", "produto[]");
-            x.setAttribute("placeholder", "Nome do produto " + (i + 1) + ":");
-            x.setAttribute("required", "");
-            var y = document.createElement("input");
-            y.setAttribute("value", "");
-            y.setAttribute("type", "number");
-            y.setAttribute("name", "quantidade[]");
-            y.setAttribute("placeholder", "Quantidade do produto " + (i + 1) + ":");
-            y.setAttribute("required", "");
-            element_itens.appendChild(x);
-            element_itens.appendChild(y);
-            var z = document.createElement("input");
-            z.setAttribute("value", "");
-            z.setAttribute("type", "text");
-            z.setAttribute("class", "qtd-prod");
-            z.setAttribute("class", "preco");
-            z.setAttribute("name", "preco[]");
-            z.setAttribute("placeholder", "Preço do produto " + (i + 1) + ":");
-            z.setAttribute("required", "");
-            element_itens.appendChild(x);
-            element_itens.appendChild(y);
-            element_itens.appendChild(z);
-            $('.preco').mask('#.##0,00', {reverse: true});
-        }
-        if((quantidade_itens == 0)) {
-            element_itens.innerHTML = '';
-        }
-    });
-</script>
-
 @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
 <script>
     var btnCadastrar = document.querySelectorAll("button.btn-principal");
@@ -628,4 +589,133 @@
     });
 </script>
 
+<script>
+    const saveButtonAdd = document.querySelector('.btnSave');
+    saveButtonAdd.classList.add('disabled');
+
+    // Função para verificar todos os campos e controlar o estado do botão
+    function checkFields() {
+        const requiredFields = document.querySelectorAll('.save_required');
+        const saveButton = document.querySelector('.btnSave');
+
+        const allFilled = Array.from(requiredFields).every(field => {
+            if (field.tagName === 'SELECT') {
+                return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+            }
+            return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+        });
+
+        // Controla o estado do botão salvar
+        if (allFilled) {
+            saveButton.classList.remove('disabled');
+        } else {
+            saveButton.classList.add('disabled');
+        }
+    }
+
+    // Função para adicionar event listeners aos novos campos dinâmicos
+    function addEventListenersToFields() {
+        saveButtonAdd.classList.add('disabled');
+        document.querySelectorAll('.save_required').forEach(field => {
+            // Remove event listeners antigos para evitar duplicações
+            field.removeEventListener('input', checkFields);
+            // Adiciona o event listener 'input' a cada campo
+            field.addEventListener('input', checkFields);
+        });
+    }
+
+    // Inicialmente chama a função para adicionar os event listeners
+    addEventListenersToFields();
+
+    // Reaplica os event listeners toda vez que novos campos são adicionados
+    $('#quantidade-item').keyup(() => {
+        // Código de criação dos novos inputs (código que você enviou anteriormente)
+        var quantidade_itens = $('#quantidade-item').val();
+        var element_itens = document.getElementById('box-form');
+        
+        // Limpa o conteúdo anterior antes de adicionar novos inputs
+        element_itens.innerHTML = '';
+
+        for (let i = 0; i < quantidade_itens; i++) {
+            var x = document.createElement("input");
+            x.setAttribute("value", "");
+            x.setAttribute("type", "text");
+            x.setAttribute("name", "produto[]");
+            x.setAttribute("placeholder", "Nome do produto " + (i + 1) + ":");
+            x.setAttribute("required", "");
+            x.setAttribute("class", "save_required");
+
+            var y = document.createElement("input");
+            y.setAttribute("value", "");
+            y.setAttribute("type", "number");
+            y.setAttribute("name", "quantidade[]");
+            y.setAttribute("placeholder", "Quantidade do produto " + (i + 1) + ":");
+            y.setAttribute("required", "");
+            y.setAttribute("class", "save_required");
+
+            var z = document.createElement("input");
+            z.setAttribute("value", "");
+            z.setAttribute("type", "text");
+            z.setAttribute("name", "preco[]");
+            z.setAttribute("placeholder", "Preço do produto " + (i + 1) + ":");
+            z.setAttribute("required", "");
+            z.setAttribute("class", "save_required preco");
+
+            // Adiciona os elementos ao DOM
+            element_itens.appendChild(x);
+            element_itens.appendChild(y);
+            element_itens.appendChild(z);
+
+            // Aplica a máscara no campo de preço
+            $('.preco').mask('#.##0,00', {reverse: true});
+        }
+
+        // Se a quantidade for 0, limpa os inputs
+        if (quantidade_itens == 0) {
+            element_itens.innerHTML = '';
+        }
+
+        // Reaplica os event listeners após a criação dos novos campos
+        addEventListenersToFields();
+    });
+
+    // Executa a verificação dos campos na carga inicial da página
+    checkFields();
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cpfCnpjField = document.getElementById('cpf-cnpj');
+
+        function formatCPF(value) {
+            return value
+                .replace(/\D/g, '') // Remove todos os caracteres não numéricos
+                .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto entre os primeiros 3 e os seguintes 3
+                .replace(/\.(\d{3})(\d)/, '.$1.$2') // Adiciona ponto entre os seguintes 3 e os seguintes 3
+                .replace(/\.(\d{3})(\d)/, '.$1-$2') // Adiciona o hífen antes dos dois últimos dígitos
+                .replace(/(-\d{2})\d+?$/, '$1'); // Limita os últimos dois dígitos
+        }
+
+        function formatCNPJ(value) {
+            return value
+                .replace(/\D/g, '') // Remove todos os caracteres não numéricos
+                .replace(/(\d{2})(\d)/, '$1.$2') // Adiciona ponto entre os primeiros 2 e os seguintes 3
+                .replace(/\.(\d{3})(\d)/, '.$1.$2') // Adiciona ponto entre os seguintes 3 e os seguintes 4
+                .replace(/\.(\d{3})(\d)/, '.$1/$2') // Adiciona barra entre os seguintes 4 e os seguintes 4
+                .replace(/(\/\d{4})(\d)/, '$1-$2') // Adiciona hífen antes dos dois últimos dígitos
+                .replace(/(-\d{2})\d+?$/, '$1'); // Limita os últimos dois dígitos
+        }
+
+        function applyMask() {
+            let value = cpfCnpjField.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            if (value.length <= 11) {
+                cpfCnpjField.value = formatCPF(value);
+            } else {
+                cpfCnpjField.value = formatCNPJ(value);
+            }
+        }
+
+        cpfCnpjField.addEventListener('input', applyMask);
+    });
+</script>
 @endsection

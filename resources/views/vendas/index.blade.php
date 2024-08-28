@@ -328,7 +328,7 @@
                     <h3 class="titulo-modal">Cadastrar Venda</h3>
                     <form method="post" action="{{ route('cadastrarVenda') }}" enctype="multipart/form-data">
                         @csrf
-                        <select name="produto_id" required onchange="subDepartamento()">
+                        <select name="produto_id" required onchange="subDepartamento()" class="save_required">
                             <option disabled selected value>Selecione o produto</option>
                             @foreach ($listaProd as $prod)
                             <option value="{{ $prod->id }}">{{ $prod->produto }}</option>
@@ -336,10 +336,10 @@
                         </select>
                         <label>
                             <span>Data da Venda:</span>
-                            <input type="date" required name="data_venda" placeholder="Data da Venda:">
+                            <input type="date" required name="data_venda" placeholder="Data da Venda:" class="save_required">
                         </label>
-                        <input type="number" name="vendidos" value="" placeholder="Vendidos:" required>
-                        <button class="salvar" type="submit">Salvar</button>
+                        <input type="number" name="vendidos" value="" placeholder="Vendidos:" required class="save_required">
+                        <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
             </section>
@@ -471,6 +471,38 @@
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
         $('.preco').mask('#.##0,00', {reverse: true});
+    });
+</script>
+
+
+<script>
+    const saveButtonAdd = document.querySelector('.btnSave');
+    saveButtonAdd.classList.add('disabled');
+
+    // Função para verificar todos os campos e controlar o estado do botão
+    function checkFields() {
+        const requiredFields = document.querySelectorAll('.save_required');
+        const saveButton = document.querySelector('.btnSave');
+
+        const allFilled = Array.from(requiredFields).every(field => {
+            if (field.tagName === 'SELECT') {
+                return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+            }
+            return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+        });
+
+        // Controla o estado do botão salvar
+        if (allFilled) {
+            saveButton.classList.remove('disabled');
+        } else {
+            saveButton.classList.add('disabled');
+        }
+    }
+
+    // Aplica o event listener a cada campo individualmente
+    document.querySelectorAll('.save_required').forEach(field => {
+        // Adiciona o event listener 'input' a cada campo
+        field.addEventListener('input', checkFields);
     });
 </script>
 

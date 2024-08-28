@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon_gestao.png') }}">
 
     {{-- Tabela inteligente --}}
     <link type="text/css" href="{{ asset('assets/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -25,7 +25,9 @@
 <body>
     <header class="header-container">
         <section class="header-content">
-            <p class="logo">Gestão<strong>Stock</strong></p>
+            <span class="logo">
+                <img src="{{ asset('assets/img/logo_gestao.png') }}"/>
+            </span>
             <nav class="nav-content">
                 <ul class="nav" id="nav">
                     <li>
@@ -101,14 +103,14 @@
 
     @yield('conteudo')
 
-    <footer class="footer-container">
+    {{--  <footer class="footer-container">
         <span>Powered by</span>
         <a href="https://igormarques.me" target="_blank">
             <svg width="53px" height="25px" viewBox="0 0 440 218" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M129.672 61.8083C134.086 54.0263 153.116 39.2406 173.678 39.2406C190.424 39.2406 203.821 44.6102 223.137 14.7274C199.251 50.265 135.747 125.698 72.8146 143.13C104.051 131.441 191.606 115.812 305.308 139.366M331.789 145.464C331.789 145.464 329.19 144.81 327.895 144.49M216.516 74.6485C207.17 73.6109 187.542 76.3605 183.804 95.6598M183.804 95.6598C181.727 104.22 178.975 123.908 189.256 124.842C191.982 125.09 207.17 125.076 216.516 102.664C218.204 100.329 214.024 95.6598 183.804 95.6598ZM183.804 95.6598C182.765 95.9192 179.52 95.6598 173.678 100.329M280.384 131.846C281.366 127.823 282.496 122 283.186 115.893M283.186 115.893C284.318 105.855 284.258 95.0507 280.384 90.2124C287.394 89.1748 302.971 88.8117 309.202 95.6598C314.394 100.199 320.885 110.601 305.308 115.893C303.411 117.32 296.331 119.317 283.186 115.893ZM283.186 115.893C289.261 123.444 302.192 138.71 305.308 139.366M305.308 139.366C306.602 139.634 307.9 139.908 309.202 140.186M309.202 140.186L339.188 80.485L327.895 144.49M309.202 140.186C315.36 141.503 321.592 142.936 327.895 144.49M327.895 144.49C349.444 123.155 393.787 80.485 398.772 80.485C401.039 80.485 393.46 91.9998 382.458 115.893M382.458 115.893C369.265 144.544 351.151 188.096 339.188 212C353.338 211.741 398.811 212 425.643 181.261C436.965 168.291 447.104 130.679 382.458 115.893ZM382.458 115.893C307.542 108.759 216.516 90.2124 7 102.664L24.1352 163.363C30.7556 181.261 50.6168 195.375 78.6561 167.643C132.296 116.023 268.153 11.2256 382.458 5M249.229 80.485C240.661 80.3262 224.772 85.6291 225.084 104.998C224.824 111.224 228.589 124.064 245.724 127.177C252.344 128.379 271.653 124.406 272.984 105.776C273.763 94.8816 266.364 80.485 249.229 80.485Z" stroke="#0b2766" stroke-width="12"></path>
             </svg>
         </a>
-    </footer>
+    </footer>  --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
