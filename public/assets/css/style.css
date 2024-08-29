@@ -618,3 +618,38 @@ textarea:focus {
     border: 2px solid rgba(75, 110, 209, 1) !important;
     transition: 0.3s ease all;
 }
+
+.lbsenha {
+    width: 100%;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.view {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    display: flex;
+}
+
+.noview {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    display: none;
+}
