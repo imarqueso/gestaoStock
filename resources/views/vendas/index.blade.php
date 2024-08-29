@@ -311,7 +311,37 @@
     .nobreak {
         white-space: nowrap !important;
     }
+
+    .chosen-container {
+        margin-bottom: 10px;
+    }
+    .chosen-container-single .chosen-search input[type=text] {
+        height: 35px !important;
+        background: #e4e4e4 url({{ asset('assets/img/icones/icon-search.png') }}) no-repeat 95% center 
+                / 15px !important;
+        border-radius: 8px !important;
+    }
+
+    .chosen-container-single .chosen-single {
+        background: white !important;
+        padding: 8px 10px !important;
+        height: 38px !important;
+    }
+
+    .chosen-container-single .chosen-single div b {
+        background-position-y: 10px !important;
+    }
+
+    .chosen-container-active.chosen-with-drop .chosen-single div b {
+        background-position:  0px 11px !important;
+    }
+
+    .chosen-container .chosen-results li:hover, .chosen-container .chosen-results li.highlighted  {
+        background: rgba(26, 54, 133, 1) !important;
+    }
 </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 
 <section class="vendas-container">
     <div class="vendas-content">
@@ -328,7 +358,7 @@
                     <h3 class="titulo-modal">Cadastrar Venda</h3>
                     <form method="post" action="{{ route('cadastrarVenda') }}" enctype="multipart/form-data">
                         @csrf
-                        <select name="produto_id" required onchange="subDepartamento()" class="save_required">
+                        <select name="produto_id" required class="save_required produto-select" id="produto-select">
                             <option disabled selected value>Selecione o produto</option>
                             @foreach ($listaProd as $prod)
                             <option value="{{ $prod->id }}">{{ $prod->produto }}</option>
@@ -395,6 +425,14 @@
         </div>
     </div>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.produto-select').chosen();
+    });
+</script>
 
 <script>
     $(document).ready(function() {

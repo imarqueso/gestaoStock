@@ -42,7 +42,7 @@
         }
 
         .login-box {
-            width: 430px;
+            width: 385px;
             height: auto;
             padding: 25px 30px;
             margin: 0px;
@@ -65,10 +65,10 @@
         }
 
         .login-box .titulo {
-            font-size: 20px;
+            font-size: 16px;
             color: rgba(26, 54, 133, 1);
             font-weight: 400;
-            line-height: 24px;
+            line-height: 20px;
             text-align: center;
             margin: 20px 0px 30px 0px;
         }
@@ -135,7 +135,7 @@
             }
 
             .login-box .titulo {
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 22px;
                 margin: 25px 0px;
             }
@@ -147,7 +147,7 @@
                 padding: 25px 15px;
             }
             .login-box .titulo {
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 22px;
                 margin: 15px 0px 25px 0px;
             }
