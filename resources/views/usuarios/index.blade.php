@@ -16,7 +16,7 @@
 
     .usuarios-content {
         width: 100%;
-        max-width: 1170px;
+        max-width: 1220px;
         height: auto;
         padding: 60px 20px 80px 20px;
         display: flex;
@@ -28,13 +28,14 @@
     .usuarios-box {
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding: 35px 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
+        border-radius: 8px;
     }
 
     /* width */
@@ -88,7 +89,7 @@
 
     table {
         width: 100%;
-        min-width: 1090px !important;
+        min-width: 1135px !important;
         height: auto;
         background-color: transparent;
         border-collapse: collapse !important;
@@ -96,19 +97,19 @@
     }
 
     th {
-        border: 1px solid #b9b8b8;
-        border-bottom: 1px solid #b9b8b8 !important;
-        padding: 15px;
-        background-color: #d6d6d6;
+        border: 1px solid #6c88d7;
+        border-bottom: 1px solid #6c88d7 !important;
+        padding: 12px 10px !important;
+        background-color: rgb(94 120 195);
         font-size: 12px;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--light);
         line-height: 18px;
         text-align: left;
     }
 
     td {
-        border: 1px solid #b9b8b8;
+        border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
         font-size: 14px;

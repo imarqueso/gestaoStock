@@ -23,7 +23,7 @@ html::-webkit-scrollbar-thumb {
 :root {
     --primary: rgba(26, 54, 133, 1);
     --primary2: rgba(75, 110, 209, 1);
-    --secondary: #ece2da;
+    --secondary: #e2e2e8;
     --light: #ffff;
     --dark: #242424;
 }
@@ -60,7 +60,7 @@ body {
     justify-content: center;
     align-items: center;
     background: rgb(75, 110, 209);
-    background: linear-gradient(270deg, rgba(75, 110, 209, 1) 0%, rgba(26, 54, 133, 1) 100%);
+    background: radial-gradient(circle, rgba(75, 110, 209, 1) 0%, rgba(26, 54, 133, 1) 100%);
 }
 
 .header-content {
@@ -104,9 +104,8 @@ body {
 }
 
 .nav-content .nav li a {
-    text-transform: uppercase;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -175,7 +174,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--secondary);
-    box-shadow: 0px 4px 51px 0px rgba(0, 0, 0, 0.36);
+    box-shadow: 0px -10px 33px 0px rgb(0 0 0 / 31%);
 }
 
 .titulo-content {

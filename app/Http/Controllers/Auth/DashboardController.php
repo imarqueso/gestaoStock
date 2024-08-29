@@ -22,6 +22,7 @@ class DashboardController extends Controller
         )->join('produtos', 'produtos.id', '=', 'vendas.produto_id')->limit(5)->orderBy('vendas.id', 'desc')->get();
 
         $produtos = Produto::select(
+            'produtos.id',
             'produtos.produto',
             'produtos.preco',
             'produtos.quantidade',
