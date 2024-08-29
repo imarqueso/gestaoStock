@@ -357,24 +357,24 @@
                 @csrf
                 <label>
                     <span>Login:</span>
-                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login:" required>
+                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Nome:</span>
-                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome:" required>
+                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Sobrenome:</span>
-                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome:" required>
+                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>E-mail:</span>
-                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail:" required>
+                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Senha:</span>
                     <div class="lbsenha">
-                        <input type="password" id="password" name="password" required
+                        <input type="password" id="password" name="password"
                         placeholder="Senha" class="senhaview">
                         <svg viewBox="0 0 181 141" fill="none" xmlns="http://www.w3.org/2000/svg" class="view">
                             <path d="M56 7.30007C59 5.80007 65.3 3.60007 70 2.40007C76.4 0.60007 81.3 0.10007 90 0.10007C98 6.97523e-05 104 0.60007 109.5 1.90007C113.9 3.00007 120.2 5.00007 123.5 6.50007C126.8 8.00007 133.1 11.5001 137.5 14.4001C141.9 17.3001 148.6 22.5001 152.4 26.1001C156.2 29.6001 162 36.2001 165.4 40.6001C168.7 45.1001 173.6 52.8001 176.2 57.6001C179.3 63.4001 180.9 67.7001 180.9 70.0001C180.9 71.9001 179.6 76.2001 177.9 79.5001C176.2 82.8001 172.4 89.1001 169.5 93.5001C166.6 97.9001 161.1 104.8 157.4 108.9C153.6 113 146.9 119 142.5 122.3C138.1 125.5 130.9 129.9 126.5 132.1C122.1 134.2 114.9 136.9 110.5 138.1C104.3 139.9 99.8 140.3 90.5 140.3C81.1 140.3 76.8 139.9 70.5 138.1C66.1 136.9 58.9 134.2 54.5 132.1C50.1 130 42.9 125.6 38.5 122.3C34.1 119 27.4 113 23.7 108.9C19.9 104.8 14.4 97.9001 11.5 93.5001C8.5 89.1001 4.7 82.5001 3.1 78.7001C1.4 75.0001 0 71.0001 0 69.8001C0 68.5001 1.7 64.1001 3.8 60.0001C5.9 55.9001 9.8 49.1001 12.5 45.0001C15.3 40.9001 21.3 33.7001 26 28.9001C30.7 24.2001 38.1 17.9001 42.5 15.1001C46.9 12.2001 53 8.70007 56 7.30007Z" fill="#1A3685"/>
@@ -387,10 +387,37 @@
                         </svg>                        
                     </div>
                 </label>
-                <button type="submit">Salvar</button>
+                <button type="submit" class="btnEdit_{{$usuario->id}}">Salvar</button>
             </form>
         </div>
     </section>
+
+    <script>
+        // Função para verificar os campos de edição do produto específico
+        function checkEditarFields_{{$usuario->id}}() {
+            const requiredFields = document.querySelectorAll('.editar_required_{{$usuario->id}}');
+            const editButton = document.querySelector('.btnEdit_{{$usuario->id}}');
+
+            const allFilled = Array.from(requiredFields).every(field => {
+                return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+            });
+
+            // Controla o estado do botão "Salvar"
+            if (allFilled) {
+                editButton.classList.remove('disabled');
+            } else {
+                editButton.classList.add('disabled');
+            }
+        }
+
+        // Aplica o event listener a cada campo individualmente
+        document.querySelectorAll('.editar_required_{{$usuario->id}}').forEach(field => {
+            field.addEventListener('input', checkEditarFields_{{$usuario->id}});
+        });
+
+        // Inicializa o botão com a classe disabled
+        checkEditarFields_{{$usuario->id}}();
+    </script>
 @endforeach
 <script>
     var btnEditar = document.querySelectorAll("button.editar");

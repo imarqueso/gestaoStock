@@ -325,13 +325,13 @@
                     <h3 class="titulo-modal">Cadastrar Usuário</h3>
                     <form method="post" action="{{ route('cadastrarUsuario') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="nome" placeholder="Nome:" required>
-                        <input type="text" name="sobrenome" placeholder="Sobrenome:">
-                        <input type="text" name="login" placeholder="Login:" required>
-                        <input type="text" name="email" placeholder="E-mail:" required>
+                        <input type="text" name="nome" placeholder="Nome:" required class="save_required">
+                        <input type="text" name="sobrenome" placeholder="Sobrenome:" required class="save_required">
+                        <input type="text" name="login" placeholder="Login:" required class="save_required">
+                        <input type="text" name="email" placeholder="E-mail:" required class="save_required">
                         <label class="lbsenha">
                             <input type="password" id="password" name="password" required
-                            placeholder="Senha" class="senhaview">
+                            placeholder="Senha" class="senhaview save_required">
                             <svg viewBox="0 0 181 141" fill="none" xmlns="http://www.w3.org/2000/svg" class="view">
                                 <path d="M56 7.30007C59 5.80007 65.3 3.60007 70 2.40007C76.4 0.60007 81.3 0.10007 90 0.10007C98 6.97523e-05 104 0.60007 109.5 1.90007C113.9 3.00007 120.2 5.00007 123.5 6.50007C126.8 8.00007 133.1 11.5001 137.5 14.4001C141.9 17.3001 148.6 22.5001 152.4 26.1001C156.2 29.6001 162 36.2001 165.4 40.6001C168.7 45.1001 173.6 52.8001 176.2 57.6001C179.3 63.4001 180.9 67.7001 180.9 70.0001C180.9 71.9001 179.6 76.2001 177.9 79.5001C176.2 82.8001 172.4 89.1001 169.5 93.5001C166.6 97.9001 161.1 104.8 157.4 108.9C153.6 113 146.9 119 142.5 122.3C138.1 125.5 130.9 129.9 126.5 132.1C122.1 134.2 114.9 136.9 110.5 138.1C104.3 139.9 99.8 140.3 90.5 140.3C81.1 140.3 76.8 139.9 70.5 138.1C66.1 136.9 58.9 134.2 54.5 132.1C50.1 130 42.9 125.6 38.5 122.3C34.1 119 27.4 113 23.7 108.9C19.9 104.8 14.4 97.9001 11.5 93.5001C8.5 89.1001 4.7 82.5001 3.1 78.7001C1.4 75.0001 0 71.0001 0 69.8001C0 68.5001 1.7 64.1001 3.8 60.0001C5.9 55.9001 9.8 49.1001 12.5 45.0001C15.3 40.9001 21.3 33.7001 26 28.9001C30.7 24.2001 38.1 17.9001 42.5 15.1001C46.9 12.2001 53 8.70007 56 7.30007Z" fill="#1A3685"/>
                                 <path d="M67 31.1001C69.5 29.7001 73.7 27.7001 76.5 26.7001C80.4 25.4001 83.9 25.0001 92 25.3001C101.4 25.5001 103.2 25.9001 109.2 28.8001C113 30.5001 118.5 34.4001 121.6 37.2001C124.7 40.1001 128.4 44.5001 129.8 47.0001C131.2 49.5001 133.2 54.1001 134.2 57.2001C135.2 60.4001 136 66.0001 136 69.7001C136 73.5001 135.3 79.0001 134.4 82.0001C133.5 85.0001 131.6 89.7001 130.2 92.5001C128.8 95.2001 125.3 99.9001 122.3 102.7C119.3 105.7 114.3 109.3 110.8 110.9C107.3 112.5 101.6 114.4 98 115C94.3 115.7 89.1 115.9 86 115.5C83 115.1 78 113.9 75 112.7C72 111.6 68.4 110 67 109.1C65.6 108.3 62.8 106.2 60.7 104.5C58.5 102.9 55 98.8001 52.8 95.5001C50.7 92.2001 48 86.6001 46.9 83.0001C45.8 79.4001 45 73.8001 45 70.5001C45 67.2001 45.7 61.8001 46.5 58.5001C47.4 55.2001 49.3 50.5001 50.7 48.0001C52.2 45.5001 55.4 41.3001 57.9 38.6001C60.4 36.0001 64.5 32.6001 67 31.1001Z" fill="white"/>
@@ -342,18 +342,18 @@
                                 <path d="M79.4998 40.8C81.6998 39.6 85.2998 38.1 87.4998 37.3C90.0998 36.5 95.1998 36.1 102 36.3C111.8 36.5 113 36.8 120 40.2C124.7 42.5 129.5 45.8 132.8 49.2C135.9 52.2 139.4 57.1 141 60.5C142.5 63.8 144.3 69 145 72C145.8 75.2 146 80.4 145.7 84.5C145.4 88.3 144.7 93.1 144.1 95C143.5 96.9 142.4 99.4 141.6 100.5C140.2 102.5 140.2 102.5 136.4 99.8C134.2 98.3 131.7 96.3 130.7 95.3C129.2 93.7 129.1 92.8 130.1 87C131 81.7 130.9 79.4 129.6 74.3C128.7 70.8 126.7 66.1 125.2 63.8C123.6 61.4 120.1 58.1 117.4 56.3C114.7 54.6 110.5 52.6 108 51.9C105.5 51.3 102.6 51 101.5 51.4C99.6998 52 99.5998 52.6 100.2 56.8C100.7 59.4 100.5 63.2 99.9998 65.3C99.1998 68.2 98.5998 68.9 97.1998 68.4C96.2998 68.1 89.6998 63.2 69.7998 47.5L72.6998 45.2C74.1998 43.9 77.2998 41.9 79.4998 40.8Z" fill="white"/>
                             </svg>                        
                         </label>
-                        <select name="ativo" required>
+                        <select name="ativo" required class="save_required">
                             <option disabled selected value>Usuário ativo?</option>
                             <option value="Sim">Sim</option>
                             <option value="Não">Não</option>
                         </select>
-                        <select name="acesso" required>
+                        <select name="acesso" required class="save_required">
                             <option disabled selected value>Selecione o acesso</option>
                             <option value="Admin">Admin</option>
                             <option value="Master">Master</option>
                             <option value="Colaborador">Colaborador</option>
                         </select>
-                        <button class="salvar" type="submit">Salvar</button>
+                        <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
             </section>
@@ -417,24 +417,24 @@
                 @csrf
                 <label>
                     <span>Login:</span>
-                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login:" required>
+                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Nome:</span>
-                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome:" required>
+                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Sobrenome:</span>
-                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome:">
+                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>E-mail:</span>
-                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail:" required>
+                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Senha:</span>
                     <div class="lbsenha">
-                        <input type="password" id="password" name="password" required
+                        <input type="password" id="password" name="password"
                         placeholder="Senha" class="senhaview">
                         <svg viewBox="0 0 181 141" fill="none" xmlns="http://www.w3.org/2000/svg" class="view">
                             <path d="M56 7.30007C59 5.80007 65.3 3.60007 70 2.40007C76.4 0.60007 81.3 0.10007 90 0.10007C98 6.97523e-05 104 0.60007 109.5 1.90007C113.9 3.00007 120.2 5.00007 123.5 6.50007C126.8 8.00007 133.1 11.5001 137.5 14.4001C141.9 17.3001 148.6 22.5001 152.4 26.1001C156.2 29.6001 162 36.2001 165.4 40.6001C168.7 45.1001 173.6 52.8001 176.2 57.6001C179.3 63.4001 180.9 67.7001 180.9 70.0001C180.9 71.9001 179.6 76.2001 177.9 79.5001C176.2 82.8001 172.4 89.1001 169.5 93.5001C166.6 97.9001 161.1 104.8 157.4 108.9C153.6 113 146.9 119 142.5 122.3C138.1 125.5 130.9 129.9 126.5 132.1C122.1 134.2 114.9 136.9 110.5 138.1C104.3 139.9 99.8 140.3 90.5 140.3C81.1 140.3 76.8 139.9 70.5 138.1C66.1 136.9 58.9 134.2 54.5 132.1C50.1 130 42.9 125.6 38.5 122.3C34.1 119 27.4 113 23.7 108.9C19.9 104.8 14.4 97.9001 11.5 93.5001C8.5 89.1001 4.7 82.5001 3.1 78.7001C1.4 75.0001 0 71.0001 0 69.8001C0 68.5001 1.7 64.1001 3.8 60.0001C5.9 55.9001 9.8 49.1001 12.5 45.0001C15.3 40.9001 21.3 33.7001 26 28.9001C30.7 24.2001 38.1 17.9001 42.5 15.1001C46.9 12.2001 53 8.70007 56 7.30007Z" fill="#1A3685"/>
@@ -449,7 +449,7 @@
                 </label>
                 <label>
                     <span>Ativo:</span>
-                    <select name="ativo">
+                    <select name="ativo" required class="editar_required_{{$usuario->id}}">
                         <option selected value="{{$usuario->ativo}}">{{$usuario->ativo}}</option>
                         <option value="Sim">Sim</option>
                         <option value="Não">Não</option>
@@ -457,18 +457,45 @@
                 </label>
                 <label>
                     <span>Acesso:</span>
-                    <select name="acesso">
+                    <select name="acesso" required class="editar_required_{{$usuario->id}}">
                         <option selected value="{{$usuario->acesso}}">{{$usuario->acesso}}</option>
                         <option value="Admin">Admin</option>
                         <option value="Master">Master</option>
                         <option value="Colaborador">Colaborador</option>
                     </select>
                     </label>
-                <button class="salvar" type="submit">Salvar</button>
+                <button class="salvar btnEdit_{{$usuario->id}}" type="submit">Salvar</button>
             </form>
         </div>
     </section>
-    @endif
+
+    <script>
+        // Função para verificar os campos de edição do produto específico
+        function checkEditarFields_{{$usuario->id}}() {
+            const requiredFields = document.querySelectorAll('.editar_required_{{$usuario->id}}');
+            const editButton = document.querySelector('.btnEdit_{{$usuario->id}}');
+
+            const allFilled = Array.from(requiredFields).every(field => {
+                return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+            });
+
+            // Controla o estado do botão "Salvar"
+            if (allFilled) {
+                editButton.classList.remove('disabled');
+            } else {
+                editButton.classList.add('disabled');
+            }
+        }
+
+        // Aplica o event listener a cada campo individualmente
+        document.querySelectorAll('.editar_required_{{$usuario->id}}').forEach(field => {
+            field.addEventListener('input', checkEditarFields_{{$usuario->id}});
+        });
+
+        // Inicializa o botão com a classe disabled
+        checkEditarFields_{{$usuario->id}}();
+    </script>
+    @endif    
 @endforeach
 <script>
     $(document).ready(function() {
@@ -624,6 +651,37 @@
                 noViewButton.style.display = 'none';
                 viewButton.style.display = 'flex';
             });
+        });
+    </script>
+
+    <script>
+        const saveButtonAdd = document.querySelector('.btnSave');
+        saveButtonAdd.classList.add('disabled');
+    
+        // Função para verificar todos os campos e controlar o estado do botão
+        function checkFields() {
+            const requiredFields = document.querySelectorAll('.save_required');
+            const saveButton = document.querySelector('.btnSave');
+    
+            const allFilled = Array.from(requiredFields).every(field => {
+                if (field.tagName === 'SELECT') {
+                    return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+                }
+                return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+            });
+    
+            // Controla o estado do botão salvar
+            if (allFilled) {
+                saveButton.classList.remove('disabled');
+            } else {
+                saveButton.classList.add('disabled');
+            }
+        }
+    
+        // Aplica o event listener a cada campo individualmente
+        document.querySelectorAll('.save_required').forEach(field => {
+            // Adiciona o event listener 'input' a cada campo
+            field.addEventListener('input', checkFields);
         });
     </script>
 
