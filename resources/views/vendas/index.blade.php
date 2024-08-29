@@ -423,11 +423,11 @@
                         <tr>
                             <td>{{$venda->id}}</td>
                             <td>{{$venda->produto}}</td>
-                            <td class="dinheiro nobreak">R$ {{$venda->preco}}</td>
+                            <td class="nobreak"><span class="dinheiro">R$ {{$venda->preco}}</span></td>
                             <td>{{$venda->quantidade}}</td>
                             <td>{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
                             <td>{{$venda->vendidos}}</td>
-                            <td class="dinheiro nobreak">R$ {{$venda->total}}</td>
+                            <td class="nobreak">R$ <span class="dinheiro">{{$venda->total}}</span></td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td>
                                 <div class="td-excluir">

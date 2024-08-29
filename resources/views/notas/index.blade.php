@@ -473,15 +473,15 @@
                                         ?>
                                         <span class="item">
                                             ({{ $quantidade }})&nbsp;{{ $item->produtos }}&nbsp;|&nbsp;
-                                            <span class="unidade">R$ {{ number_format($preco, 2, ',', '.') }}/un</span>&nbsp;|&nbsp;
-                                            <span class="total">Total: R$ {{ number_format($total, 2, ',', '.') }}</span>
+                                            <span>R$ <span class="unidade">{{ number_format($preco, 2, ',', '.') }}</span>/un</span>&nbsp;|&nbsp;
+                                            <span>Total: R$ <span class="total">{{ number_format($total, 2, ',', '.') }}</span></span>
                                         </span>
                                     @endforeach
                                 </div>
                             </td>
                             <td>{{\Carbon\Carbon::parse($nota->data_venda)->format('d/m/Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($nota->created_at)->format('d/m/Y')}}</td>
-                            <td class="dinheiro nobreak">R$ {{$nota->total}}</td>
+                            <td class="nobreak">R$ <span class="dinheiro">{{$nota->total}}</span></td>
                             <td><a class="visualizar" href="/notas/{{$nota->id}}" target="_blank"><img src="{{ asset('assets/img/icones/notas.svg') }}"></a></td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td>

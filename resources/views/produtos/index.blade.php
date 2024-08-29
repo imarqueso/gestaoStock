@@ -356,7 +356,7 @@
                     @foreach ($produtos as $produto)
                         <tr>
                             <td>{{$produto->produto}}</td>
-                            <td class="dinheiro nobreak">R$ {{$produto->preco}}</td>
+                            <td class="nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
                             <td>{{$produto->quantidade}}</td>
                             <td>{{\Carbon\Carbon::parse($produto->data_cadastro)->format('d/m/Y')}}</td>
                             <td>{{$produto->vendidos}}</td>

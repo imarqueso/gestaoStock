@@ -50,6 +50,7 @@ class VendasController extends Controller
 
         $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
         $totalProdutoVendido = $preco * $request->vendidos;
+        $totalProdutoVendido = number_format($preco * $request->vendidos, 2, ',', '.');
 
         $produto->update([
             'quantidade' => $subtracaoProdutoVendido,

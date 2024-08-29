@@ -154,7 +154,7 @@
                 @foreach ($produtos as $produto)
                     <tr>
                         <td class="produtos-td-1">{{$produto->produto}}</td>
-                        <td class="produtos-td-2 dinheiro nobreak">R$ {{$produto->preco}}</td>
+                        <td class="produtos-td-2 nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
                         <td class="produtos-td-3">{{$produto->quantidade}}</td>
                         <td class="produtos-td-4">{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
                     </tr>
@@ -178,10 +178,10 @@
                     <tr>
                         <td class="vendas-td-1">{{$venda->id}}</td>
                         <td class="vendas-td-2">{{$venda->produto}}</td>
-                        <td class="vendas-td-3 dinheiro">R$ {{$venda->preco}}</td>
+                        <td class="vendas-td-3">R$ <span class="dinheiro">{{$venda->preco}}</span></td>
                         <td class="vendas-td-4">{{$venda->vendidos}}</td>
                         <td class="vendas-td-5">{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
-                        <td class="vendas-td-6 dinheiro nobreak">R$ {{$venda->total}}</td>
+                        <td class="vendas-td-6 nobreak">R$ <span class="dinheiro">{{$venda->total}}</span></td>
                     </tr>
                 @endforeach
                 @endif
