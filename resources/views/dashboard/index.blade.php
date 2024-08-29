@@ -191,11 +191,22 @@
 </section>
 
 <script>
-    var dinheiro = document.querySelectorAll('td.dinheiro');
+    $(document).ready(function(){
+        // Aplica a máscara de moeda ao campo de entrada
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
 
-    for (var z = 0; z < dinheiro.length; z++) {
-        dinheiro[z].innerHTML = dinheiro[z].innerHTML.replace('.', ",");
-    }
+        $('.dinheiro').each(function() {
+            let valorDinheiro = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorDinheiro.startsWith('.')) {
+                valorDinheiro = valorDinheiro.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorDinheiro);
+        });       
+    });
 </script>
 
 @endsection

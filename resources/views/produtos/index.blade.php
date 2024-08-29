@@ -612,6 +612,31 @@
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
         $('.preco').mask('#.##0,00', {reverse: true});
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
+
+        $('.preco').each(function() {
+            let valorPreco = $(this).val();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorPreco.startsWith('.')) {
+                valorPreco = valorPreco.replace(/^\./, '');
+            }
+        
+            // Atualiza o campo com o valor sem o ponto no início
+            $(this).val(valorPreco);
+        });
+
+        $('.dinheiro').each(function() {
+            let valorDinheiro = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorDinheiro.startsWith('.')) {
+                valorDinheiro = valorDinheiro.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorDinheiro);
+        });        
     });
 </script>
 

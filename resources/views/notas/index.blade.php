@@ -464,10 +464,19 @@
                             <td>{{$nota->cliente}}</td>
                             <td class="itens-nota">
                                 <div class="itens-nota-box">
-                                    <?php $itens[$nota->id] = json_decode($nota->itens);?>
-                                    @for ($i = 0; $i < count($itens[$nota->id]); $i++)
-                                        <span class="item">({{ $itens[$nota->id][$i]->quantidade }})&nbsp;{{ $itens[$nota->id][$i]->produtos }}&nbsp;|&nbsp;<span class="unidade">R$ {{ $itens[$nota->id][$i]->preco }}/un</span>&nbsp;|&nbsp;<span class="total">Total: R$ {{ $itens[$nota->id][$i]->total_item }}</span></span>
-                                    @endfor
+                                    <?php $itens = json_decode($nota->itens); ?>
+                                    @foreach ($itens as $item)
+                                        <?php
+                                            $quantidade = (float) $item->quantidade;
+                                            $preco = (float) $item->preco;
+                                            $total = $quantidade * $preco;
+                                        ?>
+                                        <span class="item">
+                                            ({{ $quantidade }})&nbsp;{{ $item->produtos }}&nbsp;|&nbsp;
+                                            <span class="unidade">R$ {{ number_format($preco, 2, ',', '.') }}/un</span>&nbsp;|&nbsp;
+                                            <span class="total">Total: R$ {{ number_format($total, 2, ',', '.') }}</span>
+                                        </span>
+                                    @endforeach
                                 </div>
                             </td>
                             <td>{{\Carbon\Carbon::parse($nota->data_venda)->format('d/m/Y')}}</td>
@@ -565,27 +574,61 @@
 @endif
 
 <script>
-    var dinheiro = document.querySelectorAll('td.dinheiro');
-    var unidade = document.querySelectorAll('span.unidade');
-    var total= document.querySelectorAll('span.total');
-
-    for (var z = 0; z < dinheiro.length; z++) {
-        dinheiro[z].innerHTML = dinheiro[z].innerHTML.replace('.', ",");
-    }
-
-    for (var w = 0; w < unidade.length; w++) {
-        unidade[w].innerHTML = unidade[w].innerHTML.replace('.', ",");
-    }
-
-    for (var w = 0; w < total.length; w++) {
-        total[w].innerHTML = total[w].innerHTML.replace('.', ",");
-    }
-</script>
-
-<script>
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
+        $('.unidade').mask('#.##0,00', {reverse: true});
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
+        $('.total').mask('#.##0,00', {reverse: true});
         $('.preco').mask('#.##0,00', {reverse: true});
+
+        $('.dinheiro').each(function() {
+            let valorDinheiro = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorDinheiro.startsWith('.')) {
+                valorDinheiro = valorDinheiro.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorDinheiro);
+        });   
+
+
+        $('.unidade').each(function() {
+            let valorUnidade = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorUnidade.startsWith('.')) {
+                valorUnidade = valorUnidade.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorUnidade);
+        });   
+
+        $('.total').each(function() {
+            let valorTotal = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorTotal.startsWith('.')) {
+                valorTotal = valorTotal.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorTotal);
+        });   
+
+        $('.preco').each(function() {
+            let valorPreco = $(this).val();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorPreco.startsWith('.')) {
+                valorPreco = valorPreco.replace(/^\./, '');
+            }
+        
+            // Atualiza o campo com o valor sem o ponto no início
+            $(this).val(valorPreco);
+        });
     });
 </script>
 

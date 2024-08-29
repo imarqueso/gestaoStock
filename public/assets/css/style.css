@@ -604,3 +604,17 @@ button[disabled] {
     opacity: 0.5;
     cursor: no-drop !important;
 }
+
+input,
+select,
+textarea {
+    transition: 0.3s ease all;
+    border: 2px solid transparent !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border: 2px solid rgba(75, 110, 209, 1) !important;
+    transition: 0.3s ease all;
+}

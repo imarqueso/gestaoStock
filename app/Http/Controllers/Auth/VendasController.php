@@ -27,7 +27,8 @@ class VendasController extends Controller
         return view('vendas.index', compact('listaProd', 'vendas'));
     }
 
-    private function formatarNumero($numero) {
+    private function formatarNumero($numero)
+    {
         $numero = str_replace('.', '', $numero); // Remove separador de milhar
         $numero = str_replace(',', '.', $numero); // Troca vírgula por ponto
         return floatval($numero); // Converte a string para float
@@ -39,7 +40,14 @@ class VendasController extends Controller
 
         $preco = $this->formatarNumero($produto->preco);
 
-        $somaProdutoVendido = $produto->vendidos + $request->vendidos;
+        if ($request->vendidos <= $produto->quantidade) {
+            $somaProdutoVendido = $produto->vendidos + $request->vendidos;
+        } else {
+            return redirect('/vendas')
+                ->with('msgf', "A quantidade de produtos vendidos é maior que a quantidade no estoque: {$produto->quantidade}")
+                ->withInput();
+        }
+
         $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
         $totalProdutoVendido = $preco * $request->vendidos;
 
@@ -66,7 +74,7 @@ class VendasController extends Controller
         $produto = Produto::find($request->produto_id);
 
 
-        $vendidos = $produto->vendidos + $request->vendidos;
+        $vendidos = $produto->vendidos - $venda->vendidos;
         $quantidade = $produto->quantidade + $request->vendidos;
 
         $produto->update([
