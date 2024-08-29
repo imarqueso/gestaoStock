@@ -124,7 +124,7 @@
         }
 
         .login-box form button:hover {
-            background-color: #1d1da8;
+            background-color: rgba(75, 110, 209, 1);
             transition: 0.5s ease all;
         }
 
