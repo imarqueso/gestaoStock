@@ -311,37 +311,66 @@
     .nobreak {
         white-space: nowrap !important;
     }
-
-    .chosen-container {
-        margin-bottom: 10px;
-    }
-    .chosen-container-single .chosen-search input[type=text] {
-        height: 35px !important;
-        background: #e4e4e4 url({{ asset('assets/img/icones/icon-search.png') }}) no-repeat 95% center 
-                / 15px !important;
-        border-radius: 8px !important;
-    }
-
-    .chosen-container-single .chosen-single {
-        background: white !important;
-        padding: 8px 10px !important;
-        height: 38px !important;
-    }
-
-    .chosen-container-single .chosen-single div b {
-        background-position-y: 10px !important;
-    }
-
-    .chosen-container-active.chosen-with-drop .chosen-single div b {
-        background-position:  0px 11px !important;
-    }
-
-    .chosen-container .chosen-results li:hover, .chosen-container .chosen-results li.highlighted  {
-        background: rgba(26, 54, 133, 1) !important;
-    }
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
+<style>
+    .selectize-control {
+        width: 100% !important;
+        margin-bottom: 0px !important;
+        padding: 8px 0px !important;
+    }
+
+    .selectize-input {
+        border-radius: 8px !important;
+        border: 2px solid #cac7c7ba !important;
+        transition: 0.3s ease all !important;
+    }
+
+    .selectize-input .item {
+        width: 100% !important;
+        height: 25px !important;
+        padding: 0px 8px !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+    }
+
+    .selectize-input:hover {
+        border: 2px solid rgba(75, 110, 209, 1) !important;
+        transition: 0.3s ease all !important;
+    }
+
+    .selectize-input>input {
+        width: 100% !important;
+        height: 25px !important;
+        padding: 0px 8px !important;
+    }
+
+    .selectize-dropdown .selected, .selectize-dropdown .active {
+        background-color: rgba(75, 110, 209, 1) !important;
+        color: white !important;
+    }
+
+    .selectize-dropdown {
+        top: 87% !important;
+    }
+
+    .selectize-control.plugin-clear_button .clear {
+        height: 56px !important;
+    }
+
+    .selectize-control.single .selectize-input:after {
+        top: 21px !important;
+    }
+</style>
 
 <section class="vendas-container">
     <div class="vendas-content">
@@ -358,8 +387,8 @@
                     <h3 class="titulo-modal">Cadastrar Venda</h3>
                     <form method="post" action="{{ route('cadastrarVenda') }}" enctype="multipart/form-data">
                         @csrf
-                        <select name="produto_id" required class="save_required produto-select" id="produto-select">
-                            <option disabled selected value>Selecione o produto</option>
+                        <select name="produto_id" required class="produto-select" id="produto-select">
+                            <option value selected disabled>Selecione o produto</option>
                             @foreach ($listaProd as $prod)
                             <option value="{{ $prod->id }}">{{ $prod->produto }}</option>
                             @endforeach
@@ -426,12 +455,22 @@
     </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 
 <script>
-    $(document).ready(function() {
-        $('.produto-select').chosen();
-    });
+    $(function () {
+        $(".produto-select").selectize({
+          plugins: ["restore_on_backspace", "clear_button"],
+          delimiter: " - ",
+          persist: false,
+          maxItems: 1,
+        });
+      });
 </script>
 
 <script>
@@ -532,6 +571,23 @@
 <script>
     const saveButtonAdd = document.querySelector('.btnSave');
     saveButtonAdd.classList.add('disabled');
+    const productSelect = document.getElementById('produto-select');
+    
+     // Função para verificar o estado do select
+     function checkProductSelect() {
+        const selectedValue = productSelect.value;
+        
+        // Verifica se o valor do select é vazio e altera o texto do botão
+        if (selectedValue === '') {
+            event.preventDefault();  // Evita a ação padrão caso o select esteja vazio
+            saveButtonAdd.textContent = 'Selecione o produto!';  // Altera o texto do botão
+        } else {
+            saveButtonAdd.textContent = 'Enviando...';  // Altera o texto do botão quando o produto é selecionado
+        }
+    }
+
+    // Verifica o select sempre que houver mudança no seu valor
+    saveButtonAdd.addEventListener('click', checkProductSelect);
 
     // Função para verificar todos os campos e controlar o estado do botão
     function checkFields() {
