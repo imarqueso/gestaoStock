@@ -43,6 +43,7 @@ class UsuariosController extends Controller
 
         // Mensagens personalizadas de erro
         $messages = [
+            'email.email' => 'Insira um e-mail válido!',
             'email.unique' => 'Este e-mail já está em uso!',
             'login.unique' => 'Este login já está em uso!',
             'password.min' => 'A senha precisa ter no mínimo 6 caracteres!',
@@ -100,6 +101,7 @@ class UsuariosController extends Controller
         }
 
         $messages = [
+            'email.email' => 'Insira um e-mail válido!',
             'email.unique' => 'Este e-mail já está em uso!',
             'login.unique' => 'Este login já está em uso!',
             'password.min' => 'A senha precisa ter no mínimo 6 caracteres!',

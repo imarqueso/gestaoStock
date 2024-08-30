@@ -428,18 +428,18 @@
                     <h3 class="titulo-modal">Cadastrar Nota</h3>
                     <form method="post" action="{{ route('cadastrarNota') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="cpf" placeholder="CPF ou CNPJ:" id="cpf-cnpj">
-                        <input type="text" name="cliente" placeholder="Cliente:" class="save_required">
-                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens:" class="save_required">
+                        <input type="text" name="cpf" placeholder="CPF ou CNPJ" id="cpf-cnpj">
+                        <input type="text" name="cliente" placeholder="Cliente" class="save_required">
+                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens" class="save_required">
                         <div class="box-form" id="box-form">
 
                         </div>
                         <label>
                             <span>Data da venda:</span>
-                            <input type="date" name="data_venda" placeholder="Data da Venda:" class="save_required">
+                            <input type="date" name="data_venda" placeholder="Data da Venda" class="save_required">
                         </label>
-                        <textarea placeholder="Observações:" name="observacoes"></textarea>
-                        <input type="text" class="preco" name="total" placeholder="Total da Nota:" class="save_required">
+                        <textarea placeholder="Observações" name="observacoes"></textarea>
+                        <input type="text" class="preco" name="total" placeholder="Total da Nota" class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -692,7 +692,7 @@
             x.setAttribute("value", "");
             x.setAttribute("type", "text");
             x.setAttribute("name", "produto[]");
-            x.setAttribute("placeholder", "Nome do produto " + (i + 1) + ":");
+            x.setAttribute("placeholder", "Nome do produto " + (i + 1));
             x.setAttribute("required", "");
             x.setAttribute("class", "save_required");
 
@@ -700,7 +700,7 @@
             y.setAttribute("value", "");
             y.setAttribute("type", "number");
             y.setAttribute("name", "quantidade[]");
-            y.setAttribute("placeholder", "Quantidade do produto " + (i + 1) + ":");
+            y.setAttribute("placeholder", "Quantidade do produto " + (i + 1));
             y.setAttribute("required", "");
             y.setAttribute("class", "save_required");
 
@@ -708,7 +708,7 @@
             z.setAttribute("value", "");
             z.setAttribute("type", "text");
             z.setAttribute("name", "preco[]");
-            z.setAttribute("placeholder", "Preço do produto " + (i + 1) + ":");
+            z.setAttribute("placeholder", "Preço do produto " + (i + 1));
             z.setAttribute("required", "");
             z.setAttribute("class", "save_required preco");
 

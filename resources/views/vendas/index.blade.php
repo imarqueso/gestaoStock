@@ -402,7 +402,7 @@
                             <span>Data da Venda:</span>
                             <input type="date" required name="data_venda" placeholder="Data da Venda:" class="save_required">
                         </label>
-                        <input type="number" name="vendidos" value="" placeholder="Vendidos:" required class="save_required">
+                        <input type="number" name="vendidos" value="" placeholder="Vendidos" required class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>

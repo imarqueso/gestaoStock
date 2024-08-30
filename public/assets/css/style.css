@@ -652,3 +652,26 @@ textarea:focus {
     transform: translateY(-50%);
     display: none;
 }
+
+.alert-danger,
+.alert-success {
+    width: auto !important;
+}
+
+td button.vender,
+td button.editar,
+td .excluir,
+td .visualizar {
+    background: transparent !important;
+}
+
+td button img,
+td .visualizar img {
+    height: auto !important;
+    width: 18px !important;
+}
+
+td .excluir img {
+    height: auto !important;
+    width: 15px !important;
+}

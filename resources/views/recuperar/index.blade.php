@@ -255,6 +255,11 @@
             text-decoration: underline rgba(75, 110, 209, 1);
             transition: 0.3s ease all;
         }
+
+        .alert-danger,
+        .alert-success {
+            width: auto !important;
+        }
     </style>
 
     <section class="login-overlay">
