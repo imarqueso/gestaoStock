@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\NotasController;
 use App\Http\Controllers\Auth\PerfilController;
 use App\Http\Controllers\Auth\ProdutosController;
+use App\Http\Controllers\Auth\RecuperarController;
 use App\Http\Controllers\Auth\UsuariosController;
 use App\Http\Controllers\Auth\VendasController;
 use App\Http\Middleware\Authenticate;
@@ -57,6 +58,14 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/login', [LoginController::class, 'loginView'])->name('loginView');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::get('/recuperar-senha', [RecuperarController::class, 'showResetRequestForm'])->name('password.request');
+Route::post('/recuperar-senha', [RecuperarController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/alterar-senha/{token}', [RecuperarController::class, 'showResetForm'])->name('password.reset');
+Route::post('/alterar-senha', [RecuperarController::class, 'resetPassword'])->name('password.update');
+
 
 
 // Route::get('/login', 'Auth\LoginController@loginView')->name('loginView');
