@@ -312,6 +312,10 @@
     .nobreak {
         white-space: nowrap !important;
     }
+
+    button[disabled] {
+        background-color: #464444 !important;
+    }
 </style>
 
 <section class="perfil-container">
@@ -406,8 +410,10 @@
             // Controla o estado do botão "Salvar"
             if (allFilled) {
                 editButton.classList.remove('disabled');
+                editButton.removeAttribute('disabled');
             } else {
                 editButton.classList.add('disabled');
+                editButton.setAttribute('disabled', 'disabled');
             }
         }
 

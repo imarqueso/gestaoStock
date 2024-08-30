@@ -286,7 +286,7 @@
             var formulario = botoes[index].closest('form');
 
                 botoes[index].removeAttribute('disabled');
-                botoes[index].innerText = 'Recuperar';
+                botoes[index].innerText = 'Recuperar Senha';
 
             formulario.addEventListener('submit', function(event) {
                 botoes[index].setAttribute('disabled', 'disabled');
@@ -327,9 +327,12 @@
     </script>
 
     <script>
-        const saveButtonAdd = document.querySelector('.btnSave');
-        saveButtonAdd.classList.add('disabled');
-    
+        document.addEventListener('DOMContentLoaded', function() {
+            const saveButtonAdd = document.querySelector('.btnSave');
+            saveButtonAdd.classList.add('disabled');
+            saveButtonAdd.setAttribute('disabled', 'disabled');
+        });
+
         // Função para verificar todos os campos e controlar o estado do botão
         function checkFields() {
             const requiredFields = document.querySelectorAll('.save_required');
@@ -345,8 +348,10 @@
             // Controla o estado do botão salvar
             if (allFilled) {
                 saveButton.classList.remove('disabled');
+                saveButton.removeAttribute('disabled');
             } else {
                 saveButton.classList.add('disabled');
+                saveButton.setAttribute('disabled', 'disabled');
             }
         }
     

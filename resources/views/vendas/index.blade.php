@@ -312,6 +312,10 @@
     .nobreak {
         white-space: nowrap !important;
     }
+
+    button[disabled] {
+        background-color: #464444 !important;
+    }
 </style>
 
 <link
@@ -570,8 +574,11 @@
 </script>
 
 <script>
-    const saveButtonAdd = document.querySelector('.btnSave');
-    saveButtonAdd.classList.add('disabled');
+    document.addEventListener('DOMContentLoaded', function() {
+        const saveButtonAdd = document.querySelector('.btnSave');
+        saveButtonAdd.classList.add('disabled');
+        saveButtonAdd.setAttribute('disabled', 'disabled');
+    });
     const productSelect = document.getElementById('produto-select');
     
      // Função para verificar o estado do select
@@ -605,8 +612,10 @@
         // Controla o estado do botão salvar
         if (allFilled) {
             saveButton.classList.remove('disabled');
+            saveButton.removeAttribute('disabled');
         } else {
             saveButton.classList.add('disabled');
+            saveButton.setAttribute('disabled', 'disabled');
         }
     }
 

@@ -407,6 +407,10 @@
         color: #46e446;
         font-weight: 600;
     }
+
+    button[disabled] {
+        background-color: #464444 !important;
+    }
 </style>
 
 <section class="notas-container">
@@ -636,6 +640,7 @@
 <script>
     const saveButtonAdd = document.querySelector('.btnSave');
     saveButtonAdd.classList.add('disabled');
+    saveButtonAdd.setAttribute('disabled', 'disabled');
 
     // Função para verificar todos os campos e controlar o estado do botão
     function checkFields() {
@@ -652,8 +657,10 @@
         // Controla o estado do botão salvar
         if (allFilled) {
             saveButton.classList.remove('disabled');
+            saveButton.removeAttribute('disabled');
         } else {
             saveButton.classList.add('disabled');
+            saveButton.setAttribute('disabled', 'disabled');
         }
     }
 
