@@ -20,7 +20,7 @@
             min-height: 100vh;
             padding: 0px;
             background: rgb(75,110,209);
-            background: radial-gradient(circle, rgba(75,110,209,1) 0%, rgba(26,54,133,1) 100%);
+            background: radial-gradient(circle, rgba(107,138,224,1) 0%, rgba(26,50,116,1) 100%);
             margin: 0px;
             display: flex;
             justify-content: center;

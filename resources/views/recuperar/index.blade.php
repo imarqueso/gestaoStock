@@ -20,7 +20,7 @@
             min-height: 100vh;
             padding: 0px;
             background: rgb(75,110,209);
-            background: radial-gradient(circle, rgba(75,110,209,1) 0%, rgba(26,54,133,1) 100%);
+            background: radial-gradient(circle, rgba(107,138,224,1) 0%, rgba(26,50,116,1) 100%);
             margin: 0px;
             display: flex;
             justify-content: center;
@@ -56,6 +56,34 @@
             -webkit-box-shadow: 10px 10px 53px -25px rgba(36,36,36,0.45);
             -moz-box-shadow: 10px 10px 53px -25px rgba(36,36,36,0.45);
             box-shadow: 10px 10px 53px -25px rgba(36,36,36,0.45);
+            position: relative
+        }
+
+        .voltar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-decoration: none;
+            background-color: #ffffffcf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 0px;
+            bottom: 105%;
+            cursor: pointer;
+            transition: 0.3s ease all;
+        }
+
+        .voltar svg {
+            width: 18px;
+            height: auto;
+            transform: rotate(180deg);
+        }
+
+        .voltar:hover {
+            transition: 0.3s ease all;
+            background-color: #ffffff;
         }
 
         .login-box .logo {
@@ -231,8 +259,13 @@
 
     <section class="login-overlay">
         <div class="login-box">
+            <a href="{{ route('loginView') }}" class="voltar">
+                <svg viewBox="0 0 126 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60.8 11.5C60.7 11 63 8.2 66 5.3C69 2.4 72.1 0 73 0C73.8 0 86.1 11.6 100.3 25.8C114.4 39.9 126 52 126 52.5C126 53 114.1 65.4 73 106.5L60.5 94.2L62.6 91.3C63.8 89.8 70.7 82.9 77.9 76C85.2 69.1 91.1 63.2 91 62.8C91 62.3 70.5 62 0 62V44H45C69.8 44 90.2 43.7 90.4 43.3C90.7 42.8 84.2 35.8 75.9 27.5C67.7 19.3 60.9 12.1 60.8 11.5Z" fill="rgba(26, 54, 133, 1)"/>
+                </svg>                    
+            </a>
             <img class="logo" src="{{ asset('assets/img/logo_gestao_light.png') }}"/>
-            <h3 class="titulo">Digite o e-mail ser recuperado.</h3>
+            <h3 class="titulo">Digite o e-mail a ser recuperado.</h3>
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <input type="email" id="email" name="email" required
