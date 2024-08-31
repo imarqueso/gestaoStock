@@ -70,8 +70,11 @@
         min-width: 680px;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse;
+        border-collapse: separate !important;
         border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        border-spacing: 0;  
     }
 
    th {

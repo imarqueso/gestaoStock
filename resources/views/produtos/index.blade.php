@@ -27,7 +27,7 @@
 
     .produtos-box {
         width: 100%;
-        max-height: 722px;
+        max-height: 803px;
         height: 100%;
         padding: 35px 20px;
         display: flex;
@@ -93,8 +93,11 @@
         min-width: 1135px !important;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse !important;
+        border-collapse: separate !important;
+        overflow: hidden; 
         border: none;
+        border-radius: 10px;
+        border-spacing: 0;  
     }
 
     th {

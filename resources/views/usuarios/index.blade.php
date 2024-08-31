@@ -26,7 +26,7 @@
     }
 
     .usuarios-box {
-        max-height: 722px;
+        max-height: 803px;
         width: 100%;
         height: 100%;
         padding: 35px 20px;
@@ -93,8 +93,11 @@
         min-width: 1135px !important;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse !important;
+        border-collapse: separate !important;
         border: none;
+        border-spacing: 0;
+        border-radius: 10px
+        overflow: hidden;
     }
 
     th {

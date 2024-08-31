@@ -60,7 +60,7 @@ body {
     justify-content: center;
     align-items: center;
     background: rgb(75, 110, 209);
-    background: radial-gradient(circle, rgba(75, 110, 209, 1) 0%, rgba(26, 54, 133, 1) 100%);
+    background: radial-gradient(circle, rgb(64 98 193 / 86%) 51%, rgb(19 44 115) 108%);
 }
 
 .header-content {
@@ -90,7 +90,7 @@ body {
     height: auto;
     max-height: 0px;
     background: rgb(75, 110, 209);
-    background: linear-gradient(180deg, rgba(75, 110, 209, 1) 0%, rgba(26, 54, 133, 1) 100%);
+    background: linear-gradient(180deg, rgb(77 111 206) 31%, rgb(37 66 149) 100%);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -258,6 +258,17 @@ body {
     transform: rotate(-405deg);
     top: 45%;
     width: 80%;
+}
+
+.dataTables_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.dataTables_length {
+    margin-bottom: 10px;
 }
 
 @media (max-width: 1080px) {
@@ -521,13 +532,6 @@ body {
 @media (max-width: 600px) {
     .modal-container {
         width: 300px;
-    }
-
-    .dataTables_wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
     }
 
     .modal-content input {
