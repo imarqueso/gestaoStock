@@ -26,6 +26,7 @@
     }
 
     .vendas-box {
+        max-height: 722px;
         width: 100%;
         height: 100%;
         padding: 35px 20px;
@@ -99,24 +100,26 @@
     th {
         border: 1px solid #6c88d7;
         border-bottom: 1px solid #6c88d7 !important;
-        padding: 12px 10px !important;
+        padding: 12px 30px 12px 10px !important;
         background-color: rgb(94 120 195);
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 16px;
+        font-size: 18px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -399,10 +402,10 @@
                             @endforeach
                         </select>
                         <label>
-                            <span>Data da Venda:</span>
-                            <input type="date" required name="data_venda" placeholder="Data da Venda:" class="save_required">
+                            <span>Data da Venda*:</span>
+                            <input type="date" required name="data_venda" placeholder="Data da Venda*:" class="save_required">
                         </label>
-                        <input type="number" name="vendidos" value="" placeholder="Vendidos" required class="save_required">
+                        <input type="number" name="vendidos" value="" placeholder="Vendidos*" required class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>

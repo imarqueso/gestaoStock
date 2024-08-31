@@ -86,7 +86,7 @@ body {
     position: absolute;
     right: 0px;
     top: 100%;
-    width: 220px;
+    width: 280px;
     height: auto;
     max-height: 0px;
     background: rgb(75, 110, 209);
@@ -112,7 +112,7 @@ body {
 
 .nav-content .nav li a {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 18px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -124,7 +124,7 @@ body {
 }
 
 .nav-content .nav li a svg {
-    width: 16px;
+    width: 18px;
     height: auto;
     margin: 0px 10px 0px 0px;
     fill: var(--light);
@@ -262,7 +262,7 @@ body {
 
 @media (max-width: 1080px) {
     .nav-content .nav {
-        width: 180px;
+        width: 200px;
     }
 
     .logo {

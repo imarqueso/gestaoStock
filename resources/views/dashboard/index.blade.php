@@ -77,24 +77,26 @@
    th {
         border: 1px solid #6c88d7;
         border-bottom: 1px solid #6c88d7 !important;
-        padding: 12px 10px !important;
+        padding: 12px 30px 12px 10px !important;
         background-color: rgb(94 120 195);
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
    }
 
    td {
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 16px;
+        font-size: 18px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
    }
 
    @media (max-width: 1080px) {

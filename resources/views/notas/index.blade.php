@@ -26,6 +26,7 @@
     }
 
     .notas-box {
+        max-height: 722px;
         width: 100%;
         height: 100%;
         padding: 35px 20px;
@@ -99,24 +100,26 @@
     th {
         border: 1px solid #6c88d7;
         border-bottom: 1px solid #6c88d7 !important;
-        padding: 12px 10px !important;
+        padding: 12px 30px 12px 10px !important;
         background-color: rgb(94 120 195);
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 14px;
+        font-size: 18px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -429,17 +432,17 @@
                     <form method="post" action="{{ route('cadastrarNota') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="cpf" placeholder="CPF ou CNPJ" id="cpf-cnpj">
-                        <input type="text" name="cliente" placeholder="Cliente" class="save_required">
-                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens" class="save_required">
+                        <input type="text" name="cliente" placeholder="Cliente*" class="save_required">
+                        <input id="quantidade-item" name="qtd_itens" type="number" required min="1" placeholder="Quantidade de itens*" class="save_required">
                         <div class="box-form" id="box-form">
 
                         </div>
                         <label>
                             <span>Data da venda:</span>
-                            <input type="date" name="data_venda" placeholder="Data da Venda" class="save_required">
+                            <input type="date" name="data_venda" placeholder="Data da Venda*" class="save_required">
                         </label>
                         <textarea placeholder="Observações" name="observacoes"></textarea>
-                        <input type="text" class="preco" name="total" placeholder="Total da Nota" class="save_required">
+                        <input type="text" class="preco" name="total" placeholder="Total da Nota*" class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -692,7 +695,7 @@
             x.setAttribute("value", "");
             x.setAttribute("type", "text");
             x.setAttribute("name", "produto[]");
-            x.setAttribute("placeholder", "Nome do produto " + (i + 1));
+            x.setAttribute("placeholder", "Nome do produto* " + (i + 1));
             x.setAttribute("required", "");
             x.setAttribute("class", "save_required");
 
@@ -700,7 +703,7 @@
             y.setAttribute("value", "");
             y.setAttribute("type", "number");
             y.setAttribute("name", "quantidade[]");
-            y.setAttribute("placeholder", "Quantidade do produto " + (i + 1));
+            y.setAttribute("placeholder", "Quantidade do produto* " + (i + 1));
             y.setAttribute("required", "");
             y.setAttribute("class", "save_required");
 
@@ -708,7 +711,7 @@
             z.setAttribute("value", "");
             z.setAttribute("type", "text");
             z.setAttribute("name", "preco[]");
-            z.setAttribute("placeholder", "Preço do produto " + (i + 1));
+            z.setAttribute("placeholder", "Preço do produto* " + (i + 1));
             z.setAttribute("required", "");
             z.setAttribute("class", "save_required preco");
 

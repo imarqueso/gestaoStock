@@ -99,24 +99,26 @@
     th {
         border: 1px solid #6c88d7;
         border-bottom: 1px solid #6c88d7 !important;
-        padding: 12px 10px !important;
+        padding: 12px 30px 12px 10px !important;
         background-color: rgb(94 120 195);
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 16px;
+        font-size: 18px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -361,20 +363,20 @@
             enctype="multipart/form-data">
                 @csrf
                 <label>
-                    <span>Login:</span>
-                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login:" required class="editar_required_{{$usuario->id}}">
+                    <span>Login*:</span>
+                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login*:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>Nome:</span>
-                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome:" required class="editar_required_{{$usuario->id}}">
+                    <span>Nome*:</span>
+                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome*:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>Sobrenome:</span>
-                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome:" required class="editar_required_{{$usuario->id}}">
+                    <span>Sobrenome*:</span>
+                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome*:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>E-mail:</span>
-                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail:" required class="editar_required_{{$usuario->id}}">
+                    <span>E-mail*:</span>
+                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail*:" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
                     <span>Senha:</span>

@@ -22,7 +22,7 @@ class PerfilController extends Controller
             'usuarios.email',
             'usuarios.ativo',
             'usuarios.acesso',
-            'usuarios.created_at AS data_cadastro',
+            'usuarios.created_at',
         )->where('usuarios.id', '=', Auth::user()->id)->get();
 
         return view('perfil.index', compact('perfil'));

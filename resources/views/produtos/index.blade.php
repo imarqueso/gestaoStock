@@ -27,6 +27,7 @@
 
     .produtos-box {
         width: 100%;
+        max-height: 722px;
         height: 100%;
         padding: 35px 20px;
         display: flex;
@@ -99,24 +100,26 @@
     th {
         border: 1px solid #6c88d7;
         border-bottom: 1px solid #6c88d7 !important;
-        padding: 12px 10px !important;
+        padding: 12px 30px 12px 10px !important;
         background-color: rgb(94 120 195);
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 16px;
+        font-size: 18px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -318,10 +321,10 @@
                     <h3 class="titulo-modal">Cadastrar Produto</h3>
                     <form method="post" action="{{ route('cadastrarProduto') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="produto" placeholder="Produto" required class="save_required">
-                        <input type="text" name="preco" placeholder="Preço" class="preco" required class="save_required">
-                        <input type="number" name="quantidade" placeholder="Quantidade" required class="save_required">
-                        <input type="number" name="vendidos" placeholder="Vendidos" required class="save_required">
+                        <input type="text" name="produto" placeholder="Produto*" required class="save_required">
+                        <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
+                        <input type="number" name="quantidade" placeholder="Quantidade*" required class="save_required">
+                        <input type="number" name="vendidos" placeholder="Vendidos*" required class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -348,7 +351,7 @@
                             <td>{{$produto->produto}}</td>
                             <td class="nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
                             <td>{{$produto->quantidade}}</td>
-                            <td>{{\Carbon\Carbon::parse($produto->data_cadastro)->format('d/m/Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
                             <td>{{$produto->vendidos}}</td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td><button class="vender"><img src="{{ asset('assets/img/icones/vendas.svg') }}"></button></td>
@@ -384,14 +387,14 @@
             <h3 class="titulo-modal">Vender Produto</h3>
             <form method="post" action="/produtos/{{$produto->id}}/vender" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
                 @csrf
-                <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto" disabled required class="vender_required_{{$produto->id}}">
-                <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preco:" required hidden class="preco vender_required_{{$produto->id}}">
+                <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto*" disabled required class="vender_required_{{$produto->id}}">
+                <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preco*" required hidden class="preco vender_required_{{$produto->id}}">
                 <label>
                     <span>Data da venda:</span>
-                    <input type="date" required name="data_venda" placeholder="Data da Venda:" class="vender_required_{{$produto->id}}">
+                    <input type="date" required name="data_venda" placeholder="Data da Venda*" class="vender_required_{{$produto->id}}">
                 </label>
-                <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade em estoque:" required hidden class="vender_required_{{$produto->id}}">
-                <input type="number" name="vendidos" placeholder="Quantidade vendida" required class="vender_required_{{$produto->id}}">
+                <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade em estoque*" required hidden class="vender_required_{{$produto->id}}">
+                <input type="number" name="vendidos" placeholder="Quantidade vendida*" required class="vender_required_{{$produto->id}}">
                 <button class="salvar btnVender_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
@@ -433,16 +436,16 @@
             <form method="post" action="/produtos/{{$produto->id}}/editar" enctype="multipart/form-data" id="form_editar_{{$produto->id}}">
                 @csrf
                 <label>
-                    <span>Produto:</span>
-                    <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto" required class="editar_required_{{$produto->id}}">
+                    <span>Produto*:</span>
+                    <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto*" required class="editar_required_{{$produto->id}}">
                 </label>
                 <label>
-                    <span>Preço:</span>
-                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço" required class="preco editar_required_{{$produto->id}}">
+                    <span>Preço*:</span>
+                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço*" required class="preco editar_required_{{$produto->id}}">
                 </label>
                 <label>
-                    <span>Quantidade:</span>
-                    <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade" required class="editar_required_{{$produto->id}}">
+                    <span>Quantidade*:</span>
+                    <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidad0e*" required class="editar_required_{{$produto->id}}">
                 </label>
                 <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>

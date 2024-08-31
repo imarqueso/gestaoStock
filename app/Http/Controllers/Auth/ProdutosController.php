@@ -17,7 +17,7 @@ class ProdutosController extends Controller
             'produtos.preco',
             'produtos.quantidade',
             'produtos.vendidos',
-            'produtos.created_at AS data_cadastro',
+            'produtos.created_at',
         )->get();
 
         return view('produtos.index', compact('produtos'));
