@@ -414,7 +414,7 @@
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>Venda Nª</th>
                         <th>Produto</th>
                         <th>Preço</th>
                         <th>Estoque</th>

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon_gestao.png') }}">
 </head>
 <body>
 
@@ -236,7 +236,7 @@
     <section class="login-overlay">
         <div class="login-box">
             <img class="logo" src="{{ asset('assets/img/logo_gestao_light.png') }}"/>
-            <h3 class="titulo">Digite o e-mail ser recuperado.</h3>
+            <h3 class="titulo">Digite sua nova senha.</h3>
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
                 <input type="email" name="email" id="email" value="{{ $email }}" hidden readonly>

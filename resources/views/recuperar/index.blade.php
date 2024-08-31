@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icones/favicon_gestao.png') }}">
 </head>
 <body>
 

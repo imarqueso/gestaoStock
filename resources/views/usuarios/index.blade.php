@@ -333,10 +333,10 @@
                     <h3 class="titulo-modal">Cadastrar Usuário</h3>
                     <form method="post" action="{{ route('cadastrarUsuario') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="nome" placeholder="Nome*:" required class="save_required">
-                        <input type="text" name="sobrenome" placeholder="Sobrenome*:" required class="save_required">
-                        <input type="text" name="login" placeholder="Login*:" required class="save_required">
-                        <input type="text" name="email" placeholder="E-mail*:" required class="save_required">
+                        <input type="text" name="nome" placeholder="Nome*" required class="save_required">
+                        <input type="text" name="sobrenome" placeholder="Sobrenome*" required class="save_required">
+                        <input type="text" name="login" placeholder="Login*" required class="save_required">
+                        <input type="text" name="email" placeholder="E-mail*" required class="save_required">
                         <label class="lbsenha">
                             <input type="password" id="password" name="password" required
                             placeholder="Senha*" class="senhaview save_required">
