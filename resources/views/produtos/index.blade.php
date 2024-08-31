@@ -112,7 +112,7 @@
         border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 14px;
+        font-size: 16px;
         text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
@@ -163,21 +163,6 @@
 
     td button.editar {
         background-color: #09308b;
-    }
-
-    td button:hover {
-        filter: brightness(1.5);
-        transition: 0.5s ease all;
-    }
-
-    td button img {
-        height: 10px;
-        width: auto;
-    }
-
-    td .excluir img {
-        height: 10px;
-        width: auto;
     }
 
     .td-excluir form {
