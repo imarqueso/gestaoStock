@@ -125,7 +125,6 @@
             box-sizing: border-box;
             margin-bottom: 10px;
             outline: none;
-            text-transform: lowercase !important;
         }
 
         .login-box form input::placeholder {

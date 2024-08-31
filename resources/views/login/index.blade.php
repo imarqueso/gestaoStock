@@ -84,7 +84,7 @@
             align-items: center;
         }
 
-        .login-box form input {
+        .login-box form input  {
             width: 100%;
             height: 40px;
             background-color: #ffffff;
@@ -97,7 +97,6 @@
             box-sizing: border-box;
             margin-bottom: 10px;
             outline: none;
-            text-transform: lowercase !important;
         }
 
         .login-box form input::placeholder {
@@ -241,7 +240,7 @@
             <form method="post">
                 @csrf
                 <input type="text" id="user" name="login" required
-                placeholder="Login" class="save_required">
+                placeholder="Login ou E-mail" class="save_required">
                 <label class="lbsenha">
                     <input type="password" id="password" name="password" required
                     placeholder="Senha" class="senhaview save_required">
