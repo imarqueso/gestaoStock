@@ -37,7 +37,7 @@ class ProdutosController extends Controller
             'vencimento' => $request->vencimento,
         ]);
 
-        return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto cadastrado com sucesso!');
+        return redirect("/produtos")->with('msg', 'Produto cadastrado com sucesso!');
     }
 
     private function formatarNumero($numero)
@@ -51,36 +51,46 @@ class ProdutosController extends Controller
     {
         $produto = Produto::find($id);
 
+        $preco = $this->formatarNumero($request->preco);
+
+        if ($request->vendidos <= $produto->quantidade) {
+            $somaProdutoVendido = $produto->vendidos + $request->vendidos;
+        } else {
+            return redirect('/produtos')
+                ->with('msgf', "A quantidade de produtos vendidos é maior que a quantidade no estoque: {$produto->quantidade}")
+                ->withInput();
+        }
+        $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
+        $totalProdutoVendido = $preco * $request->vendidos;
+        $totalProdutoVendido = number_format($preco * $request->vendidos, 2, ',', '.');
+
         $produto->update([
-            'vendido' => 1,
+            'vendidos' => $somaProdutoVendido,
+            'quantidade' => $subtracaoProdutoVendido,
         ]);
 
         $venda = Venda::create([
-            'sku' => $produto->sku,
             'produto_id' => $id,
-            'preco' => $produto->preco,
+            'preco' => $request->preco,
+            'quantidade' => $subtracaoProdutoVendido,
+            'vendidos' => $request->vendidos,
+            'total' => $totalProdutoVendido,
             'data_venda' => $request->data_venda,
         ]);
-        return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto vendido com sucesso!');
+        return redirect('/produtos')->with('msg', 'Produto vendido com sucesso!');
     }
 
     public function editar(Request $request, $id)
     {
         $produto = Produto::find($id);
 
-        if ($produto->vencimento !== $request->vencimento) {
-            $vencimento_anterior = $produto->vencimento;
-        }
-
         $produto->update([
-            'sku' => $request->sku,
             'produto' => $request->produto,
             'preco' => $request->preco,
-            'vencimento' => $request->vencimento,
-            'vencimento_anterior' => $vencimento_anterior,
+            'quantidade' => $request->quantidade,
         ]);
 
-        return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto editado com sucesso!');
+        return redirect('/produtos')->with('msg', 'Produto editado com sucesso!');
     }
 
     public function excluir(Request $request, $id)
@@ -91,6 +101,6 @@ class ProdutosController extends Controller
         $venda->delete();
         $produto->delete();
 
-        return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto excluido com sucesso!');
+        return redirect('/produtos')->with('msg', 'Produto excluido com sucesso!');
     }
 }

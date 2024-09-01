@@ -1,7 +1,7 @@
 {
     "sen": {
-        "normal": "D:\\wamp64\\www\\gestao-stock\\storage\\fonts\/sen_normal_f2218f690c172bb43e740ac1b7e6c10f",
-        "bold": "sen_bold_87730a235990cbbc6c6a52fa8fa762b8",
-        "800": "D:\\wamp64\\www\\gestao-stock\\storage\\fonts\/sen_800_c50aac6cadddc818667b3e9ee8283533"
+        "normal": "D:\\wamp64\\www\\gestaoStock\\storage\\fonts\/sen_normal_f2218f690c172bb43e740ac1b7e6c10f",
+        "bold": "D:\\wamp64\\www\\gestaoStock\\storage\\fonts\/sen_bold_87730a235990cbbc6c6a52fa8fa762b8",
+        "800": "sen_800_c50aac6cadddc818667b3e9ee8283533"
     }
 }

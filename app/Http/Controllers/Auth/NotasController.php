@@ -96,7 +96,8 @@ class NotasController extends Controller
         $pdf = $pdf->loadView('notas.nota', compact('notas'))
             ->setPaper('a4', 'portrait');
 
-        return $pdf->download('nota_' . $id . '.pdf');
+        // return $pdf->download('nota_' . $id . '.pdf');
+        return $pdf->stream('nota_' . $id . '.pdf');
     }
 
     public function excluir(Request $request, $id)

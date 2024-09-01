@@ -386,34 +386,8 @@
 <section class="vendas-container">
     <div class="vendas-content">
         @include('partials.mensagem')
-        @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-        <button class="btn-principal">Cadastrar Venda</button>
-        @endif
         <div class="vendas-box">
             <h3>Vendas cadastradas</h3>
-            @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-            <section class="modal-container modal-cadastrar">
-                <div class="modal-content">
-                    <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-cadastrar">
-                    <h3 class="titulo-modal">Cadastrar Venda</h3>
-                    <form method="post" action="{{ route('cadastrarVenda') }}" enctype="multipart/form-data">
-                        @csrf
-                        <select name="produto_id" required class="produto-select" id="produto-select">
-                            <option value selected disabled>Selecione o produto</option>
-                            @foreach ($listaProd as $prod)
-                            <option value="{{ $prod->id }}">{{ $prod->produto }}</option>
-                            @endforeach
-                        </select>
-                        <label>
-                            <span>Data da Venda*:</span>
-                            <input type="date" required name="data_venda" placeholder="Data da Venda*:" class="save_required">
-                        </label>
-                        <input type="number" name="vendidos" value="" placeholder="Vendidos*" required class="save_required">
-                        <button class="salvar btnSave" type="submit">Salvar</button>
-                    </form>
-                </div>
-            </section>
-            @endif
             <table id="dataTable">
                 <thead>
                     <tr>

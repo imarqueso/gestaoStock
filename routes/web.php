@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\DashboardController;
+use App\Http\Controllers\Auth\GruposController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
@@ -36,12 +37,17 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboardView');
 
+    // Grupos
+    Route::get('/grupos', [GruposController::class, 'view'])->name('gruposView');
+    Route::post('grupos/cadastrar', [GruposController::class, 'cadastrar'])->name('cadastrarGrupo');
+    Route::post('/grupos/{id}/editar', [GruposController::class, 'editar'])->name('editarGrupo');
+    Route::post('/grupos/{id}/excluir', [GruposController::class, 'excluir'])->name('excluirGrupo');
+
     // Produtos
-    Route::get('/produtos', [ProdutosController::class, 'view'])->name('produtosView');
-    Route::post('produtos/cadastrar', [ProdutosController::class, 'cadastrar'])->name('cadastrarProduto');
-    Route::post('/produtos/{id}/vender', [ProdutosController::class, 'vender'])->name('venderProduto');
-    Route::post('/produtos/{id}/editar', [ProdutosController::class, 'editar'])->name('editarProduto');
-    Route::post('/produtos/{id}/excluir', [ProdutosController::class, 'excluir'])->name('excluirProduto');
+    Route::get('/produtos/{grupo_id}', [ProdutosController::class, 'view'])->name('produtosView');;
+    Route::post('/produtos/{produto_id}/vender', [ProdutosController::class, 'vender'])->name('venderProduto');
+    Route::post('/produtos/{produto_id}/editar', [ProdutosController::class, 'editar'])->name('editarProduto');
+    Route::post('/produtos/{produto_id}/excluir', [ProdutosController::class, 'excluir'])->name('excluirProduto');
 
     // Vendas
     Route::get('/vendas', [VendasController::class, 'view'])->name('vendasView');

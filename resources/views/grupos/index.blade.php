@@ -1,7 +1,7 @@
 @extends('layouts.basico')
 
-@section('titulo', 'Produtos | Gestão Stock')
-@section('pagina', 'Produtos em Estoque')
+@section('titulo', 'Grupos de Produtos | Gestão Stock')
+@section('pagina', 'Grupos de Produtos')
 
 @section('conteudo')
 <style>
@@ -313,23 +313,18 @@
     <div class="produtos-content">
         @include('partials.mensagem')
         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-        <button class="btn-principal">Cadastrar Produto</button>
+        <button class="btn-principal">Cadastrar Grupo</button>
         @endif
         <div class="produtos-box">
-            <h3>Produtos cadastrados</h3>
+            <h3>Grupos cadastrados</h3>
             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
             <section class="modal-container modal-cadastrar">
                 <div class="modal-content">
                     <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-cadastrar">
-                    <h3 class="titulo-modal">Cadastrar Produto</h3>
-                    <form method="post" action="{{ route('cadastrarProduto') }}" enctype="multipart/form-data">
+                    <h3 class="titulo-modal">Cadastrar Grupo</h3>
+                    <form method="post" action="{{ route('cadastrarGrupo') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="number" value="0" required name="vendido" hidden class="save_required">
-                        <input type="number" value="" disabled  name="grupo_id" required class="save_required">
-                        <input type="text" name="sku" placeholder="SKU*" required class="save_required">
-                        <input type="text" name="produto" placeholder="Produto*" required class="save_required">
-                        <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
-                        <input type="date" name="validade" placeholder="Validade*" required class="save_required">
+                        <input type="text" name="grupo" placeholder="Grupo*" required class="save_required">
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -338,44 +333,26 @@
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>SKU</th>
-                        <th>Produto</th>
-                        <th>Preço</th>
-                        <th>Vencimento</th>
-                        <th>Vencimento Anterior</th>
+                        <th>Grupo</th>
+                        <th>Estoque</th>
+                        <th>Vendidos</th>
+                        <th>Faturamento</th>
                         <th>Cadastro</th>
-                        <th>Vendido</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-                        <th>Vender</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($produtos as $produto)
+                    @foreach ($grupos as $grupo)
                         <tr>
-                            <td>{{$produto->sku}}</td>
-                            <td>{{$produto->produto}}</td>
-                            <td class="nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
-                            <td>{{\Carbon\Carbon::parse($produto->vencimento)->format('d/m/Y')}}</td>
-                            <td>
-                                @if ($produto->vencimento_anterior)
-                                {{\Carbon\Carbon::parse($produto->vencimento_anterior)->format('d/m/Y')}}
-                                @else 
-                                --
-                                @endif
-                            </td>
-                            <td>{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
-                            <td>
-                                @if ($produto->vendido)
-                                <span class="vendido">Sim</span>
-                                @else
-                                <span class="naovendido">Não</span>
-                                @endif
-                            </td>
+                            <td><a href="{{ route('produtosView', $grupo->id) }}">{{$grupo->grupo}}</a></td>
+                            <td>{{$quantidade}}</td>
+                            <td>{{$vendidos}}</td>
+                            <td>{{$faturamento}}</td>
+                            <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-                            <td><button class="vender"><img src="{{ asset('assets/img/icones/vendas.svg') }}"></button></td>
                             <td><button class="editar"><img src="{{ asset('assets/img/icones/editar.svg') }}"></button></td>
                             <td>
                                 <div class="td-excluir">
@@ -383,7 +360,7 @@
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
                                     <form method="post"
-                                    action="{{ route('excluirProduto', $produto->id) }}"
+                                    action="{{ route('excluirGrupo', $grupo->id) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
                                         <button type="submit" class="btn-excluir">Excluir</button>
@@ -401,84 +378,24 @@
 </section>
 
 @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-@foreach ($produtos as $produto)
-    <section class="modal-container modal-vender">
-        <div class="modal-content">
-            <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-vender">
-            <h3 class="titulo-modal">Vender Produto</h3>
-            <form method="post" action="{{ route('venderProduto', $produto->id) }}" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
-                @csrf
-                <input type="number" value="1" required name="vendido" hidden class="vender_required_{{$produto->id}}">
-                <input type="text" value="{{$produto->sku}}" name="sku" disabled required class="vender_required_{{$produto->id}}">
-                <input type="text" value="{{$produto->produto}}" name="produto" disabled required class="vender_required_{{$produto->id}}">
-                <input type="text" disabled value="{{$produto->preco}}" name="preco" placeholder="Preco*" disabled required class="preco">
-                <label>
-                    <span>Data da venda:</span>
-                    <input type="date" required name="data_venda" placeholder="Data da Venda*" class="vender_required_{{$produto->id}}">
-                </label>
-                <button class="salvar btnVender_{{$produto->id}} disabled" type="submit">Salvar</button>
-            </form>
-        </div>
-
-        <script>
-            // Função para verificar os campos de venda do produto específico
-            function checkVenderFields_{{$produto->id}}() {
-                const requiredFields = document.querySelectorAll('.vender_required_{{$produto->id}}');
-                const venderButton = document.querySelector('.btnVender_{{$produto->id}}');
-
-                const allFilled = Array.from(requiredFields).every(field => {
-                    return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
-                });
-
-                // Controla o estado do botão "Salvar"
-                if (allFilled) {
-                    venderButton.classList.remove('disabled');
-                    venderButton.removeAttribute('disabled');
-                } else {
-                    venderButton.classList.add('disabled');
-                    venderButton.setAttribute('disabled', 'disabled');
-                }
-            }
-
-            // Aplica o event listener a cada campo individualmente
-            document.querySelectorAll('.vender_required_{{$produto->id}}').forEach(field => {
-                field.addEventListener('input', checkVenderFields_{{$produto->id}});
-            });
-
-            // Inicializa o botão com a classe disabled
-            checkVenderFields_{{$produto->id}}();
-        </script>
-    </section>
-
+@foreach ($grupos as $grupo)
     <section class="modal-container modal-editar">
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-editar">
-            <h3 class="titulo-modal">Editar Produto</h3>
-            <form method="post" action="{{ route('editarProduto', $produto->id) }}" enctype="multipart/form-data" id="form_editar_{{$produto->id}}">
+            <h3 class="titulo-modal">Editar Grupo</h3>
+            <form method="post" action="{{ route('editarGrupo', $grupo->id) }}" enctype="multipart/form-data" id="form_editar_{{$grupo->id}}">
                 @csrf
                 <label>
-                    <span>Código SKU*</span>
-                    <input type="text" value="{{$produto->sku}}" name="sku" placeholder="Código SKU*" required class="editar_required_{{$produto->id}}">
+                    <span>Grupo*</span>
+                    <input type="text" value="{{$grupo->grupo}}" name="grupo" placeholder="Grupo*" required class="editar_required_{{$grupo->id}}">
                 </label>
-                <label>
-                    <span>Produto*</span>
-                    <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto*" required class="editar_required_{{$produto->id}}">
-                </label>
-                <label>
-                    <span>Preço*</span>
-                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço*" required class="preco editar_required_{{$produto->id}}">
-                </label>
-                <label>
-                    <span>Validade*</span>
-                    <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*" required class="preco editar_required_{{$produto->id}}">
-                </label>
-                <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
+                <button class="salvar btnEdit_{{$grupo->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
 
         <script>
             // Função para verificar os campos de edição do produto específico
-            function checkEditarFields_{{$produto->id}}() {
+            function checkEditarFields_{{$grupo->id}}() {
                 const requiredFields = document.querySelectorAll('.editar_required_{{$produto->id}}');
                 const editButton = document.querySelector('.btnEdit_{{$produto->id}}');
 
@@ -498,11 +415,11 @@
 
             // Aplica o event listener a cada campo individualmente
             document.querySelectorAll('.editar_required_{{$produto->id}}').forEach(field => {
-                field.addEventListener('input', checkEditarFields_{{$produto->id}});
+                field.addEventListener('input', checkEditarFields_{{$grupo->id}});
             });
 
             // Inicializa o botão com a classe disabled
-            checkEditarFields_{{$produto->id}}();
+            checkEditarFields_{{$grupo->id}}();
         </script>
     </section>
 @endforeach
@@ -547,32 +464,6 @@
     closeCadastrar.forEach(function(item, index) {
         item.addEventListener("click", function() {
             modalCadastrar[index].classList.remove("abrir");
-        });
-    })
-</script>
-
-<script>
-    var btnVender = document.querySelectorAll("button.vender");
-    var modalVender = document.querySelectorAll("section.modal-vender");
-
-    btnVender.forEach(function(item, index) {
-        item.addEventListener("click", function() {
-                if (modalVender[index].classList.contains("abrir")) {
-                    modalVender[index].classList.remove("abrir");
-            } else {
-                for (var i = 0; i < modalVender.length; i++) {
-                    modalVender[i].classList.remove("abrir");
-                }
-                modalVender[index].classList.add("abrir");
-            }
-        });
-    });
-
-    var closeVender = document.querySelectorAll("img.close-vender");
-
-    closeVender.forEach(function(item, index) {
-        item.addEventListener("click", function() {
-            modalVender[index].classList.remove("abrir");
         });
     })
 </script>
@@ -633,20 +524,7 @@
 <script>
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
-        $('.preco').mask('#.##0,00', {reverse: true});
         $('.dinheiro').mask('#.##0,00', {reverse: true});
-
-        $('.preco').each(function() {
-            let valorPreco = $(this).val();
-        
-            // Se o valor começa com um ponto, remova-o
-            if (valorPreco.startsWith('.')) {
-                valorPreco = valorPreco.replace(/^\./, '');
-            }
-        
-            // Atualiza o campo com o valor sem o ponto no início
-            $(this).val(valorPreco);
-        });
 
         $('.dinheiro').each(function() {
             let valorDinheiro = $(this).text().trim();
