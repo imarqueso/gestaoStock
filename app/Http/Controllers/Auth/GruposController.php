@@ -15,6 +15,7 @@ class GruposController extends Controller
         $grupos = Grupo::select(
             'grupos.id',
             'grupos.grupo',
+            'grupos.comentarios',
             'grupos.created_at',
         )->get();
 
@@ -58,6 +59,7 @@ class GruposController extends Controller
     {
         $grupo = Grupo::create([
             'grupo' => $request->grupo,
+            'comentarios' => $request->comentarios,
         ]);
 
         return redirect("/grupos")->with('msg', 'Grupo cadastrado com sucesso!');
@@ -69,6 +71,7 @@ class GruposController extends Controller
 
         $grupo->update([
             'grupo' => $request->grupo,
+            'comentarios' => $request->comentarios,
         ]);
 
         return redirect('/grupos')->with('msg', 'Grupo editado com sucesso!');

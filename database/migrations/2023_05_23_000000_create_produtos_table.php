@@ -22,6 +22,7 @@ class CreateProdutosTable extends Migration
             $table->boolean('vendido');
             $table->date('validade')->nullable();
             $table->date('validade_anterior')->nullable();
+            $table->text('comentarios')->nullable();
             $table->timestamps();
         });
     }

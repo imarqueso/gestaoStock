@@ -118,7 +118,6 @@
         padding: 15px;
         background-color: var(--light);
         font-size: 18px;
-        text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
@@ -307,6 +306,20 @@
     button[disabled] {
         background-color: #464444 !important;
     }
+
+    .linkTabela {
+        text-decoration: underline;
+        color: var(--primary);
+        text-decoration-color: var(--primary);
+        transition: 0.3s ease all;
+        cursor: pointer;
+    }
+
+    .linkTabela:hover {
+        color: #8bdec8;
+        text-decoration-color: #8bdec8;
+        transition: 0.3s ease all;
+    }
 </style>
 
 <section class="produtos-container">
@@ -325,6 +338,7 @@
                     <form method="post" action="{{ route('cadastrarGrupo') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="grupo" placeholder="Grupo*" required class="save_required">
+                        <textarea placeholder="Comentários" name="comentarios"></textarea>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -338,6 +352,7 @@
                         <th>Vendidos</th>
                         <th>Faturamento</th>
                         <th>Cadastro</th>
+                        <th>Comentários</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Editar</th>
                         <th>Excluir</th>
@@ -347,11 +362,18 @@
                 <tbody>
                     @foreach ($grupos as $grupo)
                         <tr>
-                            <td><a href="{{ route('produtosView', $grupo->id) }}">{{$grupo->grupo}}</a></td>
+                            <td><a href="{{ route('produtosView', $grupo->id) }}" class="linkTabela">{{$grupo->grupo}}</a></td>
                             <td>{{$grupo->estoque}}</td>
                             <td>{{$grupo->vendido}}</td>
                             <td>{{$grupo->faturamento}}</td>
                             <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
+                            <td class="comentarios">
+                                @if ($grupo->comentarios)
+                                {!! nl2br(e($grupo->comentarios)) !!}
+                                @else 
+                                --
+                                @endif
+                            </td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td><button class="editar"><img src="{{ asset('assets/img/icones/editar.svg') }}"></button></td>
                             <td>
@@ -388,6 +410,10 @@
                 <label>
                     <span>Grupo*</span>
                     <input type="text" value="{{$grupo->grupo}}" name="grupo" placeholder="Grupo*" required class="editar_required_{{$grupo->id}}">
+                </label>
+                <label>
+                    <span>Comentarios*</span>
+                    <textarea placeholder="Comentários" name="comentarios">{{$grupo->comentarios}}</textarea>
                 </label>
                 <button class="salvar btnEdit_{{$grupo->id}} disabled" type="submit">Salvar</button>
             </form>

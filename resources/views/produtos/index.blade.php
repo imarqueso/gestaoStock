@@ -118,7 +118,6 @@
         padding: 15px;
         background-color: var(--light);
         font-size: 18px;
-        text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
@@ -329,10 +328,12 @@
                         <input type="text" name="sku" placeholder="SKU*" required class="save_required">
                         <input type="text" name="produto" placeholder="Produto*" required class="save_required">
                         <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
+                        <input type="number" name="quantidade" placeholder="Quantidade*" required class="save_required">
                         <label>
                             <span>Validade:</span>
                             <input type="date" name="validade" placeholder="Validade*">
                         </label>
+                        <textarea placeholder="Comentários" name="comentarios"></textarea>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -348,6 +349,7 @@
                         <th>Validade Anterior</th>
                         <th>Cadastro</th>
                         <th>Vendido</th>
+                        <th>Comentários</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Vender</th>
                         <th>Editar</th>
@@ -381,6 +383,13 @@
                                 <span class="vendido">Sim</span>
                                 @else
                                 <span class="naovendido">Não</span>
+                                @endif
+                            </td>
+                            <td class="comentarios">
+                                @if ($produto->comentarios)
+                                {!! nl2br(e($produto->comentarios)) !!}
+                                @else 
+                                --
                                 @endif
                             </td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
@@ -482,6 +491,10 @@
                 <label>
                     <span>Validade*</span>
                     <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*">
+                </label>
+                <label>
+                    <span>Comentarios*</span>
+                    <textarea placeholder="Comentários" name="comentarios">{{$produto->comentarios}}</textarea>
                 </label>
                 <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>

@@ -10,5 +10,5 @@ class Grupo extends Model
     use HasFactory;
 
     protected $table = "grupos";
-    protected $fillable = ['grupo'];
+    protected $fillable = ['grupo', 'comentarios'];
 }

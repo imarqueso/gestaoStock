@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Grupo;
 use App\Models\Produto;
 use App\Models\Venda;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
@@ -22,6 +23,7 @@ class ProdutosController extends Controller
                 'vendido',
                 'validade',
                 'validade_anterior',
+                'comentarios',
                 'created_at'
             )
             ->orderBy('id', 'DESC')
@@ -37,16 +39,19 @@ class ProdutosController extends Controller
 
         $validade = $request->has('validade') ? $request->validade : null;
 
-        $produto = Produto::create([
-            'sku' => $request->sku,
-            'produto' => $request->produto,
-            'preco' => $request->preco,
-            'grupo_id' => $request->grupo_id,
-            'vendido' => $request->vendido,
-            'validade' => $validade,
-            'validade_anterior' => null,
-        ]);
-
+        // Loop para inserir múltiplos produtos com base na quantidade
+        for ($i = 0; $i < $request->quantidade; $i++) {
+            Produto::create([
+                'sku' => $request->sku,
+                'produto' => $request->produto,
+                'preco' => $request->preco,
+                'grupo_id' => $request->grupo_id,
+                'vendido' => $request->vendido,
+                'validade' => $validade,
+                'validade_anterior' => null,
+                'comentarios' => $request->comentarios,
+            ]);
+        }
         return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto cadastrado com sucesso!');
     }
 
@@ -77,10 +82,13 @@ class ProdutosController extends Controller
     {
         $produto = Produto::find($id);
 
-        $validade = $request->has('validade') ? $request->validade : null;
+        $validade = $request->has('validade') ? Carbon::parse($request->validade)->toDateString() : null;
 
+        // Verifica se a validade foi alterada
         if ($produto->validade !== $validade) {
             $validade_anterior = $produto->validade;
+        } else {
+            $validade_anterior = $produto->validade_anterior; // Mantém a validade anterior se não foi alterada
         }
 
         $produto->update([
@@ -89,6 +97,7 @@ class ProdutosController extends Controller
             'preco' => $request->preco,
             'validade' => $request->validade,
             'validade_anterior' => $validade_anterior,
+            'comentarios' => $request->comentarios,
         ]);
 
         return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto editado com sucesso!');
