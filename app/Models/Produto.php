@@ -11,4 +11,9 @@ class Produto extends Model
 
     protected $table = "produtos";
     protected $fillable = ['sku', 'produto', 'grupo_id', 'preco', 'vendido', 'validade', 'validade_anterior'];
+
+    public function grupo()
+    {
+        return $this->belongsTo(Grupo::class, 'grupo_id');
+    }
 }

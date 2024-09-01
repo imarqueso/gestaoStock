@@ -56,7 +56,6 @@ class ProdutosController extends Controller
         ]);
 
         $venda = Venda::create([
-            'sku' => $produto->sku,
             'produto_id' => $id,
             'preco' => $produto->preco,
             'data_venda' => $request->data_venda,

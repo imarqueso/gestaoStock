@@ -393,11 +393,9 @@
                     <tr>
                         <th>Venda Nª</th>
                         <th>Produto</th>
+                        <th>Grupo</th>
                         <th>Preço</th>
-                        <th>Estoque</th>
                         <th>Data da Venda</th>
-                        <th>Vendido</th>
-                        <th>Total</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Excluir</th>
                         @endif
@@ -407,12 +405,10 @@
                     @foreach ($vendas as $venda)
                         <tr>
                             <td>{{$venda->id}}</td>
-                            <td>{{$venda->produto}}</td>
-                            <td class="nobreak">R$ <span class="dinheiro">{{$venda->preco}}</span></td>
-                            <td>{{$venda->quantidade}}</td>
+                            <td>{{ $venda->produto->nome }}</td>
+                            <td>{{ $venda->produto->grupo->grupo }}</td>
+                            <td class="nobreak">R$ <span class="dinheiro">{{$venda->produto->preco}}</span></td>
                             <td>{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
-                            <td>{{$venda->vendidos}}</td>
-                            <td class="nobreak">R$ <span class="dinheiro">{{$venda->total}}</span></td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td>
                                 <div class="td-excluir">
@@ -420,7 +416,7 @@
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
                                     <form method="post"
-                                    action="/vendas/{{$venda->id}}/excluir"
+                                    action="{{ route('excluirVenda', {{$venda->id}}) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
                                         <input type="number" name="quantidade" value="{{$venda->quantidade}}" hidden>

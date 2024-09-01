@@ -14,15 +14,9 @@ class VendasController extends Controller
         $listaProd = $listarProdutos->listarProdutos();
 
         $vendas = Venda::select(
-            'produtos.produto AS produto',
-            'vendas.produto_id',
             'vendas.id',
-            'vendas.preco',
-            'vendas.quantidade',
             'vendas.data_venda',
-            'vendas.vendidos',
-            'vendas.total',
-        )->join('produtos', 'produtos.id', '=', 'vendas.produto_id')->orderby('vendas.id', 'DESC')->get();
+        )->orderby('vendas.id', 'DESC')->get();
 
         return view('vendas.index', compact('listaProd', 'vendas'));
     }
@@ -34,53 +28,13 @@ class VendasController extends Controller
         return floatval($numero); // Converte a string para float
     }
 
-    public function cadastrar(Request $request)
-    {
-        $produto = Produto::find($request->produto_id);
-
-        $preco = $this->formatarNumero($produto->preco);
-
-        if ($request->vendidos <= $produto->quantidade) {
-            $somaProdutoVendido = $produto->vendidos + $request->vendidos;
-        } else {
-            return redirect('/vendas')
-                ->with('msgf', "A quantidade de produtos vendidos é maior que a quantidade no estoque: {$produto->quantidade}")
-                ->withInput();
-        }
-
-        $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
-        $totalProdutoVendido = $preco * $request->vendidos;
-        $totalProdutoVendido = number_format($preco * $request->vendidos, 2, ',', '.');
-
-        $produto->update([
-            'quantidade' => $subtracaoProdutoVendido,
-            'vendidos' => $somaProdutoVendido,
-        ]);
-
-        $venda = Venda::create([
-            'produto_id' => $request->produto_id,
-            'preco' => $produto->preco,
-            'quantidade' => $subtracaoProdutoVendido,
-            'data_venda' => $request->data_venda,
-            'vendidos' => $request->vendidos,
-            'total' => $totalProdutoVendido,
-        ]);
-
-        return redirect("/vendas")->with('msg', 'Venda cadastrada com sucesso!');
-    }
-
     public function excluir(Request $request, $id)
     {
         $venda = Venda::find($id);
         $produto = Produto::find($request->produto_id);
 
-
-        $vendidos = $produto->vendidos - $venda->vendidos;
-        $quantidade = $produto->quantidade + $request->vendidos;
-
         $produto->update([
-            'quantidade' => $quantidade,
-            'vendidos' => $vendidos,
+            'vendido' => 0,
         ]);
 
         $venda->delete();
