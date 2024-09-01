@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Grupo;
 use App\Models\Produto;
 use App\Models\Venda;
 use Illuminate\Http\Request;
@@ -11,30 +12,39 @@ class ProdutosController extends Controller
     public function view($grupo_id)
     {
 
-        $produtos = Produto::select(
-            'produtos.id',
-            'produtos.sku',
-            'produtos.produto',
-            'produtos.preco',
-            'produtos.grupo_id',
-            'produtos.vendido',
-            'produtos.vencimento',
-            'produtos.vencimento_anterior',
-            'produtos.created_at',
-        )->join('grupos', $grupo_id, '=', 'produtos.grupo_id')->orderby('produtos.id', 'DESC')->get();;
+        $produtos = Produto::where('grupo_id', $grupo_id)
+            ->select(
+                'id',
+                'sku',
+                'produto',
+                'preco',
+                'grupo_id',
+                'vendido',
+                'validade',
+                'validade_anterior',
+                'created_at'
+            )
+            ->orderBy('id', 'DESC')
+            ->get();
 
-        return view('produtos.index', compact('produtos'));
+        $grupo = Grupo::findOrFail($grupo_id);
+
+        return view('produtos.index', compact('produtos', 'grupo'));
     }
 
     public function cadastrar(Request $request)
     {
+
+        $validade = $request->has('validade') ? $request->validade : null;
+
         $produto = Produto::create([
             'sku' => $request->sku,
             'produto' => $request->produto,
             'preco' => $request->preco,
             'grupo_id' => $request->grupo_id,
             'vendido' => $request->vendido,
-            'vencimento' => $request->vencimento,
+            'validade' => $validade,
+            'validade_anterior' => null,
         ]);
 
         return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto cadastrado com sucesso!');
@@ -67,16 +77,18 @@ class ProdutosController extends Controller
     {
         $produto = Produto::find($id);
 
-        if ($produto->vencimento !== $request->vencimento) {
-            $vencimento_anterior = $produto->vencimento;
+        $validade = $request->has('validade') ? $request->validade : null;
+
+        if ($produto->validade !== $validade) {
+            $validade_anterior = $produto->validade;
         }
 
         $produto->update([
             'sku' => $request->sku,
             'produto' => $request->produto,
             'preco' => $request->preco,
-            'vencimento' => $request->vencimento,
-            'vencimento_anterior' => $vencimento_anterior,
+            'validade' => $request->validade,
+            'validade_anterior' => $validade_anterior,
         ]);
 
         return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto editado com sucesso!');

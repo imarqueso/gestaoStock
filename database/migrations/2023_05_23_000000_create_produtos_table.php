@@ -20,8 +20,8 @@ class CreateProdutosTable extends Migration
             $table->integer('grupo_id');
             $table->text('preco');
             $table->boolean('vendido');
-            $table->date('validade');
-            $table->date('validade_anterior');
+            $table->date('validade')->nullable();
+            $table->date('validade_anterior')->nullable();
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 @extends('layouts.basico')
 
 @section('titulo', 'Produtos | Gestão Stock')
-@section('pagina', 'Produtos em Estoque')
+@section('pagina', 'Produtos de ' . $grupo->grupo)
 
 @section('conteudo')
 <style>
@@ -325,11 +325,14 @@
                     <form method="post" action="{{ route('cadastrarProduto') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="number" value="0" required name="vendido" hidden class="save_required">
-                        <input type="number" value="" disabled  name="grupo_id" required class="save_required">
+                        <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
                         <input type="text" name="sku" placeholder="SKU*" required class="save_required">
                         <input type="text" name="produto" placeholder="Produto*" required class="save_required">
                         <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
-                        <input type="date" name="validade" placeholder="Validade*" required class="save_required">
+                        <label>
+                            <span>Validade:</span>
+                            <input type="date" name="validade" placeholder="Validade*">
+                        </label>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
@@ -341,8 +344,8 @@
                         <th>SKU</th>
                         <th>Produto</th>
                         <th>Preço</th>
-                        <th>Vencimento</th>
-                        <th>Vencimento Anterior</th>
+                        <th>Validade</th>
+                        <th>Validade Anterior</th>
                         <th>Cadastro</th>
                         <th>Vendido</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
@@ -358,10 +361,16 @@
                             <td>{{$produto->sku}}</td>
                             <td>{{$produto->produto}}</td>
                             <td class="nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
-                            <td>{{\Carbon\Carbon::parse($produto->vencimento)->format('d/m/Y')}}</td>
                             <td>
-                                @if ($produto->vencimento_anterior)
-                                {{\Carbon\Carbon::parse($produto->vencimento_anterior)->format('d/m/Y')}}
+                                @if ($produto->validade)
+                                {{\Carbon\Carbon::parse($produto->validade)->format('d/m/Y')}}
+                                @else 
+                                --
+                                @endif
+                            </td>
+                            <td>
+                                @if ($produto->validade_anterior)
+                                {{\Carbon\Carbon::parse($produto->validade_anterior)->format('d/m/Y')}}
                                 @else 
                                 --
                                 @endif
@@ -408,6 +417,7 @@
             <h3 class="titulo-modal">Vender Produto</h3>
             <form method="post" action="{{ route('venderProduto', $produto->id) }}" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
                 @csrf
+                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
                 <input type="number" value="1" required name="vendido" hidden class="vender_required_{{$produto->id}}">
                 <input type="text" value="{{$produto->sku}}" name="sku" disabled required class="vender_required_{{$produto->id}}">
                 <input type="text" value="{{$produto->produto}}" name="produto" disabled required class="vender_required_{{$produto->id}}">
@@ -456,6 +466,7 @@
             <h3 class="titulo-modal">Editar Produto</h3>
             <form method="post" action="{{ route('editarProduto', $produto->id) }}" enctype="multipart/form-data" id="form_editar_{{$produto->id}}">
                 @csrf
+                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
                 <label>
                     <span>Código SKU*</span>
                     <input type="text" value="{{$produto->sku}}" name="sku" placeholder="Código SKU*" required class="editar_required_{{$produto->id}}">
@@ -470,7 +481,7 @@
                 </label>
                 <label>
                     <span>Validade*</span>
-                    <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*" required class="preco editar_required_{{$produto->id}}">
+                    <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*">
                 </label>
                 <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>

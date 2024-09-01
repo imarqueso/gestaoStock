@@ -348,9 +348,9 @@
                     @foreach ($grupos as $grupo)
                         <tr>
                             <td><a href="{{ route('produtosView', $grupo->id) }}">{{$grupo->grupo}}</a></td>
-                            <td>{{$quantidade}}</td>
-                            <td>{{$vendidos}}</td>
-                            <td>{{$faturamento}}</td>
+                            <td>{{$grupo->estoque}}</td>
+                            <td>{{$grupo->vendido}}</td>
+                            <td>{{$grupo->faturamento}}</td>
                             <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td><button class="editar"><img src="{{ asset('assets/img/icones/editar.svg') }}"></button></td>
@@ -396,8 +396,8 @@
         <script>
             // Função para verificar os campos de edição do produto específico
             function checkEditarFields_{{$grupo->id}}() {
-                const requiredFields = document.querySelectorAll('.editar_required_{{$produto->id}}');
-                const editButton = document.querySelector('.btnEdit_{{$produto->id}}');
+                const requiredFields = document.querySelectorAll('.editar_required_{{$grupo->id}}');
+                const editButton = document.querySelector('.btnEdit_{{$grupo->id}}');
 
                 const allFilled = Array.from(requiredFields).every(field => {
                     return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
@@ -414,7 +414,7 @@
             }
 
             // Aplica o event listener a cada campo individualmente
-            document.querySelectorAll('.editar_required_{{$produto->id}}').forEach(field => {
+            document.querySelectorAll('.editar_required_{{$grupo->id}}').forEach(field => {
                 field.addEventListener('input', checkEditarFields_{{$grupo->id}});
             });
 
