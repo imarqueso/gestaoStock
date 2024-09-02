@@ -351,6 +351,10 @@
         border-radius: 6px;
         padding: 2px 6px;
         color: white;
+        min-width: 35px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .amarelo {
@@ -360,7 +364,11 @@
         height: auto;
         border-radius: 6px;
         padding: 2px 6px;
-        color: #000000;
+        color: var(--primary);
+        min-width: 35px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .laranja {
@@ -370,7 +378,11 @@
         height: auto;
         border-radius: 6px;
         padding: 2px 6px;
-        color: #000000;
+        color: var(--primary);
+        min-width: 35px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .vermelho {
@@ -381,6 +393,10 @@
         border-radius: 6px;
         padding: 2px 6px;
         color: white;
+        min-width: 35px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .verde {
@@ -391,6 +407,10 @@
         border-radius: 6px;
         padding: 2px 6px;
         color: white;
+        min-width: 35px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .legenda {
@@ -468,7 +488,7 @@
         <div class="legenda">
             <div>
                 <span class="legendaRoxa"></span>
-                <span class="legendaTexto">Estoque Máximo</span>
+                <span class="legendaTexto">Estoque Máx.</span>
             </div>
             <div>
                 <span class="legendaAmarela"></span>
@@ -480,11 +500,11 @@
             </div>
             <div>
                 <span class="legendaLaranja"></span>
-                <span class="legendaTexto">Próx. Estoque Min</span>
+                <span class="legendaTexto">Próx. Estoque Min.</span>
             </div>
             <div>
                 <span class="legendaVermelha"></span>
-                <span class="legendaTexto">Estoque Minimo</span>
+                <span class="legendaTexto">Estoque Min.</span>
             </div>
         </div>
         <div class="produtos-box">
