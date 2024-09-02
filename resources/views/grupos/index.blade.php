@@ -344,23 +344,118 @@
     }
 
     .roxo {
-        color: #ff00e4;
+        background: #a106bb;
+        font-weight: 400;
+        width: auto;
+        height: auto;
+        border-radius: 6px;
+        padding: 2px 6px;
+        color: white;
     }
 
     .amarelo {
-        color: #d5d500;
+        background: #d5d500;
+        font-weight: 400;
+        width: auto;
+        height: auto;
+        border-radius: 6px;
+        padding: 2px 6px;
+        color: #000000;
     }
 
     .laranja {
-        color: #ff8200;
+        background: #ff8200;
+        font-weight: 400;
+        width: auto;
+        height: auto;
+        border-radius: 6px;
+        padding: 2px 6px;
+        color: #000000;
     }
 
     .vermelho {
-        color: red;
+        background: red;
+        font-weight: 400;
+        width: auto;
+        height: auto;
+        border-radius: 6px;
+        padding: 2px 6px;
+        color: white;
     }
 
     .verde {
-        color: green;
+        background: green;
+        font-weight: 400;
+        width: auto;
+        height: auto;
+        border-radius: 6px;
+        padding: 2px 6px;
+        color: white;
+    }
+
+    .legenda {
+        width: auto;
+        height: auto;
+        padding: 10px 5px 5px 10px;
+        border-radius: 8px;
+        background: var(--secondary);
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    .legenda div {
+        width: auto;
+        height: auto;
+        padding: 5px 8px;
+        border-radius: 6px;
+        background: var(--light);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    .legenda div .legendaTexto {
+        color: var(--primary);
+        font-weight: 400;
+        font-size: 12px;
+    }
+
+    .legenda div .legendaRoxa {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: #a106bb;
+        margin-right: 5px;
+    }
+    .legenda div .legendaAmarela {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: #d5d500;
+        margin-right: 5px;
+    }
+    .legenda div .legendaVerde {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: green;
+        margin-right: 5px;
+    }
+    .legenda div .legendaLaranja {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: #ff8200;
+        margin-right: 5px;
+    }
+    .legenda div .legendaVermelha {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: red;
+        margin-right: 5px;
     }
 </style>
 
@@ -370,6 +465,28 @@
         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
         <button class="btn-principal">Cadastrar Grupo</button>
         @endif
+        <div class="legenda">
+            <div>
+                <span class="legendaRoxa"></span>
+                <span class="legendaTexto">Estoque Máximo</span>
+            </div>
+            <div>
+                <span class="legendaAmarela"></span>
+                <span class="legendaTexto">Próx. Estoque Máx.</span>
+            </div>
+            <div>
+                <span class="legendaVerde"></span>
+                <span class="legendaTexto">Estoque Controlado</span>
+            </div>
+            <div>
+                <span class="legendaLaranja"></span>
+                <span class="legendaTexto">Próx. Estoque Min</span>
+            </div>
+            <div>
+                <span class="legendaVermelha"></span>
+                <span class="legendaTexto">Estoque Minimo</span>
+            </div>
+        </div>
         <div class="produtos-box">
             <h3>Grupos cadastrados</h3>
             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
