@@ -155,6 +155,7 @@
                 <tr>
                     <th>SKU</th>
                     <th>Produto</th>
+                    <th>Grupo</th>
                     <th>Preço</th>
                     <th>Cadastro</th>
                 </tr>
@@ -163,6 +164,7 @@
                     <tr>
                         <td class="produtos-td-0">{{$produto->sku}}</td>
                         <td class="produtos-td-1">{{$produto->produto}}</td>
+                        <td class="produtos-td-1">{{$produto->grupo->grupo}}</td>
                         <td class="produtos-td-2 nobreak"><span class="dinheiro">{{$produto->preco}}</span></td>
                         <td class="produtos-td-4">{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
                     </tr>
@@ -176,6 +178,7 @@
                 <tr>
                     <th>SKU</th>
                     <th>Produto</th>
+                    <th>Grupo</th>
                     <th>Preço</th>
                     <th>Data da Venda</th>
                 </tr>
@@ -183,7 +186,8 @@
                 @foreach ($vendas as $venda)
                     <tr>
                         <td class="vendas-td-1">{{$venda->sku}}</td>
-                        <td class="vendas-td-2">{{$venda->produto}}</td>
+                        <td class="vendas-td-2">{{$venda->produto->produto}}</td>
+                        <td class="vendas-td-2">{{$venda->produto->grupo->grupo}}</td>
                         <td class="vendas-td-3"><span class="dinheiro">{{$venda->preco}}</span></td>
                         <td class="vendas-td-5">{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
                     </tr>

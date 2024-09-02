@@ -12,7 +12,6 @@ class DashboardController extends Controller
     {
         $vendas = Venda::select(
             'produtos.sku',
-            'produtos.produto',
             'produtos.preco',
             'vendas.produto_id',
             'vendas.id',
@@ -23,6 +22,7 @@ class DashboardController extends Controller
             'produtos.id',
             'produtos.sku',
             'produtos.produto',
+            'produtos.grupo_id',
             'produtos.preco',
             'produtos.created_at',
         )->limit(5)->orderBy('produtos.id', 'desc')->get();
