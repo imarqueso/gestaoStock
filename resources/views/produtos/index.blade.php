@@ -306,6 +306,28 @@
     button[disabled] {
         background-color: #464444 !important;
     }
+
+    .comentarios {
+        position: relative;
+        white-space: normal;
+    }
+
+    .comentarios .resumo {
+        display: block;
+    }
+
+    .comentarios .conteudo {
+        display: none;
+        min-width: 200px;
+    }
+
+    .comentarios:hover .resumo {
+        display: none;
+    }
+
+    .comentarios:hover .conteudo {
+        display: block;
+    }
 </style>
 
 <section class="produtos-container">
@@ -387,7 +409,12 @@
                             </td>
                             <td class="comentarios">
                                 @if ($produto->comentarios)
-                                {!! nl2br(e($produto->comentarios)) !!}
+                                <span class="resumo">
+                                    {!! nl2br(e(\Illuminate\Support\Str::limit($produto->comentarios, 10, '...'))) !!}
+                                </span>
+                                <span class="conteudo">
+                                    {!! nl2br(e($produto->comentarios)) !!}
+                                </span>
                                 @else 
                                 --
                                 @endif

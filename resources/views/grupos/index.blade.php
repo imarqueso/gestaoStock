@@ -320,6 +320,28 @@
         text-decoration-color: #8bdec8;
         transition: 0.3s ease all;
     }
+
+    .comentarios {
+        position: relative;
+        white-space: normal;
+    }
+
+    .comentarios .resumo {
+        display: block;
+    }
+
+    .comentarios .conteudo {
+        display: none;
+        min-width: 200px;
+    }
+
+    .comentarios:hover .resumo {
+        display: none;
+    }
+
+    .comentarios:hover .conteudo {
+        display: block;
+    }
 </style>
 
 <section class="produtos-container">
@@ -369,7 +391,12 @@
                             <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
                             <td class="comentarios">
                                 @if ($grupo->comentarios)
-                                {!! nl2br(e($grupo->comentarios)) !!}
+                                <span class="resumo">
+                                    {!! nl2br(e(\Illuminate\Support\Str::limit($grupo->comentarios, 10, '...'))) !!}
+                                </span>
+                                <span class="conteudo">
+                                    {!! nl2br(e($grupo->comentarios)) !!}
+                                </span>
                                 @else 
                                 --
                                 @endif
