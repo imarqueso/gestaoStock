@@ -426,7 +426,7 @@
             <h3 class="titulo-modal">Vender Produto</h3>
             <form method="post" action="{{ route('venderProduto', $produto->id) }}" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
                 @csrf
-                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
+                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required>
                 <input type="number" value="1" required name="vendido" hidden class="vender_required_{{$produto->id}}">
                 <input type="text" value="{{$produto->sku}}" name="sku" disabled required class="vender_required_{{$produto->id}}">
                 <input type="text" value="{{$produto->produto}}" name="produto" disabled required class="vender_required_{{$produto->id}}">

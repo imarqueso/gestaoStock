@@ -72,7 +72,6 @@ class ProdutosController extends Controller
 
         $venda = Venda::create([
             'produto_id' => $id,
-            'preco' => $produto->preco,
             'data_venda' => $request->data_venda,
         ]);
         return redirect("/produtos/$request->grupo_id")->with('msg', 'Produto vendido com sucesso!');

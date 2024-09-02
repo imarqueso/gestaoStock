@@ -392,6 +392,7 @@
                 <thead>
                     <tr>
                         <th>Venda Nª</th>
+                        <th>SKU</th>
                         <th>Produto</th>
                         <th>Grupo</th>
                         <th>Preço</th>
@@ -405,7 +406,8 @@
                     @foreach ($vendas as $venda)
                         <tr>
                             <td>{{$venda->id}}</td>
-                            <td>{{ $venda->produto->nome }}</td>
+                            <td>{{ $venda->produto->sku }}</td>
+                            <td>{{ $venda->produto->produto }}</td>
                             <td>{{ $venda->produto->grupo->grupo }}</td>
                             <td class="nobreak">R$ <span class="dinheiro">{{$venda->produto->preco}}</span></td>
                             <td>{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
@@ -416,7 +418,7 @@
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
                                     <form method="post"
-                                    action="{{ route('excluirVenda', {{$venda->id}}) }}"
+                                    action="{{ route('excluirVenda', $venda->id) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
                                         <input type="number" name="quantidade" value="{{$venda->quantidade}}" hidden>

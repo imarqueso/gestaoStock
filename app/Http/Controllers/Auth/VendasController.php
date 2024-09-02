@@ -14,9 +14,10 @@ class VendasController extends Controller
         $listaProd = $listarProdutos->listarProdutos();
 
         $vendas = Venda::select(
-            'vendas.id',
-            'vendas.data_venda',
-        )->orderby('vendas.id', 'DESC')->get();
+            'id',
+            'produto_id',
+            'data_venda',
+        )->orderby('id', 'DESC')->get();
 
         return view('vendas.index', compact('listaProd', 'vendas'));
     }
