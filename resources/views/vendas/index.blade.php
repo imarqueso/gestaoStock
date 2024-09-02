@@ -409,7 +409,7 @@
                             <td>{{ $venda->produto->sku }}</td>
                             <td>{{ $venda->produto->produto }}</td>
                             <td>{{ $venda->produto->grupo->grupo }}</td>
-                            <td class="nobreak">R$ <span class="dinheiro">{{$venda->produto->preco}}</span></td>
+                            <td class="nobreak"><span class="dinheiro">{{$venda->produto->preco}}</span></td>
                             <td>{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td>

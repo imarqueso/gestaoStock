@@ -362,7 +362,7 @@
                         <tr>
                             <td>{{$produto->sku}}</td>
                             <td>{{$produto->produto}}</td>
-                            <td class="nobreak">R$ <span class="dinheiro">{{$produto->preco}}</span></td>
+                            <td class="nobreak"><span class="dinheiro">{{$produto->preco}}</span></td>
                             <td>
                                 @if ($produto->validade)
                                 {{\Carbon\Carbon::parse($produto->validade)->format('d/m/Y')}}
