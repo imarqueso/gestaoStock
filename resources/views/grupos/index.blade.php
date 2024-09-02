@@ -506,8 +506,8 @@
                                 <option value="C">C</option>
                             </select>
                         </label>
-                        <input type="number" name="estoque_max" placeholder="Estoque Máximo">
-                        <input type="number" name="estoque_min" placeholder="Estoque Minimo">
+                        <input type="number" name="estoque_max" placeholder="Estoque máximo">
+                        <input type="number" name="estoque_min" placeholder="Estoque minimo">
                         <textarea placeholder="Comentários" name="comentarios"></textarea>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
@@ -627,8 +627,14 @@
                         <option value="C">C</option>
                     </select>
                 </label>
-                <input type="number" value="{{$grupo->estoque_max}}" name="estoque_max" placeholder="Estoque Máximo">
-                <input type="number" value="{{$grupo->estoque_min}}" name="estoque_min" placeholder="Estoque Minimo">
+                <label>
+                    <span>Estoque máximo</span>
+                    <input type="number" value="{{$grupo->estoque_max}}" name="estoque_max" placeholder="Estoque máximo">
+                </label>
+                <label>
+                    <span>Estoque minimo</span>
+                    <input type="number" value="{{$grupo->estoque_min}}" name="estoque_min" placeholder="Estoque minimo">
+                </label>
                 <label>
                     <span>Comentarios*</span>
                     <textarea placeholder="Comentários" name="comentarios">{{$grupo->comentarios}}</textarea>
