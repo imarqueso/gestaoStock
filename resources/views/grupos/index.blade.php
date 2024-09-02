@@ -316,8 +316,8 @@
     }
 
     .linkTabela:hover {
-        color: #8bdec8;
-        text-decoration-color: #8bdec8;
+        color: #aa81d6;
+        text-decoration-color: #aa81d6;
         transition: 0.3s ease all;
     }
 

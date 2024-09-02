@@ -117,7 +117,6 @@
         padding: 15px;
         background-color: var(--light);
         font-size: 18px;
-        text-transform: uppercase;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
