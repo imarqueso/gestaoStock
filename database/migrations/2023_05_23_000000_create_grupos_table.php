@@ -17,6 +17,8 @@ class CreateGruposTable extends Migration
             $table->id();
             $table->string('grupo');
             $table->string('curva')->nullable();
+            $table->integer('estoque_max');
+            $table->integer('estoque_min');
             $table->text('comentarios')->nullable();
             $table->timestamps();
         });

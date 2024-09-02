@@ -15,6 +15,9 @@ class GruposController extends Controller
         $grupos = Grupo::select(
             'grupos.id',
             'grupos.grupo',
+            'grupos.curva',
+            'grupos.estoque_max',
+            'grupos.estoque_min',
             'grupos.comentarios',
             'grupos.created_at',
         )->get();
@@ -60,6 +63,8 @@ class GruposController extends Controller
         $grupo = Grupo::create([
             'grupo' => $request->grupo,
             'curva' => $request->curva,
+            'estoque_max' => $request->estoque_max,
+            'estoque_min' => $request->estoque_min,
             'comentarios' => $request->comentarios,
         ]);
 
@@ -73,6 +78,8 @@ class GruposController extends Controller
         $grupo->update([
             'grupo' => $request->grupo,
             'curva' => $request->curva,
+            'estoque_max' => $request->estoque_max,
+            'estoque_min' => $request->estoque_min,
             'comentarios' => $request->comentarios,
         ]);
 

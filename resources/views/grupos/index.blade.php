@@ -342,6 +342,26 @@
     .comentarios:hover .conteudo {
         display: block;
     }
+
+    .roxo {
+        color: #ff00e4;
+    }
+
+    .amarelo {
+        color: #d5d500;
+    }
+
+    .laranja {
+        color: #ff8200;
+    }
+
+    .vermelho {
+        color: red;
+    }
+
+    .verde {
+        color: green;
+    }
 </style>
 
 <section class="produtos-container">
@@ -361,7 +381,7 @@
                         @csrf
                         <input type="text" name="grupo" placeholder="Grupo*" required class="save_required">
                         <label>
-                            <span>Curva ABC*</span>
+                            <span>Curva ABC</span>
                             <select name="curva" class="produto-select">
                                 <option value selected disabled>Selecione a curva</option>
                                 <option value="A">A</option>
@@ -369,6 +389,8 @@
                                 <option value="C">C</option>
                             </select>
                         </label>
+                        <input type="number" name="estoque_max" placeholder="Estoque Máximo">
+                        <input type="number" name="estoque_min" placeholder="Estoque Minimo">
                         <textarea placeholder="Comentários" name="comentarios"></textarea>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
@@ -395,13 +417,33 @@
                     @foreach ($grupos as $grupo)
                         <tr>
                             <td><a href="{{ route('produtosView', $grupo->id) }}" class="linkTabela">{{$grupo->grupo}}</a></td>
-                            <td>{{$grupo->estoque}}</td>
+                            <td>
+                                @php
+                                    $estoque_max_95 = $grupo->estoque_max * 80 / 100;
+                                    $estoque_min_plus_10 = $grupo->estoque_min * 30 / 100;
+                                    $estoque_min_10 = $grupo->estoque_min + $estoque_min_plus_10;
+                                @endphp
+                                
+                            
+                                @if ($grupo->estoque >= $grupo->estoque_max)
+                                    <span class="roxo">{{ $grupo->estoque }}</span>
+                                @elseif ($grupo->estoque >= $estoque_max_95)
+                                    <span class="amarelo">{{ $grupo->estoque }}</span>
+                                @elseif ($grupo->estoque <= $grupo->estoque_min)
+                                    <span class="vermelho">{{ $grupo->estoque }}</span>
+                                @elseif ($grupo->estoque <= $estoque_min_10)
+                                    <span class="laranja">{{ $grupo->estoque }}</span>
+                                @else 
+                                    <span class="verde">{{ $grupo->estoque }}</span>
+                                @endif
+                            </td>
+                            
                             <td>{{$grupo->vendido}}</td>
                             <td>{{$grupo->faturamento}}</td>
                             <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
                             <td>
                                 @if ($grupo->curva)
-                                    $grupo->curva
+                                    {{ $grupo->curva }}
                                 @else 
                                 --
                                 @endif
@@ -456,10 +498,10 @@
                     <input type="text" value="{{$grupo->grupo}}" name="grupo" placeholder="Grupo*" required class="editar_required_{{$grupo->id}}">
                 </label>
                 <label>
-                    <span>Curva ABC*</span>
+                    <span>Curva ABC</span>
                     <select name="curva" value class="produto-select">
                         @if ($grupo->curva)
-                            <option value="$grupo->curva" selected>$grupo->curva</option>
+                            <option value="{{$grupo->curva}}" selected>{{$grupo->curva}}</option>
                         @else
                             <option value selected disabled>Selecione a curva</option>
                         @endif
@@ -468,6 +510,8 @@
                         <option value="C">C</option>
                     </select>
                 </label>
+                <input type="number" value="{{$grupo->estoque_max}}" name="estoque_max" placeholder="Estoque Máximo">
+                <input type="number" value="{{$grupo->estoque_min}}" name="estoque_min" placeholder="Estoque Minimo">
                 <label>
                     <span>Comentarios*</span>
                     <textarea placeholder="Comentários" name="comentarios">{{$grupo->comentarios}}</textarea>

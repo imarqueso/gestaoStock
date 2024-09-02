@@ -10,5 +10,5 @@ class Grupo extends Model
     use HasFactory;
 
     protected $table = "grupos";
-    protected $fillable = ['grupo', 'curva', 'comentarios'];
+    protected $fillable = ['grupo', 'curva', 'estoque_max', 'estoque_min', 'comentarios'];
 }
