@@ -360,6 +360,15 @@
                     <form method="post" action="{{ route('cadastrarGrupo') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="grupo" placeholder="Grupo*" required class="save_required">
+                        <label>
+                            <span>Curva ABC*</span>
+                            <select name="curva" class="produto-select">
+                                <option value selected disabled>Selecione a curva</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </label>
                         <textarea placeholder="Comentários" name="comentarios"></textarea>
                         <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
@@ -374,6 +383,7 @@
                         <th>Vendidos</th>
                         <th>Faturamento</th>
                         <th>Cadastro</th>
+                        <th>Curva ABC</th>
                         <th>Comentários</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Editar</th>
@@ -389,6 +399,13 @@
                             <td>{{$grupo->vendido}}</td>
                             <td>{{$grupo->faturamento}}</td>
                             <td>{{\Carbon\Carbon::parse($grupo->created_at)->format('d/m/Y')}}</td>
+                            <td>
+                                @if ($grupo->curva)
+                                    $grupo->curva
+                                @else 
+                                --
+                                @endif
+                            </td>
                             <td class="comentarios">
                                 @if ($grupo->comentarios)
                                 <span class="resumo">
@@ -437,6 +454,19 @@
                 <label>
                     <span>Grupo*</span>
                     <input type="text" value="{{$grupo->grupo}}" name="grupo" placeholder="Grupo*" required class="editar_required_{{$grupo->id}}">
+                </label>
+                <label>
+                    <span>Curva ABC*</span>
+                    <select name="curva" value class="produto-select">
+                        @if ($grupo->curva)
+                            <option value="$grupo->curva" selected>$grupo->curva</option>
+                        @else
+                            <option value selected disabled>Selecione a curva</option>
+                        @endif
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
                 </label>
                 <label>
                     <span>Comentarios*</span>

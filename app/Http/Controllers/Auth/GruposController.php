@@ -59,6 +59,7 @@ class GruposController extends Controller
     {
         $grupo = Grupo::create([
             'grupo' => $request->grupo,
+            'curva' => $request->curva,
             'comentarios' => $request->comentarios,
         ]);
 
@@ -71,6 +72,7 @@ class GruposController extends Controller
 
         $grupo->update([
             'grupo' => $request->grupo,
+            'curva' => $request->curva,
             'comentarios' => $request->comentarios,
         ]);
 
