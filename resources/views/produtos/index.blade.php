@@ -36,7 +36,7 @@
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
-        border-radius: 8px;
+        border-radius: 0px 8px 8px 8px;
     }
 
     /* width */
@@ -336,6 +336,11 @@
         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
         <button class="btn-principal">Cadastrar Produto</button>
         @endif
+        <div class="abas">
+            <a class="ativo">Estoque</a>
+            <a href="{{ route('vendidosView', $grupo->id) }}">Vendidos</a>
+            <a href="{{ route('vencidosView', $grupo->id) }}">Vencidos</a>
+        </div>
         <div class="produtos-box">
             <h3>Produtos em estoque</h3>
             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')

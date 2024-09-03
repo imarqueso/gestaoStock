@@ -36,7 +36,7 @@
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
-        border-radius: 8px;
+        border-radius: 0px 8px 8px 8px;
     }
 
     /* width */
@@ -333,6 +333,11 @@
 <section class="produtos-container">
     <div class="produtos-content">
         @include('partials.mensagem')
+        <div class="abas">
+            <a href="{{ route('estoqueView', $grupo->id) }}">Estoque</a>
+            <a class="ativo">Vendidos</a>
+            <a href="{{ route('vencidosView', $grupo->id) }}">Vencidos</a>
+        </div>
         <div class="produtos-box">
             <h3>Produtos vendidos</h3>
             <table id="dataTable">
