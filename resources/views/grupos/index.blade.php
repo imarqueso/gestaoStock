@@ -509,7 +509,10 @@
             </div>
         </div>
         <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
-            Ao excluir o grupo, todos os produtos cadastrados nele também serão excluídos!
+            <div class="alert-box">
+                <span id="fechar-alert">Fechar</span>
+                Ao excluir o grupo, todos os produtos cadastrados nele também serão excluídos!
+            </div>
         </div>
         <div class="produtos-box">
             <h3>Grupos cadastrados</h3>
@@ -672,6 +675,11 @@
             // Seleciona todos os botões com a classe 'btn-excluir'
             var excluirButtons = document.querySelectorAll('.excluir');
             var alertBox = document.getElementById('alert-box');
+            var fecharAlert = document.getElementById('fechar-alert');
+
+            fecharAlert.addEventListener('click', function(event) {
+                alertBox.style.display = 'none';
+            });        
         
             excluirButtons.forEach(function(button) {
                 button.addEventListener('click', function(event) {
@@ -679,11 +687,6 @@
         
                     // Exibe o alerta com a mensagem
                     alertBox.style.display = 'block';
-        
-                    // Faz o submit do formulário após uma pequena pausa ou confirmação
-                    setTimeout(() => {
-                        alertBox.style.display = 'none';
-                    }, 8000); // Tempo para exibir o alerta antes de excluir
                 });
             });
         });

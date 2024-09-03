@@ -293,7 +293,7 @@ tr:hover td {
 .abas a {
     width: auto;
     height: auto;
-    padding: 8px 12px;
+    padding: 10px 14px;
     border-radius: 6px 6px 0px 0px;
     background: var(--secondary);
     color: var(--primary);
