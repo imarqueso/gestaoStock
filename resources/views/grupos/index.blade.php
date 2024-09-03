@@ -662,7 +662,7 @@
                     <input type="number" value="{{$grupo->estoque_min}}" name="estoque_min" placeholder="Estoque minimo">
                 </label>
                 <label>
-                    <span>Comentarios*</span>
+                    <span>Comentários*</span>
                     <textarea placeholder="Comentários" name="comentarios">{{$grupo->comentarios}}</textarea>
                 </label>
                 <button class="salvar btnEdit_{{$grupo->id}} disabled" type="submit">Salvar</button>

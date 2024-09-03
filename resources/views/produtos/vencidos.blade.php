@@ -469,7 +469,7 @@
                     <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*">
                 </label>
                 <label>
-                    <span>Comentarios*</span>
+                    <span>Comentários*</span>
                     <textarea placeholder="Comentários" name="comentarios">{{$produto->comentarios}}</textarea>
                 </label>
                 <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>

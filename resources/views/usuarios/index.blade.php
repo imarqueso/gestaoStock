@@ -431,23 +431,23 @@
             enctype="multipart/form-data">
                 @csrf
                 <label>
-                    <span>Login*:</span>
-                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login*:" required class="editar_required_{{$usuario->id}}">
+                    <span>Login*</span>
+                    <input type="text" value="{{$usuario->login}}" name="login"  placeholder="Login*" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>Nome*:</span>
-                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome*:" required class="editar_required_{{$usuario->id}}">
+                    <span>Nome*</span>
+                    <input type="text" value="{{$usuario->nome}}" name="nome"  placeholder="Nome*" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>Sobrenome*:</span>
-                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome*:" required class="editar_required_{{$usuario->id}}">
+                    <span>Sobrenome*</span>
+                    <input type="text" value="{{$usuario->sobrenome}}" name="sobrenome"  placeholder="Sobrenome*" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>E-mail*:</span>
-                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail*:" required class="editar_required_{{$usuario->id}}">
+                    <span>E-mail*</span>
+                    <input type="text" value="{{$usuario->email}}" name="email"  placeholder="E-mail*" required class="editar_required_{{$usuario->id}}">
                 </label>
                 <label>
-                    <span>Senha:</span>
+                    <span>Senha</span>
                     <div class="lbsenha">
                         <input type="password" id="password" name="password"
                         placeholder="Senha" class="senhaview">
@@ -463,7 +463,7 @@
                     </div>
                 </label>
                 <label>
-                    <span>Ativo*:</span>
+                    <span>Ativo*</span>
                     <select name="ativo" required class="editar_required_{{$usuario->id}}">
                         <option selected value="{{$usuario->ativo}}">{{$usuario->ativo}}</option>
                         <option value="Sim">Sim</option>
@@ -471,7 +471,7 @@
                     </select>
                 </label>
                 <label>
-                    <span>Acesso*:</span>
+                    <span>Acesso*</span>
                     <select name="acesso" required class="editar_required_{{$usuario->id}}">
                         <option selected value="{{$usuario->acesso}}">{{$usuario->acesso}}</option>
                         <option value="Admin">Admin</option>

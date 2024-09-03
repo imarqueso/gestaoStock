@@ -87,17 +87,31 @@ class GruposController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect('/grupos')->with('msg', 'Grupo editado com sucesso!');
+        return redirect()->route('gruposView')->with('msg', 'Grupo editado com sucesso!');
     }
 
     public function excluir(Request $request, $id)
     {
-        $venda = Venda::with('produto_id')->where('produto_id', '=', $id);
-        $produto = Produto::find($id);
+        // Encontre o grupo
+        $grupo = Grupo::find($id);
 
-        $venda->delete();
-        $produto->delete();
+        // Se o grupo não for encontrado, redirecione com uma mensagem de erro
+        if (!$grupo) {
+            return redirect()->route('gruposView')->with('msgf', 'Grupo não encontrado.');
+        }
 
-        return redirect('/grupos')->with('msg', 'Grupo excluido com sucesso!');
+        // Busque todos os produtos associados ao grupo
+        $produtos = Produto::where('grupo_id', $id)->get();
+
+        // Para cada produto, exclua as vendas associadas a ele
+        foreach ($produtos as $produto) {
+            Venda::where('produto_id', $produto->id)->delete();
+            $produto->delete();
+        }
+
+        // Exclua o grupo
+        $grupo->delete();
+
+        return redirect()->route('gruposView')->with('msg', 'Grupo excluído com sucesso!');
     }
 }

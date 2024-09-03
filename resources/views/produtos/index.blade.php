@@ -362,7 +362,7 @@
                         <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
                         <input type="number" name="quantidade" placeholder="Quantidade*" required class="save_required">
                         <label>
-                            <span>Validade:</span>
+                            <span>Validade</span>
                             <input type="date" name="validade" placeholder="Validade*">
                         </label>
                         <textarea placeholder="Comentários" name="comentarios"></textarea>
@@ -548,7 +548,7 @@
                     <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*">
                 </label>
                 <label>
-                    <span>Comentarios*</span>
+                    <span>Comentários*</span>
                     <textarea placeholder="Comentários" name="comentarios">{{$produto->comentarios}}</textarea>
                 </label>
                 <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
