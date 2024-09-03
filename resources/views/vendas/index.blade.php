@@ -450,14 +450,14 @@
             button.addEventListener('click', function(event) {
                 event.preventDefault(); // Previne o envio imediato do formulário
                 
-                if (alertBox.style.display !== 'flex') {
+                if (!alertBox.classList.contains('ativo')) {
                     // Exibe o alerta com a mensagem
                     alertBox.classList.add('ativo');
 
                     setTimeout(() => {
                         alertBox.classList.remove('ativo');
                     }, 5000);
-                } else {
+                } else if (alertBox.classList.contains('ativo')) {
                     return false;
                 }
             });

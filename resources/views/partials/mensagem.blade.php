@@ -69,7 +69,7 @@
         position: absolute;
         left: 0px;
         bottom: 100%;
-        transition: 5s ease all;
+        transition: 0.3s ease all;
     }
 
     .alert-warning.ativo {
@@ -80,7 +80,7 @@
 
     .alert-warning.ativo .barra {
         max-width: 0px;
-        transition: 5s ease all;
+        transition: 5s ease all !important;
     }
 
     @media (max-width: 600px) {

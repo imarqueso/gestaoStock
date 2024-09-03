@@ -59,8 +59,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(75, 110, 209);
-    background: radial-gradient(circle, rgb(64 98 193 / 86%) 51%, rgb(19 44 115) 108%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
 }
 
 .header-content {
@@ -89,8 +91,10 @@ body {
     width: 330px;
     height: auto;
     max-height: 0px;
-    background: rgb(75, 110, 209);
-    background: linear-gradient(180deg, rgb(77 111 206) 31%, rgb(37 66 149) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
     overflow: hidden;
     transition: 0.3s ease all;
     z-index: 9999;
@@ -318,6 +322,41 @@ tr:hover td {
     background: var(--primary);
     color: var(--light);
     transition: 0.3s ease all;
+}
+
+.td-excluir form {
+    top: 10px !important;
+}
+
+.td-excluir form .btn-excluir,
+.td-excluir form .btn-cancelar {
+    text-transform: none !important;
+    font-size: 12px !important;
+    padding: 5px 16px !important;
+}
+
+.td-excluir form .btn-cancelar {
+    position: relative;
+}
+
+.td-excluir form .btn-cancelar::before {
+    content: 'Deseja realmente excluir?';
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--light);
+    background-color: #993b3b;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 108%;
+    right: -1px;
+    text-transform: none;
+    line-height: 12px;
 }
 
 @media (max-width: 1080px) {

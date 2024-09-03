@@ -23,13 +23,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </head>
 <body>
-    <header class="header-container">
+    <header class="header-container" style="background-image: url({{ asset('assets/img/background-header.jpg') }})">
         <section class="header-content">
             <span class="logo">
                 <img src="{{ asset('assets/img/logo_gestao.png') }}"/>
             </span>
             <nav class="nav-content">
-                <ul class="nav" id="nav">
+                <ul class="nav" id="nav" style="background-image: url({{ asset('assets/img/background-header.jpg') }})">
                     <li>
                         <a href="{{ route('dashboardView') }}">
                         <svg width="161" height="160" viewBox="0 0 161 160" fill="none" xmlns="http://www.w3.org/2000/svg">
