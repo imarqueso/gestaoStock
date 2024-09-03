@@ -96,7 +96,7 @@
         border-collapse: separate !important;
         border: none;
         border-spacing: 0;
-        border-radius: 10px
+        border-radius: 10px;
         overflow: hidden;
     }
 
@@ -327,6 +327,11 @@
     <div class="usuarios-content">
         @include('partials.mensagem')
         <button class="btn-principal">Cadastrar Usuário</button>
+        <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
+            <div class="alert-box">
+                Ao excluir o usuario, todos os dados e interações dele serão excluídos!
+            </div>
+        </div>
         <div class="usuarios-box">
             <h3>Usuários cadastrados</h3>
             <section class="modal-container modal-cadastrar">
@@ -509,6 +514,26 @@
     </script>
     @endif    
 @endforeach
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleciona todos os botões com a classe 'btn-excluir'
+        var excluirButtons = document.querySelectorAll('.excluir');
+        var alertBox = document.getElementById('alert-box');
+    
+        excluirButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Previne o envio imediato do formulário
+    
+                // Exibe o alerta com a mensagem
+                alertBox.style.display = 'flex';
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 5000);
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable({

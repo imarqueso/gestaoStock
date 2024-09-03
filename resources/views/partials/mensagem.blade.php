@@ -33,9 +33,9 @@
     .alert-warning {
         position: fixed;
         left: 50%;
-        top: 50%;
+        bottom: -40px;
         transform: translate(-50%, -50%);
-        width: auto;
+        width: 80%;
         height: auto;
         display: flex;
         justify-content: center;
@@ -48,14 +48,12 @@
         max-width: 380px;
         height: auto;
         padding: 20px;
-        border-radius: 6px;
         color: white;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
         line-height: 20px;
         color: var(--light);
         background-color: #792525;
-        margin: 0px 0px 20px 0px;
         box-sizing: border-box;
         position: relative;
     }
@@ -64,15 +62,20 @@
         width: auto;
         height: auto;
         padding: 5px 10px;
-        border-radius: 6px;
         background-color: #792525;
         color: var(--light);
         font-size: 10px;
         font-weight: 400;
         cursor: pointer;
         position: absolute;
-        bottom: 105%;
+        bottom: 100%;
         right: 0px;
+        transition: 0.3s ease all;
+    }
+
+    .alert-warning span:hover {
+        background-color: #bf4949;
+        transition: 0.3s ease all;
     }
 </style>
 

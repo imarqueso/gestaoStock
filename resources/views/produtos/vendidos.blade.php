@@ -338,6 +338,11 @@
             <a class="ativo">Vendidos</a>
             <a href="{{ route('vencidosView', $grupo->id) }}">Vencidos</a>
         </div>
+        <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
+            <div class="alert-box">
+                Ao excluir a venda, o produto voltara para o estoque caso não esteja vencido!
+            </div>
+        </div>
         <div class="produtos-box">
             <h3>Produtos vendidos</h3>
             <table id="dataTable">
@@ -413,6 +418,27 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleciona todos os botões com a classe 'btn-excluir'
+        var excluirButtons = document.querySelectorAll('.excluir');
+        var alertBox = document.getElementById('alert-box');
+    
+        excluirButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Previne o envio imediato do formulário
+    
+                // Exibe o alerta com a mensagem
+                alertBox.style.display = 'flex';
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 5000);
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

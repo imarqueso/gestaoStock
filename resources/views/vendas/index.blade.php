@@ -385,6 +385,11 @@
 <section class="vendas-container">
     <div class="vendas-content">
         @include('partials.mensagem')
+        <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
+            <div class="alert-box">
+                Ao excluir a venda, o produto voltara para o estoque caso não esteja vencido!
+            </div>
+        </div>
         <div class="vendas-box">
             <h3>Vendas cadastradas</h3>
             <table id="dataTable">
@@ -434,6 +439,26 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleciona todos os botões com a classe 'btn-excluir'
+        var excluirButtons = document.querySelectorAll('.excluir');
+        var alertBox = document.getElementById('alert-box');
+    
+        excluirButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Previne o envio imediato do formulário
+    
+                // Exibe o alerta com a mensagem
+                alertBox.style.display = 'flex';
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 5000);
+            });
+        });
+    });
+</script>
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
