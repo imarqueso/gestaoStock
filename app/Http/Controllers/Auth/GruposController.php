@@ -26,6 +26,10 @@ class GruposController extends Controller
         foreach ($grupos as $grupo) {
             // Obtendo os produtos filhos de cada grupo
             $estoque = Produto::where('grupo_id', $grupo->id)
+                ->where(function ($query) {
+                    $query->where('validade', '>', now())
+                        ->orWhereNull('validade');
+                })
                 ->where('vendido', 0) // Condição para somar apenas os não vendidos
                 ->get();
 

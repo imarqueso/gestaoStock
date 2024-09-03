@@ -44,16 +44,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/grupos/{id}/excluir', [GruposController::class, 'excluir'])->name('excluirGrupo');
 
     // Produtos
-    Route::get('/produtos/{grupo_id}', [ProdutosController::class, 'view'])->name('produtosView');
+    Route::get('/produtos/{grupo_id}/estoque', [ProdutosController::class, 'viewEstoque'])->name('estoqueView');
+    Route::get('/produtos/{grupo_id}/vendidos', [ProdutosController::class, 'viewVendidos'])->name('vendidosView');
+    Route::get('/produtos/{grupo_id}/vencidos', [ProdutosController::class, 'viewVencidos'])->name('vencidosView');
     Route::post('/produtos/cadastrar', [ProdutosController::class, 'cadastrar'])->name('cadastrarProduto');
     Route::post('/produtos/{produto_id}/vender', [ProdutosController::class, 'vender'])->name('venderProduto');
     Route::post('/produtos/{produto_id}/editar', [ProdutosController::class, 'editar'])->name('editarProduto');
+    Route::post('/produtos/{produto_id}/vencidos/editar', [ProdutosController::class, 'editarVencidos'])->name('editarVencidos');
     Route::post('/produtos/{produto_id}/excluir', [ProdutosController::class, 'excluir'])->name('excluirProduto');
+    Route::post('/produtos/{produto_id}/vencidos/excluir', [ProdutosController::class, 'excluirVencidos'])->name('excluirVencidos');
 
     // Vendas
     Route::get('/vendas', [VendasController::class, 'view'])->name('vendasView');
     Route::post('/vendas/cadastrar', [VendasController::class, 'cadastrar'])->name('cadastrarVenda');
     Route::post('/vendas/{id}/excluir', [VendasController::class, 'excluir'])->name('excluirVenda');
+    Route::post('/produtos/{id}/vendidos/excluir', [ProdutosController::class, 'excluirVendidos'])->name('excluirVendidos');
 
     // Notas
     Route::get('/notas', [NotasController::class, 'view'])->name('notasView');

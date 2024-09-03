@@ -415,6 +415,7 @@
 
     .legenda {
         width: auto;
+        max-width: 338px;
         height: auto;
         padding: 10px 5px 5px 10px;
         border-radius: 8px;
@@ -553,7 +554,7 @@
                 <tbody>
                     @foreach ($grupos as $grupo)
                         <tr>
-                            <td><a href="{{ route('produtosView', $grupo->id) }}" class="linkTabela">{{$grupo->grupo}}</a></td>
+                            <td><a href="{{ route('estoqueView', $grupo->id) }}" class="linkTabela">{{$grupo->grupo}}</a></td>
                             <td>
                                 @php
                                     $estoque_max_95 = $grupo->estoque_max * 80 / 100;

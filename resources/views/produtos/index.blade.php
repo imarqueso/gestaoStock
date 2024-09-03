@@ -337,7 +337,7 @@
         <button class="btn-principal">Cadastrar Produto</button>
         @endif
         <div class="produtos-box">
-            <h3>Produtos cadastrados</h3>
+            <h3>Produtos em estoque</h3>
             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
             <section class="modal-container modal-cadastrar">
                 <div class="modal-content">
@@ -370,7 +370,6 @@
                         <th>Validade</th>
                         <th>Validade Anterior</th>
                         <th>Cadastro</th>
-                        <th>Vendido</th>
                         <th>Comentários</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Vender</th>
@@ -400,13 +399,6 @@
                                 @endif
                             </td>
                             <td>{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
-                            <td>
-                                @if ($produto->vendido)
-                                <span class="vendido">Sim</span>
-                                @else
-                                <span class="naovendido">Não</span>
-                                @endif
-                            </td>
                             <td class="comentarios">
                                 @if ($produto->comentarios)
                                 <span class="resumo">
@@ -431,6 +423,7 @@
                                     action="{{ route('excluirProduto', $produto->id) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
+                                        <input type="number" name="grupo_id" value="{{$grupo->id}}" hidden>
                                         <button type="submit" class="btn-excluir">Excluir</button>
                                         <span class="btn-cancelar">Cancelar</span>
                                     </form>
