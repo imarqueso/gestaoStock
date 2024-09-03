@@ -106,6 +106,6 @@ class NotasController extends Controller
 
         $nota->delete();
 
-        return redirect('/notas')->with('msg', 'Nota excluida com sucesso!');
+        return redirect()->route('notasView')->with('msg', 'Nota excluida com sucesso!');
     }
 }

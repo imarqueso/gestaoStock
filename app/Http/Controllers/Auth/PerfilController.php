@@ -67,7 +67,7 @@ class PerfilController extends Controller
         if ($validator->fails()) {
             // Extrair a primeira mensagem de erro e passá-la com 'msgf'
             $firstErrorMessage = $validator->errors()->first();
-            return redirect('/perfil')
+            return redirect()->route('perfilView')
                 ->with('msgf', $firstErrorMessage)
                 ->withInput(); // Preserva os dados do formulário
         }
@@ -86,6 +86,6 @@ class PerfilController extends Controller
 
         $perfil->update($dados);
 
-        return redirect('/perfil')->with('msg', 'Dados pessoais editados com sucesso!');
+        return redirect()->route('perfilView')->with('msg', 'Dados pessoais editados com sucesso!');
     }
 }

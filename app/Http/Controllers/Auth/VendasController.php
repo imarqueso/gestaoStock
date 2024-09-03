@@ -40,6 +40,6 @@ class VendasController extends Controller
 
         $venda->delete();
 
-        return redirect('/vendas')->with('msg', 'Venda excluida com sucesso!');
+        return redirect()->route('vendasView')->with('msg', 'Venda excluida com sucesso!');
     }
 }

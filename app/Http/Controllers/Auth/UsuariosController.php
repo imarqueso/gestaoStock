@@ -56,7 +56,7 @@ class UsuariosController extends Controller
         if ($validator->fails()) {
             // Extrair a primeira mensagem de erro e passá-la com 'msgf'
             $firstErrorMessage = $validator->errors()->first();
-            return redirect('/usuarios')
+            return redirect()->route('usuariosView')
                 ->with('msgf', $firstErrorMessage)
                 ->withInput(); // Preserva os dados do formulário
         }
@@ -72,7 +72,7 @@ class UsuariosController extends Controller
             'acesso' => $request->acesso,
         ]);
 
-        return redirect("/usuarios")->with('msg', 'Usuário cadastrado com sucesso!');
+        return redirect()->route('usuariosView')->with('msg', 'Usuário cadastrado com sucesso!');
     }
 
     public function editar(Request $request, $id)
@@ -114,7 +114,7 @@ class UsuariosController extends Controller
         if ($validator->fails()) {
             // Extrair a primeira mensagem de erro e passá-la com 'msgf'
             $firstErrorMessage = $validator->errors()->first();
-            return redirect('/usuarios')
+            return redirect()->route('usuariosView')
                 ->with('msgf', $firstErrorMessage)
                 ->withInput(); // Preserva os dados do formulário
         }
@@ -135,7 +135,7 @@ class UsuariosController extends Controller
 
         $usuario->update($dados);
 
-        return redirect('/usuarios')->with('msg', 'Usuário editado com sucesso!');
+        return redirect()->route('usuariosView')->with('msg', 'Usuário editado com sucesso!');
     }
 
     public function excluir(Request $request, $id)
@@ -144,6 +144,6 @@ class UsuariosController extends Controller
 
         $usuario->delete();
 
-        return redirect('/usuarios')->with('msg', 'Usuário excluido com sucesso!');
+        return redirect()->route('usuariosView')->with('msg', 'Usuário excluido com sucesso!');
     }
 }

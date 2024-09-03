@@ -72,7 +72,7 @@ class GruposController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect("/grupos")->with('msg', 'Grupo cadastrado com sucesso!');
+        return redirect()->route('gruposView')->with('msg', 'Grupo cadastrado com sucesso!');
     }
 
     public function editar(Request $request, $id)
