@@ -333,6 +333,8 @@ tr:hover td {
     text-transform: none !important;
     font-size: 12px !important;
     padding: 5px 16px !important;
+    font-family: 'Sen', sans-serif !important;
+    font-weight: 400 !important;
 }
 
 .td-excluir form .btn-cancelar {
