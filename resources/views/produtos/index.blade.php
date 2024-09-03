@@ -457,13 +457,17 @@
         excluirButtons.forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault(); // Previne o envio imediato do formulário
-    
-                // Exibe o alerta com a mensagem
-                alertBox.style.display = 'flex';
+                
+                if (alertBox.style.display !== 'flex') {
+                    // Exibe o alerta com a mensagem
+                    alertBox.style.display = 'flex';
 
-                setTimeout(() => {
-                    alertBox.style.display = 'none';
-                }, 5000);
+                    setTimeout(() => {
+                        alertBox.style.display = 'none';
+                    }, 5000);
+                } else {
+                    return false;
+                }
             });
         });
     });
