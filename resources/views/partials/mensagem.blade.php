@@ -16,7 +16,7 @@
     }
 
     .alert-danger {
-        width: 100%;
+        width: auto;
         height: auto;
         padding: 10px 20px;
         border-radius: 5px;
@@ -27,6 +27,21 @@
         color: white;
         background-color: #792525;
         margin: 20px 0px;
+        box-sizing: border-box;
+    }
+
+    .alert-warning {
+        width: auto;
+        height: auto;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        color: white;
+        background-color: #792525;
+        margin: 0px 0px 20px 0px;
         box-sizing: border-box;
     }
 </style>

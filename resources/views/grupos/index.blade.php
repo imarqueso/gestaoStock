@@ -399,8 +399,8 @@
         align-items: center;
     }
 
-    .verde {
-        background: green;
+    .controlado {
+        background: var(--primary2);
         font-weight: 400;
         width: auto;
         height: auto;
@@ -457,11 +457,11 @@
         background: #d5d500;
         margin-right: 5px;
     }
-    .legenda div .legendaVerde {
+    .legenda div .legendaAzul {
         width: 20px;
         height: 20px;
         border-radius: 6px;
-        background: green;
+        background: var(--primary2);
         margin-right: 5px;
     }
     .legenda div .legendaLaranja {
@@ -496,7 +496,7 @@
                 <span class="legendaTexto">Próx. Estoque Máx.</span>
             </div>
             <div>
-                <span class="legendaVerde"></span>
+                <span class="legendaAzul"></span>
                 <span class="legendaTexto">Estoque Controlado</span>
             </div>
             <div>
@@ -507,6 +507,9 @@
                 <span class="legendaVermelha"></span>
                 <span class="legendaTexto">Estoque Min.</span>
             </div>
+        </div>
+        <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
+            Ao excluir o grupo, todos os produtos cadastrados nele também serão excluídos!
         </div>
         <div class="produtos-box">
             <h3>Grupos cadastrados</h3>
@@ -558,7 +561,7 @@
                             <td>
                                 @php
                                     $estoque_max_95 = $grupo->estoque_max * 80 / 100;
-                                    $estoque_min_plus_10 = $grupo->estoque_min * 30 / 100;
+                                    $estoque_min_plus_10 = $grupo->estoque_min * 40 / 100;
                                     $estoque_min_10 = $grupo->estoque_min + $estoque_min_plus_10;
                                 @endphp
                                 
@@ -572,7 +575,7 @@
                                 @elseif ($grupo->estoque <= $estoque_min_10)
                                     <span class="laranja">{{ $grupo->estoque }}</span>
                                 @else 
-                                    <span class="verde">{{ $grupo->estoque }}</span>
+                                    <span class="controlado">{{ $grupo->estoque }}</span>
                                 @endif
                             </td>
                             
@@ -664,6 +667,27 @@
             </form>
         </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleciona todos os botões com a classe 'btn-excluir'
+            var excluirButtons = document.querySelectorAll('.excluir');
+            var alertBox = document.getElementById('alert-box');
+        
+            excluirButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Previne o envio imediato do formulário
+        
+                    // Exibe o alerta com a mensagem
+                    alertBox.style.display = 'block';
+        
+                    // Faz o submit do formulário após uma pequena pausa ou confirmação
+                    setTimeout(() => {
+                        alertBox.style.display = 'none';
+                    }, 8000); // Tempo para exibir o alerta antes de excluir
+                });
+            });
+        });
+    </script>
         <script>
             // Função para verificar os campos de edição do produto específico
             function checkEditarFields_{{$grupo->id}}() {
