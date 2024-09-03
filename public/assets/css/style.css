@@ -92,7 +92,7 @@ body {
     background: rgb(75, 110, 209);
     background: linear-gradient(180deg, rgb(77 111 206) 31%, rgb(37 66 149) 100%);
     overflow: hidden;
-    transition: 0.5s ease all;
+    transition: 0.3s ease all;
     z-index: 9999;
     display: block;
 }
@@ -231,7 +231,7 @@ body {
 
 .abrir-menu {
     max-height: 180px !important;
-    transition: 0.5s ease all;
+    transition: 0.3s ease all;
 }
 
 #menu::after {

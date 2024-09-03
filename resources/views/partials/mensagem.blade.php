@@ -33,7 +33,7 @@
     .alert-warning {
         position: fixed;
         left: 50%;
-        bottom: -40px;
+        bottom: -38px;
         transform: translate(-50%, -50%);
         width: 80%;
         height: auto;
@@ -47,7 +47,7 @@
         width: auto;
         max-width: 380px;
         height: auto;
-        padding: 20px;
+        padding: 15px 20px;
         color: white;
         font-size: 12px;
         font-weight: 400;

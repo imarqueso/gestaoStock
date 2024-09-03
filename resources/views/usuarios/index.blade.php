@@ -329,7 +329,7 @@
         <button class="btn-principal">Cadastrar Usuário</button>
         <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
             <div class="alert-box">
-                Ao excluir o usuario, todos os dados e interações dele serão excluídos!
+                Ao excluir o usuário, todos os dados e interações dele serão excluídos!
             </div>
         </div>
         <div class="usuarios-box">
