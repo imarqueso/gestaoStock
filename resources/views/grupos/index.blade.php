@@ -508,8 +508,9 @@
                 <span class="legendaTexto">Estoque Min.</span>
             </div>
         </div>
-        <div id="alert-box" class="alert-warning" role="alert" style="display: none;">
+        <div id="alert-box" class="alert-warning" role="alert">
             <div class="alert-box">
+                <span class="barra"></span>
                 Ao excluir o grupo, todos os produtos cadastrados nele também serão excluídos!
             </div>
         </div>
@@ -681,10 +682,10 @@
                     
                     if (alertBox.style.display !== 'flex') {
                         // Exibe o alerta com a mensagem
-                        alertBox.style.display = 'flex';
+                        alertBox.classList.add('ativo');
 
                         setTimeout(() => {
-                            alertBox.style.display = 'none';
+                            alertBox.classList.remove('ativo');
                         }, 5000);
                     } else {
                         return false;

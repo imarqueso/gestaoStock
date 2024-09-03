@@ -32,12 +32,14 @@
 
     .alert-warning {
         position: fixed;
-        left: 50%;
-        bottom: -38px;
-        transform: translate(-50%, -50%);
-        width: 80%;
+        right: 0;
+        bottom: 0px;
+        width: auto;
         height: auto;
         display: flex;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease all;
         justify-content: center;
         align-items: center;
         z-index: 99999;
@@ -58,24 +60,42 @@
         position: relative;
     }
 
-    .alert-warning span {
-        width: auto;
-        height: auto;
-        padding: 5px 10px;
+    .alert-box .barra {
+        width: 100%;
+        max-width: 380px;
+        height: 6px;
         background-color: #792525;
-        color: var(--light);
-        font-size: 10px;
-        font-weight: 400;
-        cursor: pointer;
+        opacity: 0.6;
         position: absolute;
+        left: 0px;
         bottom: 100%;
-        right: 0px;
+        transition: 5s ease all;
+    }
+
+    .alert-warning.ativo {
+        opacity: 1;
+        visibility: visible;
         transition: 0.3s ease all;
     }
 
-    .alert-warning span:hover {
-        background-color: #bf4949;
-        transition: 0.3s ease all;
+    .alert-warning.ativo .barra {
+        max-width: 0px;
+        transition: 5s ease all;
+    }
+
+    @media (max-width: 600px) {
+        .alert-box {
+            max-width: 300px;
+        }
+
+        .alert-box .barra {
+            max-width: 300px;
+        }
+
+        .alert-warning.ativo .barra {
+            max-width: 0px;
+            transition: 5s ease all;
+        }
     }
 </style>
 
