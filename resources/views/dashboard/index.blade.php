@@ -16,7 +16,8 @@
 
     .dashboard-content {
         width: 100%;
-        max-width: 1170px;
+        max-width: 1220px;
+        max-width: ;
         height: auto;
         padding: 60px 20px 80px 20px;
         display: grid;
@@ -30,13 +31,14 @@
     .dashboard-box {
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding: 35px 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
+        border-radius: 8px;
     }
 
     /* width */
@@ -68,30 +70,35 @@
         min-width: 680px;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse;
+        border-collapse: separate !important;
         border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        border-spacing: 0;  
     }
 
    th {
-        border: 1px solid #b9b8b8;
-        padding: 15px;
-        background-color: #d6d6d6;
-        font-size: 12px;
+        border: 1px solid #6c88d7;
+        border-bottom: 1px solid #6c88d7 !important;
+        padding: 12px 30px 12px 10px !important;
+        background-color: rgb(94 120 195);
+        font-size: 16px;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
    }
 
    td {
-        border: 1px solid #b9b8b8;
+        border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 14px;
-        text-transform: uppercase;
+        font-size: 18px;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
    }
 
    @media (max-width: 1080px) {
@@ -119,7 +126,7 @@
    }
 
    .produtos-td-2, .vendas-td-3 {
-        min-width: 100px;
+        min-width: 165px;
    }
 
    .vendas-td-4 {
@@ -145,17 +152,19 @@
             <h3>Últimos produtos adicionados</h3>
             <table>
                 <tr>
-                    <th>Titulo</th>
+                    <th>SKU</th>
+                    <th>Produto</th>
+                    <th>Grupo</th>
                     <th>Preço</th>
-                    <th>Quantidade</th>
                     <th>Cadastro</th>
                 </tr>
                 @if(isset($produtos))
                 @foreach ($produtos as $produto)
                     <tr>
+                        <td class="produtos-td-0">{{$produto->sku}}</td>
                         <td class="produtos-td-1">{{$produto->produto}}</td>
-                        <td class="produtos-td-2 dinheiro nobreak">R$ {{$produto->preco}}</td>
-                        <td class="produtos-td-3">{{$produto->quantidade}}</td>
+                        <td class="produtos-td-1">{{$produto->grupo->grupo}}</td>
+                        <td class="produtos-td-2 nobreak"><span class="dinheiro">{{$produto->preco}}</span></td>
                         <td class="produtos-td-4">{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
                     </tr>
                 @endforeach
@@ -166,22 +175,20 @@
             <h3>Últimos produtos vendidos</h3>
             <table>
                 <tr>
-                    <th>Código</th>
-                    <th>Titulo</th>
+                    <th>SKU</th>
+                    <th>Produto</th>
+                    <th>Grupo</th>
                     <th>Preço</th>
-                    <th>Vendidos</th>
                     <th>Data da Venda</th>
-                    <th>Total</th>
                 </tr>
                 @if(isset($vendas))
                 @foreach ($vendas as $venda)
                     <tr>
-                        <td class="vendas-td-1">{{$venda->id}}</td>
-                        <td class="vendas-td-2">{{$venda->produto}}</td>
-                        <td class="vendas-td-3 dinheiro">R$ {{$venda->preco}}</td>
-                        <td class="vendas-td-4">{{$venda->vendidos}}</td>
+                        <td class="vendas-td-1">{{$venda->sku}}</td>
+                        <td class="vendas-td-2">{{$venda->produto->produto}}</td>
+                        <td class="vendas-td-2">{{$venda->produto->grupo->grupo}}</td>
+                        <td class="vendas-td-3"><span class="dinheiro">{{$venda->preco}}</span></td>
                         <td class="vendas-td-5">{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
-                        <td class="vendas-td-6 dinheiro nobreak">R$ {{$venda->total}}</td>
                     </tr>
                 @endforeach
                 @endif
@@ -191,11 +198,22 @@
 </section>
 
 <script>
-    var dinheiro = document.querySelectorAll('td.dinheiro');
+    $(document).ready(function(){
+        // Aplica a máscara de moeda ao campo de entrada
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
 
-    for (var z = 0; z < dinheiro.length; z++) {
-        dinheiro[z].innerHTML = dinheiro[z].innerHTML.replace('.', ",");
-    }
+        $('.dinheiro').each(function() {
+            let valorDinheiro = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorDinheiro.startsWith('.')) {
+                valorDinheiro = valorDinheiro.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorDinheiro);
+        });       
+    });
 </script>
 
 @endsection

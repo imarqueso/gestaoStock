@@ -36,7 +36,8 @@ class NotasController extends Controller
     }
 
 
-    private function formatarNumero($numero) {
+    private function formatarNumero($numero)
+    {
         $numero = str_replace('.', '', $numero); // Remove separador de milhar
         $numero = str_replace(',', '.', $numero); // Troca vírgula por ponto
         return floatval($numero); // Converte a string para float
@@ -93,8 +94,18 @@ class NotasController extends Controller
         )->where('notas.id', '=', $id)->get();
 
         $pdf = $pdf->loadView('notas.nota', compact('notas'))
-                   ->setPaper('a4', 'portrait');
+            ->setPaper('a4', 'portrait');
 
-        return $pdf->download('nota_' . $id . '.pdf');
+        // return $pdf->download('nota_' . $id . '.pdf');
+        return $pdf->stream('nota_' . $id . '.pdf');
+    }
+
+    public function excluir(Request $request, $id)
+    {
+        $nota = Nota::find($id);
+
+        $nota->delete();
+
+        return redirect()->route('notasView')->with('msg', 'Nota excluida com sucesso!');
     }
 }

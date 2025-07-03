@@ -14,50 +14,19 @@ class VendasController extends Controller
         $listaProd = $listarProdutos->listarProdutos();
 
         $vendas = Venda::select(
-            'produtos.produto AS produto',
-            'vendas.produto_id',
-            'vendas.id',
-            'vendas.preco',
-            'vendas.quantidade',
-            'vendas.data_venda',
-            'vendas.vendidos',
-            'vendas.total',
-        )->join('produtos', 'produtos.id', '=', 'vendas.produto_id')->orderby('vendas.id', 'DESC')->get();
+            'id',
+            'produto_id',
+            'data_venda',
+        )->orderby('id', 'DESC')->get();
 
         return view('vendas.index', compact('listaProd', 'vendas'));
     }
 
-    private function formatarNumero($numero) {
+    private function formatarNumero($numero)
+    {
         $numero = str_replace('.', '', $numero); // Remove separador de milhar
         $numero = str_replace(',', '.', $numero); // Troca vírgula por ponto
         return floatval($numero); // Converte a string para float
-    }
-
-    public function cadastrar(Request $request)
-    {
-        $produto = Produto::find($request->produto_id);
-
-        $preco = $this->formatarNumero($produto->preco);
-
-        $somaProdutoVendido = $produto->vendidos + $request->vendidos;
-        $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
-        $totalProdutoVendido = $preco * $request->vendidos;
-
-        $produto->update([
-            'quantidade' => $subtracaoProdutoVendido,
-            'vendidos' => $somaProdutoVendido,
-        ]);
-
-        $venda = Venda::create([
-            'produto_id' => $request->produto_id,
-            'preco' => $produto->preco,
-            'quantidade' => $subtracaoProdutoVendido,
-            'data_venda' => $request->data_venda,
-            'vendidos' => $request->vendidos,
-            'total' => $totalProdutoVendido,
-        ]);
-
-        return redirect("/vendas")->with('msg', 'Venda cadastrada com sucesso!');
     }
 
     public function excluir(Request $request, $id)
@@ -65,17 +34,12 @@ class VendasController extends Controller
         $venda = Venda::find($id);
         $produto = Produto::find($request->produto_id);
 
-
-        $vendidos = $produto->vendidos + $request->vendidos;
-        $quantidade = $produto->quantidade + $request->vendidos;
-
         $produto->update([
-            'quantidade' => $quantidade,
-            'vendidos' => $vendidos,
+            'vendido' => 0,
         ]);
 
         $venda->delete();
 
-        return redirect('/vendas')->with('msg', 'Venda excluida com sucesso!');
+        return redirect()->route('vendasView')->with('msg', 'Venda excluida com sucesso!');
     }
 }

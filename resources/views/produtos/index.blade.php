@@ -1,7 +1,7 @@
 @extends('layouts.basico')
 
 @section('titulo', 'Produtos | Gestão Stock')
-@section('pagina', 'Produtos em Estoque')
+@section('pagina', 'Produtos de ' . $grupo->grupo)
 
 @section('conteudo')
 <style>
@@ -16,7 +16,7 @@
 
     .produtos-content {
         width: 100%;
-        max-width: 1170px;
+        max-width: 1220px;
         height: auto;
         padding: 60px 20px 80px 20px;
         display: flex;
@@ -27,14 +27,16 @@
 
     .produtos-box {
         width: 100%;
+        max-height: 803px;
         height: 100%;
-        padding: 20px;
+        padding: 35px 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
+        border-radius: 0px 8px 8px 8px;
     }
 
     /* width */
@@ -88,34 +90,38 @@
 
     table {
         width: 100%;
-        min-width: 1090px !important;
+        min-width: 1135px !important;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse !important;
+        border-collapse: separate !important;
+        overflow: hidden; 
         border: none;
+        border-radius: 10px;
+        border-spacing: 0;  
     }
 
     th {
-        border: 1px solid #b9b8b8;
-        border-bottom: 1px solid #b9b8b8 !important;
-        padding: 15px;
-        background-color: #d6d6d6;
-        font-size: 12px;
+        border: 1px solid #6c88d7;
+        border-bottom: 1px solid #6c88d7 !important;
+        padding: 12px 30px 12px 10px !important;
+        background-color: rgb(94 120 195);
+        font-size: 16px;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
-        border: 1px solid #b9b8b8;
+        border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 14px;
-        text-transform: uppercase;
+        font-size: 18px;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -162,21 +168,6 @@
 
     td button.editar {
         background-color: #09308b;
-    }
-
-    td button:hover {
-        filter: brightness(1.5);
-        transition: 0.5s ease all;
-    }
-
-    td button img {
-        height: 10px;
-        width: auto;
-    }
-
-    td .excluir img {
-        height: 10px;
-        width: auto;
     }
 
     .td-excluir form {
@@ -311,6 +302,32 @@
     .nobreak {
         white-space: nowrap !important;
     }
+
+    button[disabled] {
+        background-color: #464444 !important;
+    }
+
+    .comentarios {
+        position: relative;
+        white-space: normal;
+    }
+
+    .comentarios .resumo {
+        display: block;
+    }
+
+    .comentarios .conteudo {
+        display: none;
+        min-width: 200px;
+    }
+
+    .comentarios:hover .resumo {
+        display: none;
+    }
+
+    .comentarios:hover .conteudo {
+        display: block;
+    }
 </style>
 
 <section class="produtos-container">
@@ -319,8 +336,19 @@
         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
         <button class="btn-principal">Cadastrar Produto</button>
         @endif
+        <div class="abas">
+            <a class="ativo">Estoque</a>
+            <a href="{{ route('vendidosView', $grupo->id) }}">Vendidos</a>
+            <a href="{{ route('vencidosView', $grupo->id) }}">Vencidos</a>
+        </div>
+        <div id="alert-box" class="alert-warning" role="alert">
+            <div class="alert-box">
+                <span class="barra"></span>
+                Ao excluir o produto, todos os dados e interações dele serão excluídos!
+            </div>
+        </div>
         <div class="produtos-box">
-            <h3>Produtos cadastrados</h3>
+            <h3>Produtos em estoque</h3>
             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
             <section class="modal-container modal-cadastrar">
                 <div class="modal-content">
@@ -328,11 +356,18 @@
                     <h3 class="titulo-modal">Cadastrar Produto</h3>
                     <form method="post" action="{{ route('cadastrarProduto') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="produto" placeholder="Produto:" required>
-                        <input type="text" name="preco" placeholder="Preço:" class="preco" required>
-                        <input type="number" name="quantidade" placeholder="Quantidade:" required>
-                        <input type="number" name="vendidos" placeholder="Vendidos:" required>
-                        <button class="salvar" type="submit">Salvar</button>
+                        <input type="number" value="0" required name="vendido" hidden class="save_required">
+                        <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
+                        <input type="text" name="sku" placeholder="SKU*" required class="save_required">
+                        <input type="text" name="produto" placeholder="Produto*" required class="save_required">
+                        <input type="text" name="preco" placeholder="Preço*" class="preco" required class="save_required">
+                        <input type="number" name="quantidade" placeholder="Quantidade*" required class="save_required">
+                        <label>
+                            <span>Validade</span>
+                            <input type="date" name="validade" placeholder="Validade*">
+                        </label>
+                        <textarea placeholder="Comentários" name="comentarios"></textarea>
+                        <button class="salvar btnSave" type="submit">Salvar</button>
                     </form>
                 </div>
             </section>
@@ -340,11 +375,13 @@
             <table id="dataTable">
                 <thead>
                     <tr>
+                        <th>SKU</th>
                         <th>Produto</th>
                         <th>Preço</th>
-                        <th>Estoque</th>
+                        <th>Validade</th>
+                        <th>Validade Anterior</th>
                         <th>Cadastro</th>
-                        <th>Vendidos</th>
+                        <th>Comentários</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Vender</th>
                         <th>Editar</th>
@@ -355,11 +392,36 @@
                 <tbody>
                     @foreach ($produtos as $produto)
                         <tr>
+                            <td>{{$produto->sku}}</td>
                             <td>{{$produto->produto}}</td>
-                            <td class="dinheiro nobreak">R$ {{$produto->preco}}</td>
-                            <td>{{$produto->quantidade}}</td>
-                            <td>{{\Carbon\Carbon::parse($produto->data_cadastro)->format('d/m/Y')}}</td>
-                            <td>{{$produto->vendidos}}</td>
+                            <td class="nobreak"><span class="dinheiro">{{$produto->preco}}</span></td>
+                            <td>
+                                @if ($produto->validade)
+                                {{\Carbon\Carbon::parse($produto->validade)->format('d/m/Y')}}
+                                @else 
+                                --
+                                @endif
+                            </td>
+                            <td>
+                                @if ($produto->validade_anterior)
+                                {{\Carbon\Carbon::parse($produto->validade_anterior)->format('d/m/Y')}}
+                                @else 
+                                --
+                                @endif
+                            </td>
+                            <td>{{\Carbon\Carbon::parse($produto->created_at)->format('d/m/Y')}}</td>
+                            <td class="comentarios">
+                                @if ($produto->comentarios)
+                                <span class="resumo">
+                                    {!! nl2br(e(\Illuminate\Support\Str::limit($produto->comentarios, 10, '...'))) !!}
+                                </span>
+                                <span class="conteudo">
+                                    {!! nl2br(e($produto->comentarios)) !!}
+                                </span>
+                                @else 
+                                --
+                                @endif
+                            </td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td><button class="vender"><img src="{{ asset('assets/img/icones/vendas.svg') }}"></button></td>
                             <td><button class="editar"><img src="{{ asset('assets/img/icones/editar.svg') }}"></button></td>
@@ -369,9 +431,10 @@
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
                                     <form method="post"
-                                    action="/produtos/{{$produto->id}}/excluir"
+                                    action="{{ route('excluirProduto', $produto->id) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
+                                        <input type="number" name="grupo_id" value="{{$grupo->id}}" hidden>
                                         <button type="submit" class="btn-excluir">Excluir</button>
                                         <span class="btn-cancelar">Cancelar</span>
                                     </form>
@@ -386,52 +449,141 @@
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleciona todos os botões com a classe 'btn-excluir'
+        var excluirButtons = document.querySelectorAll('.excluir');
+        var alertBox = document.getElementById('alert-box');
+    
+        excluirButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Previne o envio imediato do formulário
+                
+                if (!alertBox.classList.contains('ativo')) {
+                    // Exibe o alerta com a mensagem
+                    alertBox.classList.add('ativo');
+
+                    setTimeout(() => {
+                        alertBox.classList.remove('ativo');
+                    }, 5000);
+                } else if (alertBox.classList.contains('ativo')) {
+                    return false;
+                }
+            });
+        });
+    });
+</script>
+
 @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
 @foreach ($produtos as $produto)
     <section class="modal-container modal-vender">
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-vender">
             <h3 class="titulo-modal">Vender Produto</h3>
-            <form method="post"
-            action="/produtos/{{$produto->id}}/vender"
-            enctype="multipart/form-data">
+            <form method="post" action="{{ route('venderProduto', $produto->id) }}" enctype="multipart/form-data" id="form_vender_{{$produto->id}}">
                 @csrf
-                <input type="text" value="{{$produto->produto}}" name="produto"  placeholder="Produto:" disabled required>
-                <input type="text" value="{{$produto->preco}}" name="preco"  placeholder="Preco:" required hidden class="preco">
+                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required>
+                <input type="number" value="1" required name="vendido" hidden class="vender_required_{{$produto->id}}">
+                <input type="text" value="{{$produto->sku}}" name="sku" disabled required class="vender_required_{{$produto->id}}">
+                <input type="text" value="{{$produto->produto}}" name="produto" disabled required class="vender_required_{{$produto->id}}">
+                <input type="text" disabled value="{{$produto->preco}}" name="preco" placeholder="Preco*" disabled required class="preco">
                 <label>
                     <span>Data da venda:</span>
-                    <input type="date" required name="data_venda" placeholder="Data da Venda:">
+                    <input type="date" required name="data_venda" placeholder="Data da Venda*" class="vender_required_{{$produto->id}}">
                 </label>
-                <input type="number" value="{{$produto->quantidade}}" name="quantidade"  placeholder="Quantidade em estoque:" required hidden>
-                <input type="number" name="vendidos" placeholder="Quantidade vendida:" required>
-                <button class="salvar" type="submit">Salvar</button>
+                <button class="salvar btnVender_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
+
+        <script>
+            // Função para verificar os campos de venda do produto específico
+            function checkVenderFields_{{$produto->id}}() {
+                const requiredFields = document.querySelectorAll('.vender_required_{{$produto->id}}');
+                const venderButton = document.querySelector('.btnVender_{{$produto->id}}');
+
+                const allFilled = Array.from(requiredFields).every(field => {
+                    return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+                });
+
+                // Controla o estado do botão "Salvar"
+                if (allFilled) {
+                    venderButton.classList.remove('disabled');
+                    venderButton.removeAttribute('disabled');
+                } else {
+                    venderButton.classList.add('disabled');
+                    venderButton.setAttribute('disabled', 'disabled');
+                }
+            }
+
+            // Aplica o event listener a cada campo individualmente
+            document.querySelectorAll('.vender_required_{{$produto->id}}').forEach(field => {
+                field.addEventListener('input', checkVenderFields_{{$produto->id}});
+            });
+
+            // Inicializa o botão com a classe disabled
+            checkVenderFields_{{$produto->id}}();
+        </script>
     </section>
 
     <section class="modal-container modal-editar">
         <div class="modal-content">
             <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-editar">
             <h3 class="titulo-modal">Editar Produto</h3>
-            <form method="post"
-            action="/produtos/{{$produto->id}}/editar"
-            enctype="multipart/form-data">
+            <form method="post" action="{{ route('editarProduto', $produto->id) }}" enctype="multipart/form-data" id="form_editar_{{$produto->id}}">
                 @csrf
+                <input type="number" value="{{$grupo->id}}" hidden name="grupo_id" required class="save_required">
                 <label>
-                    <span>Produto:</span>
-                    <input type="text" value="{{$produto->produto}}" name="produto"  placeholder="Produto:" required>
+                    <span>Código SKU*</span>
+                    <input type="text" value="{{$produto->sku}}" name="sku" placeholder="Código SKU*" required class="editar_required_{{$produto->id}}">
                 </label>
                 <label>
-                    <span>Preço:</span>
-                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço:" required class="preco">
+                    <span>Produto*</span>
+                    <input type="text" value="{{$produto->produto}}" name="produto" placeholder="Produto*" required class="editar_required_{{$produto->id}}">
                 </label>
                 <label>
-                    <span>Quantidade:</span>
-                    <input type="number" value="{{$produto->quantidade}}" name="quantidade" placeholder="Quantidade:" required>
+                    <span>Preço*</span>
+                    <input type="text" value="{{$produto->preco}}" name="preco" placeholder="Preço*" required class="preco editar_required_{{$produto->id}}">
                 </label>
-                <button class="salvar" type="submit">Salvar</button>
+                <label>
+                    <span>Validade*</span>
+                    <input type="date" value="{{$produto->validade}}" name="validade" placeholder="Validade*">
+                </label>
+                <label>
+                    <span>Comentários*</span>
+                    <textarea placeholder="Comentários" name="comentarios">{{$produto->comentarios}}</textarea>
+                </label>
+                <button class="salvar btnEdit_{{$produto->id}} disabled" type="submit">Salvar</button>
             </form>
         </div>
+
+        <script>
+            // Função para verificar os campos de edição do produto específico
+            function checkEditarFields_{{$produto->id}}() {
+                const requiredFields = document.querySelectorAll('.editar_required_{{$produto->id}}');
+                const editButton = document.querySelector('.btnEdit_{{$produto->id}}');
+
+                const allFilled = Array.from(requiredFields).every(field => {
+                    return field.value.trim() !== '';  // Verifica se todos os campos estão preenchidos
+                });
+
+                // Controla o estado do botão "Salvar"
+                if (allFilled) {
+                    editButton.classList.remove('disabled');
+                    editButton.removeAttribute('disabled');
+                } else {
+                    editButton.classList.add('disabled');
+                    editButton.setAttribute('disabled', 'disabled');
+                }
+            }
+
+            // Aplica o event listener a cada campo individualmente
+            document.querySelectorAll('.editar_required_{{$produto->id}}').forEach(field => {
+                field.addEventListener('input', checkEditarFields_{{$produto->id}});
+            });
+
+            // Inicializa o botão com a classe disabled
+            checkEditarFields_{{$produto->id}}();
+        </script>
     </section>
 @endforeach
 @endif
@@ -562,7 +714,67 @@
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
         $('.preco').mask('#.##0,00', {reverse: true});
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
+
+        $('.preco').each(function() {
+            let valorPreco = $(this).val();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorPreco.startsWith('.')) {
+                valorPreco = valorPreco.replace(/^\./, '');
+            }
+        
+            // Atualiza o campo com o valor sem o ponto no início
+            $(this).val(valorPreco);
+        });
+
+        $('.dinheiro').each(function() {
+            let valorDinheiro = $(this).text().trim();
+        
+            // Se o valor começa com um ponto, remova-o
+            if (valorDinheiro.startsWith('.')) {
+                valorDinheiro = valorDinheiro.replace(/^\./, '');
+            }
+        
+            // Atualiza o span com o valor sem o ponto no início
+            $(this).text(valorDinheiro);
+        });        
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const saveButtonAdd = document.querySelector('.btnSave');
+        saveButtonAdd.classList.add('disabled');
+        saveButtonAdd.setAttribute('disabled', 'disabled');
+    });
+
+    // Função para verificar todos os campos e controlar o estado do botão
+    function checkFields() {
+        const requiredFields = document.querySelectorAll('.save_required');
+        const saveButton = document.querySelector('.btnSave');
+
+        const allFilled = Array.from(requiredFields).every(field => {
+            if (field.tagName === 'SELECT') {
+                return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+            }
+            return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+        });
+
+        // Controla o estado do botão salvar
+        if (allFilled) {
+            saveButton.classList.remove('disabled');
+            saveButton.removeAttribute('disabled');
+        } else {
+            saveButton.classList.add('disabled');
+            saveButton.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    // Aplica o event listener a cada campo individualmente
+    document.querySelectorAll('.save_required').forEach(field => {
+        // Adiciona o event listener 'input' a cada campo
+        field.addEventListener('input', checkFields);
+    });
+</script>
 @endsection

@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Models\Produto;
+use App\Models\Venda;
+use Illuminate\Http\Request;
+
+class ProdutosController extends Controller
+{
+    public function view($grupo_id)
+    {
+
+        $produtos = Produto::select(
+            'produtos.id',
+            'produtos.sku',
+            'produtos.produto',
+            'produtos.preco',
+            'produtos.grupo_id',
+            'produtos.vendido',
+            'produtos.vencimento',
+            'produtos.vencimento_anterior',
+            'produtos.created_at',
+        )->join('grupos', $grupo_id, '=', 'produtos.grupo_id')->orderby('produtos.id', 'DESC')->get();;
+
+        return view('produtos.index', compact('produtos'));
+    }
+
+    public function cadastrar(Request $request)
+    {
+        $produto = Produto::create([
+            'sku' => $request->sku,
+            'produto' => $request->produto,
+            'preco' => $request->preco,
+            'grupo_id' => $request->grupo_id,
+            'vendido' => $request->vendido,
+            'vencimento' => $request->vencimento,
+        ]);
+
+        return redirect("/produtos")->with('msg', 'Produto cadastrado com sucesso!');
+    }
+
+    private function formatarNumero($numero)
+    {
+        $numero = str_replace('.', '', $numero); // Remove separador de milhar
+        $numero = str_replace(',', '.', $numero); // Troca vírgula por ponto
+        return floatval($numero); // Converte a string para float
+    }
+
+    public function vender(Request $request, $id)
+    {
+        $produto = Produto::find($id);
+
+        $preco = $this->formatarNumero($request->preco);
+
+        if ($request->vendidos <= $produto->quantidade) {
+            $somaProdutoVendido = $produto->vendidos + $request->vendidos;
+        } else {
+            return redirect('/produtos')
+                ->with('msgf', "A quantidade de produtos vendidos é maior que a quantidade no estoque: {$produto->quantidade}")
+                ->withInput();
+        }
+        $subtracaoProdutoVendido = $produto->quantidade - $request->vendidos;
+        $totalProdutoVendido = $preco * $request->vendidos;
+        $totalProdutoVendido = number_format($preco * $request->vendidos, 2, ',', '.');
+
+        $produto->update([
+            'vendidos' => $somaProdutoVendido,
+            'quantidade' => $subtracaoProdutoVendido,
+        ]);
+
+        $venda = Venda::create([
+            'produto_id' => $id,
+            'preco' => $request->preco,
+            'quantidade' => $subtracaoProdutoVendido,
+            'vendidos' => $request->vendidos,
+            'total' => $totalProdutoVendido,
+            'data_venda' => $request->data_venda,
+        ]);
+        return redirect('/produtos')->with('msg', 'Produto vendido com sucesso!');
+    }
+
+    public function editar(Request $request, $id)
+    {
+        $produto = Produto::find($id);
+
+        $produto->update([
+            'produto' => $request->produto,
+            'preco' => $request->preco,
+            'quantidade' => $request->quantidade,
+        ]);
+
+        return redirect('/produtos')->with('msg', 'Produto editado com sucesso!');
+    }
+
+    public function excluir(Request $request, $id)
+    {
+        $venda = Venda::with('produto_id')->where('produto_id', '=', $id);
+        $produto = Produto::find($id);
+
+        $venda->delete();
+        $produto->delete();
+
+        return redirect('/produtos')->with('msg', 'Produto excluido com sucesso!');
+    }
+}

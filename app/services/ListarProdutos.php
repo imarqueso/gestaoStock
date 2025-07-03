@@ -9,13 +9,11 @@ class ListarProdutos
 
     public function listarProdutos()
     {
-        $produtos = Produto::query()->select('produtos.id', 'produtos.produto')->orderBy('produto')->get();
-        $prod = [];
+        $produtosVendidos = Produto::where('vendido', 1)
+            ->select('id', 'produto', 'sku')
+            ->orderBy('produto')
+            ->get();
 
-        foreach ($produtos as $produto) {
-            array_push($prod, $produto);
-        }
-
-        return $prod;
+        return $produtosVendidos;
     }
 }

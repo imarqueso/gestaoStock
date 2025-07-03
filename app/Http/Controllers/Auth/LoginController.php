@@ -28,12 +28,18 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // Converter o login para minúsculas
+        $login = strtolower($request->input('login'));
+
+        // Verificar se o campo de login é um email ou um login
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'login';
+
         $credentials = [
-            'login' => $request->input('login'),
+            $fieldType => $login,
             'password' => $request->input('password'),
         ];
 
-        $user = User::where('login', $request->input('login'))->first();
+        $user = User::where($fieldType, $login)->first();
 
         if (Auth::attempt($credentials)) {
             if ($user && $user->ativo == 'Sim') {

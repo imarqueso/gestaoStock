@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
             'login' => 'admin',
             'nome' => 'admin',
             'sobrenome' => 'master',
-            'email' => 'admin@email.com',
+            'email' => 'soigormarques@gmail.com',
             'password' => Hash::make('admin4321'), // Correct usage of Hash facade
             'ativo' => "Sim",
             'acesso' => 'Admin',

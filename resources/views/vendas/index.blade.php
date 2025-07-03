@@ -16,7 +16,7 @@
 
     .vendas-content {
         width: 100%;
-        max-width: 1170px;
+        max-width: 1220px;
         height: auto;
         padding: 60px 20px 80px 20px;
         display: flex;
@@ -26,15 +26,17 @@
     }
 
     .vendas-box {
+        max-height: 803px;
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding: 35px 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         background-color: var(--secondary);
         overflow: auto;
+        border-radius: 8px;
     }
 
     /* width */
@@ -88,34 +90,38 @@
 
     table {
         width: 100%;
-        min-width: 1090px !important;
+        min-width: 1135px !important;
         height: auto;
         background-color: transparent;
-        border-collapse: collapse !important;
+        border-collapse: separate !important;
         border: none;
+        border-radius: 10px;
+        border-spacing: 0; 
+        overflow: hidden;
     }
 
     th {
-        border: 1px solid #b9b8b8;
-        border-bottom: 1px solid #b9b8b8 !important;
-        padding: 15px;
-        background-color: #d6d6d6;
-        font-size: 12px;
+        border: 1px solid #6c88d7;
+        border-bottom: 1px solid #6c88d7 !important;
+        padding: 12px 30px 12px 10px !important;
+        background-color: rgb(94 120 195);
+        font-size: 16px;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--light);
         line-height: 18px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td {
-        border: 1px solid #b9b8b8;
+        border: 1px solid #eeeaea;
         padding: 15px;
         background-color: var(--light);
-        font-size: 14px;
-        text-transform: uppercase;
+        font-size: 18px;
         color: var(--primary);
         line-height: 20px;
         text-align: left;
+        white-space: nowrap;
     }
 
     td button {
@@ -311,49 +317,91 @@
     .nobreak {
         white-space: nowrap !important;
     }
+
+    button[disabled] {
+        background-color: #464444 !important;
+    }
+</style>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
+<style>
+    .selectize-control {
+        width: 100% !important;
+        margin-bottom: 0px !important;
+        padding: 8px 0px !important;
+    }
+
+    .selectize-input {
+        border-radius: 8px !important;
+        border: 2px solid #cac7c7ba !important;
+        transition: 0.3s ease all !important;
+    }
+
+    .selectize-input .item {
+        width: 100% !important;
+        height: 25px !important;
+        padding: 0px 8px !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+    }
+
+    .selectize-input:hover {
+        border: 2px solid rgba(75, 110, 209, 1) !important;
+        transition: 0.3s ease all !important;
+    }
+
+    .selectize-input>input {
+        width: 100% !important;
+        height: 25px !important;
+        padding: 0px 8px !important;
+    }
+
+    .selectize-dropdown .selected, .selectize-dropdown .active {
+        background-color: rgba(75, 110, 209, 1) !important;
+        color: white !important;
+    }
+
+    .selectize-dropdown {
+        top: 87% !important;
+    }
+
+    .selectize-control.plugin-clear_button .clear {
+        height: 56px !important;
+    }
+
+    .selectize-control.single .selectize-input:after {
+        top: 21px !important;
+    }
 </style>
 
 <section class="vendas-container">
     <div class="vendas-content">
         @include('partials.mensagem')
-        @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-        <button class="btn-principal">Cadastrar Venda</button>
-        @endif
+        <div id="alert-box" class="alert-warning" role="alert">
+            <div class="alert-box">
+                <span class="barra"></span>
+                Ao excluir a venda, o produto voltara para o estoque caso não esteja vencido!
+            </div>
+        </div>
         <div class="vendas-box">
             <h3>Vendas cadastradas</h3>
-            @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
-            <section class="modal-container modal-cadastrar">
-                <div class="modal-content">
-                    <img src="{{ asset('assets/img/icones/close.svg') }}" class="close close-cadastrar">
-                    <h3 class="titulo-modal">Cadastrar Venda</h3>
-                    <form method="post" action="{{ route('cadastrarVenda') }}" enctype="multipart/form-data">
-                        @csrf
-                        <select name="produto_id" required onchange="subDepartamento()">
-                            <option disabled selected value>Selecione o produto</option>
-                            @foreach ($listaProd as $prod)
-                            <option value="{{ $prod->id }}">{{ $prod->produto }}</option>
-                            @endforeach
-                        </select>
-                        <label>
-                            <span>Data da Venda:</span>
-                            <input type="date" required name="data_venda" placeholder="Data da Venda:">
-                        </label>
-                        <input type="number" name="vendidos" value="" placeholder="Vendidos:" required>
-                        <button class="salvar" type="submit">Salvar</button>
-                    </form>
-                </div>
-            </section>
-            @endif
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>Venda Nª</th>
+                        <th>SKU</th>
                         <th>Produto</th>
+                        <th>Grupo</th>
                         <th>Preço</th>
-                        <th>Estoque</th>
                         <th>Data da Venda</th>
-                        <th>Vendido</th>
-                        <th>Total</th>
                         @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                         <th>Excluir</th>
                         @endif
@@ -363,12 +411,11 @@
                     @foreach ($vendas as $venda)
                         <tr>
                             <td>{{$venda->id}}</td>
-                            <td>{{$venda->produto}}</td>
-                            <td class="dinheiro nobreak">R$ {{$venda->preco}}</td>
-                            <td>{{$venda->quantidade}}</td>
+                            <td>{{ $venda->produto->sku }}</td>
+                            <td>{{ $venda->produto->produto }}</td>
+                            <td>{{ $venda->produto->grupo->grupo }}</td>
+                            <td class="nobreak"><span class="dinheiro">{{$venda->produto->preco}}</span></td>
                             <td>{{\Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y')}}</td>
-                            <td>{{$venda->vendidos}}</td>
-                            <td class="dinheiro nobreak">R$ {{$venda->total}}</td>
                             @if (Auth::user()->acesso == 'Admin' || Auth::user()->acesso == 'Master')
                             <td>
                                 <div class="td-excluir">
@@ -376,11 +423,9 @@
                                         <img src="{{ asset('assets/img/icones/excluir.svg') }}">
                                     </span>
                                     <form method="post"
-                                    action="/vendas/{{$venda->id}}/excluir"
+                                    action="{{ route('excluirVenda', $venda->id) }}"
                                     enctype="multipart/form-data" class="modal-excluir">
                                         @csrf
-                                        <input type="number" name="quantidade" value="{{$venda->quantidade}}" hidden>
-                                        <input type="number" name="vendidos" value="{{$venda->vendidos}}" hidden>
                                         <input type="number" name="produto_id" value="{{$venda->produto_id}}" hidden>
                                         <button type="submit" class="btn-excluir salvar">Excluir</button>
                                         <span class="btn-cancelar">Cancelar</span>
@@ -395,6 +440,48 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleciona todos os botões com a classe 'btn-excluir'
+        var excluirButtons = document.querySelectorAll('.excluir');
+        var alertBox = document.getElementById('alert-box');
+    
+        excluirButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Previne o envio imediato do formulário
+                
+                if (!alertBox.classList.contains('ativo')) {
+                    // Exibe o alerta com a mensagem
+                    alertBox.classList.add('ativo');
+
+                    setTimeout(() => {
+                        alertBox.classList.remove('ativo');
+                    }, 5000);
+                } else if (alertBox.classList.contains('ativo')) {
+                    return false;
+                }
+            });
+        });
+    });
+</script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
+<script>
+    $(function () {
+        $(".produto-select").selectize({
+          plugins: ["restore_on_backspace", "clear_button"],
+          delimiter: " - ",
+          persist: false,
+          maxItems: 1,
+        });
+      });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -460,17 +547,87 @@
 @endif
 
 <script>
-    var dinheiro = document.querySelectorAll('td.dinheiro');
-
-    for (var z = 0; z < dinheiro.length; z++) {
-        dinheiro[z].innerHTML = dinheiro[z].innerHTML.replace('.', ",");
-    }
-</script>
-
-<script>
     $(document).ready(function(){
         // Aplica a máscara de moeda ao campo de entrada
         $('.preco').mask('#.##0,00', {reverse: true});
+        $('.dinheiro').mask('#.##0,00', {reverse: true});
+    });
+
+    $('.preco').each(function() {
+        let valorPreco = $(this).val();
+    
+        // Se o valor começa com um ponto, remova-o
+        if (valorPreco.startsWith('.')) {
+            valorPreco = valorPreco.replace(/^\./, '');
+        }
+    
+        // Atualiza o campo com o valor sem o ponto no início
+        $(this).val(valorPreco);
+    });
+
+    $('.dinheiro').each(function() {
+        let valorDinheiro = $(this).text().trim();
+    
+        // Se o valor começa com um ponto, remova-o
+        if (valorDinheiro.startsWith('.')) {
+            valorDinheiro = valorDinheiro.replace(/^\./, '');
+        }
+    
+        // Atualiza o span com o valor sem o ponto no início
+        $(this).text(valorDinheiro);
+    });     
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const saveButtonAdd = document.querySelector('.btnSave');
+        saveButtonAdd.classList.add('disabled');
+        saveButtonAdd.setAttribute('disabled', 'disabled');
+    });
+    const productSelect = document.getElementById('produto-select');
+    
+     // Função para verificar o estado do select
+     function checkProductSelect() {
+        const selectedValue = productSelect.value;
+        
+        // Verifica se o valor do select é vazio e altera o texto do botão
+        if (selectedValue === '') {
+            event.preventDefault();  // Evita a ação padrão caso o select esteja vazio
+            saveButtonAdd.textContent = 'Selecione o produto!';  // Altera o texto do botão
+        } else {
+            saveButtonAdd.textContent = 'Enviando...';  // Altera o texto do botão quando o produto é selecionado
+        }
+    }
+
+    // Verifica o select sempre que houver mudança no seu valor
+    saveButtonAdd.addEventListener('click', checkProductSelect);
+
+    // Função para verificar todos os campos e controlar o estado do botão
+    function checkFields() {
+        const requiredFields = document.querySelectorAll('.save_required');
+        const saveButton = document.querySelector('.btnSave');
+
+        const allFilled = Array.from(requiredFields).every(field => {
+            if (field.tagName === 'SELECT') {
+                return field.value !== '';  // Para selects, verifica se uma opção foi selecionada
+            }
+            return field.value.trim() !== '';  // Para inputs de texto, verifica se não está vazio
+        });
+
+        // Controla o estado do botão salvar
+        if (allFilled) {
+            saveButton.classList.remove('disabled');
+            saveButton.removeAttribute('disabled');
+        } else {
+            saveButton.classList.add('disabled');
+            saveButton.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    // Aplica o event listener a cada campo individualmente
+    document.querySelectorAll('.save_required').forEach(field => {
+        // Adiciona o event listener 'input' a cada campo
+        field.addEventListener('input', checkFields);
     });
 </script>
 
